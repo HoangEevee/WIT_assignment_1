@@ -1,0 +1,18 @@
+body {
+    color: #0D2557;
+    font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    text-align: center;
+    margin: 0;
+}
+footer, header {
+    background-color: #CED7EA;
+}
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+footer {
+    padding: 2rem;
+}
