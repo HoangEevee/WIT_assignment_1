@@ -1,9 +1,8 @@
 body {
     color: #0D2557;
     font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    font-size: 18px;
     margin: 0;
-
+    font-size: 1.2rem;
 }
 
 footer, nav {
@@ -21,7 +20,7 @@ nav a {
     text-align: center;
     text-decoration: none;
     color: #0D2557;
-    padding: 14px 16px;
+    padding: 1rem;
 }
 
 nav a.active {
@@ -29,21 +28,29 @@ nav a.active {
     color: white;
 }
 
+nav a.menubar:hover {
+    background-color: #8693B4;
+}
+
 section, .logo {
-    padding: 0 150px;
+    padding: 0 15vw;
 }
 
 .logo {
     text-align: center;
 }
 .logo img {
-    margin-top: 50px;
-    margin-bottom: -20px;
+    margin-top: 4rem;
+    margin-bottom: -2rem;
 }
 
-.two-columns {
-    column-count: 2;
+/* for tablet size and beyond */
+@media screen and (min-width: 768px) {
+    .two-columns {
+        column-count: 2;
+    }
 }
+
 
 footer {
     padding: 2rem;
