@@ -1,16 +1,48 @@
 body {
     color: #0D2557;
     font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    text-align: center;
+    font-size: 18px;
     margin: 0;
+
 }
-footer, header {
+
+footer, nav {
     background-color: #CED7EA;
 }
-header {
+
+nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+nav a {
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    color: #0D2557;
+    padding: 14px 16px;
+}
+
+nav a.active {
+    background-color: #0D2557;
+    color: white;
+}
+
+section, .logo {
+    padding: 0 150px;
+}
+
+.logo {
+    text-align: center;
+}
+.logo img {
+    margin-top: 50px;
+    margin-bottom: -20px;
+}
+
+.two-columns {
+    column-count: 2;
 }
 
 footer {
