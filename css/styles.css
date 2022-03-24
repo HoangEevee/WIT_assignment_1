@@ -44,6 +44,10 @@ section, .logo {
     margin-bottom: -2rem;
 }
 
+    text-align: center;
+    margin-top: 3rem;
+}
+
 /* for tablet size and beyond */
 @media screen and (min-width: 768px) {
     .two-columns {
@@ -51,6 +55,11 @@ section, .logo {
     }
 }
 
+.parent {
+    display: flex;
+    flex-flow: row wrap;
+    align-content: flex-start;
+}
 
 footer {
     padding: 2rem;
