@@ -1,10 +1,22 @@
+@font-face {
+    font-family: "Malgun gothic";
+    src: url(..\font\malgun-gothic\malgun-gothic.ttf);
+}
+
 body {
     color: #0D2557;
-    font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-family: "Malgun gothic", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-weight: 400;
     margin: 0;
     font-size: 1.2rem;
 }
 
+nav, .logo, h1, h2, h3, h4, h5, h6 {
+    font-family: Poppins;
+}
+.logo, h1, h2, h3, h4, h5, h6 {
+    font-weight: 300;
+}
 footer, nav {
     background-color: #CED7EA;
 }
