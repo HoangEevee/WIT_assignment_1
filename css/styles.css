@@ -66,6 +66,11 @@ section, .logo {
     .two-columns {
         column-count: 2;
     }
+
+    .aboutsitecontainer {
+        display: flex;
+        align-items: center;    
+    }
 }
 
 .parent {
@@ -78,9 +83,8 @@ footer {
     padding: 2rem;
 }
 
-.container {
-    padding: 20px 40px 40px;
-    max-width: 600px;
+.textcontainer {
+    padding: 1rem 1rem;
 }
 
 .embedimg {
@@ -88,7 +92,6 @@ footer {
     max-width: 420px;
     height: auto;
     margin: 1rem 1rem 1rem 0;
-    float: left;
 }
 
 .embedvid {
