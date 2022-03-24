@@ -1,10 +1,22 @@
+@font-face {
+    font-family: "Malgun gothic";
+    src: url(..\font\malgun-gothic\malgun-gothic.ttf);
+}
+
 body {
     color: #0D2557;
-    font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-family: "Malgun gothic", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-weight: 400;
     margin: 0;
     font-size: 1.2rem;
 }
 
+nav, .logo, h1, h2, h3, h4, h5, h6 {
+    font-family: Poppins;
+}
+.logo, h1, h2, h3, h4, h5, h6 {
+    font-weight: 300;
+}
 footer, nav {
     background-color: #CED7EA;
 }
@@ -38,19 +50,12 @@ section, .logo {
 
 .logo {
     text-align: center;
+    font-weight: 100;
 }
 .logo img {
     margin-top: 4rem;
     margin-bottom: -2rem;
 }
-
-/* for tablet size and beyond */
-@media screen and (min-width: 768px) {
-    .two-columns {
-        column-count: 2;
-    }
-}
-
 
 footer {
     padding: 2rem;
