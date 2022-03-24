@@ -69,7 +69,8 @@ section, .logo {
 
     .aboutsitecontainer {
         display: flex;
-        align-items: center;    
+        flex-flow: row;
+        align-items: center;   
     }
 }
 
@@ -88,10 +89,9 @@ footer {
 }
 
 .embedimg {
-    width: 100%;
-    max-width: 420px;
+    max-width: 600px;
     height: auto;
-    margin: 1rem 1rem 1rem 0;
+    margin: 1rem 3rem 1rem 0;
 }
 
 .embedvid {
