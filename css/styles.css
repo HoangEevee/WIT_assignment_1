@@ -63,21 +63,12 @@ section, .logo {
 
 /* for tablet size and beyond */
 @media screen and (min-width: 768px) {
-    .two-columns {
-        column-count: 2;
-    }
 
     .parentcontainer {
         display: flex;
         flex-flow: row;
         align-items: center;   
     }
-}
-
-.parent {
-    display: flex;
-    flex-flow: row wrap;
-    align-content: flex-start;
 }
 
 footer {
