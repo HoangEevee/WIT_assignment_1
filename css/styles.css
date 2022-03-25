@@ -61,13 +61,17 @@ section, .logo {
     margin-top: 3rem;
 }
 
-/* for tablet size and beyond */
-@media screen and (min-width: 768px) {
+/* for computer size and beyond */
+@media screen and (min-width: 1200px) {
 
     .parentcontainer {
         display: flex;
         flex-flow: row;
         align-items: center;   
+    }
+
+    .embedimg {
+        max-width: 400px;
     }
 }
 
@@ -81,7 +85,6 @@ footer {
 
 .embedimg {
     width: 100%;
-    max-width: 400px;
     height: auto;
     margin: 1rem 3rem 1rem 0;
 }
