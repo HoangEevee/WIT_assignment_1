@@ -9,6 +9,7 @@ body {
     font-weight: 400;
     margin: 0;
     font-size: 1.2rem;
+    text-align: justify;
 }
 
 nav, .logo, h1, h2, h3, h4, h5, h6 {
@@ -67,7 +68,8 @@ section, .logo {
     .parentcontainer {
         display: flex;
         flex-flow: row;
-        align-items: center;   
+        align-items:center;
+        justify-content: space-between;   
     }
 
     .embedimg {
@@ -87,6 +89,9 @@ footer {
     width: 100%;
     height: auto;
     margin: 1rem 3rem 1rem 0;
+}
+.img-right {
+    margin:1rem 0 1rem 3rem;
 }
 
 .embedvid {
