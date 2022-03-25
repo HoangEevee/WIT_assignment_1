@@ -3,10 +3,6 @@
     src: url(..\font\malgun-gothic\malgun-gothic.ttf);
 }
 
-* {
-    border: solid red 1px;
-}
-
 body {
     color: #0D2557;
     font-family: "Malgun gothic", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
