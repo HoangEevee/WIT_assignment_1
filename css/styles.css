@@ -67,7 +67,7 @@ section, .logo {
         column-count: 2;
     }
 
-    .aboutsitecontainer {
+    .parentcontainer {
         display: flex;
         flex-flow: row;
         align-items: center;   
