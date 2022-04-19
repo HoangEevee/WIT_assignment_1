@@ -2,7 +2,7 @@
 // TO BE REPLACED WITH MONGODB
 const Patient = require('../models/patient')
 
-// prolly more suited for clinician but eh
+// prolly more suited for clinician but eh testing
 const getAllPatientData = async (req, res, next) => {
     try {
         const patients = await Patient.find().lean()
