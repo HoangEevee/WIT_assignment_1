@@ -5,7 +5,7 @@ const patientRouter = express.Router()
 // connect to controller
 const patientController = require('../controllers/patientController.js')
 
-patientRouter.get('/patient', patientController.getPatientData)
+patientRouter.get('/patient', patientController.getAllPatientData)
 patientRouter.get('/:patient_id', patientController.getDataByPatient)
 //peopleRouter.post('/', patientController.writeGlucose)
 

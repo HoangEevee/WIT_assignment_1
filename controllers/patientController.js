@@ -3,16 +3,16 @@
 const Patient = require('../models/patient')
 
 // prolly more suited for clinician but eh
-const getPatientData = async (req, res, next) => {
+const getAllPatientData = async (req, res, next) => {
     try {
         const patients = await Patient.find().lean()
-        return res.render('allPatients', {data: patientData})
+        return res.render('allPatients', {data: patients})
     } catch (err) {
         return next(err)
     }   
 }
 
-const getDataByPatient = (req, res) => {
+const getDataByPatient = async (req, res) => {
     try {
         const patient = await Patient.findById(req.params.patient_id).lean()
         if (!author) {
@@ -33,6 +33,6 @@ const getDataByPatient = (req, res) => {
 }*/
 
 module.exports = {
-    getPatientData,
+    getAllPatientData,
     getDataByPatient,
 }
