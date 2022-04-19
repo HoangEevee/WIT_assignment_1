@@ -18,7 +18,7 @@ app.engine(
 app.set('view engine', 'hbs')
 
 // connect to database
-require('./models')
+require('./models/index.js')
 
 
 // Set default page as the aboutWebsite page for now, until we make an actual home page
