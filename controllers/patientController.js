@@ -1,23 +1,28 @@
 // import demo model
 // TO BE REPLACED WITH MONGODB
-const patientData = require('../models/patientModel')
+const Patient = require('../models/patient')
 
-const getPatientData = (req, res) => {
-    res.render('allPatients', {data: patientData})
+// prolly more suited for clinician but eh
+const getPatientData = async (req, res, next) => {
+    try {
+        const patients = await Patient.find().lean()
+        return res.render('allPatients', {data: patientData})
+    } catch (err) {
+        return next(err)
+    }   
 }
 
 const getDataByPatient = (req, res) => {
-    // search id
-    const data = patientData.find(
-        (data) => data.patient_id == req.params.patient_id
-    )
-
-    // return data if id exists
-    if (data) {
-        res.send(data)
-    } else {
-        // temporarily set 404 response
-        res.sendStatus(404)
+    try {
+        const patient = await Patient.findById(req.params.patient_id).lean()
+        if (!author) {
+            // patient not in db
+            return res.sendStatus(404)
+        }
+        // found patient
+        return res.render('patientData', { oneItem: patient})
+    } catch (err) {
+        return next(err)
     }
 }
 
