@@ -15,7 +15,7 @@ const getAllPatientData = async (req, res, next) => {
 const getDataByPatient = async (req, res, next) => {
     try {
         const patient = await Patient.findById(req.params.patient_id).lean()
-        if (!author) {
+        if (!patient) {
             // patient not in db
             return res.sendStatus(404)
         }
