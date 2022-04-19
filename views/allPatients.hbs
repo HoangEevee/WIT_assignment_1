@@ -1,0 +1,7 @@
+<h2 class="center">All patients</h2>
+
+<ul>
+    {{#each data}}
+        <li>{{this.patient_id}} - {{this.patient_name}} - {{this.today_glucose['value']}}</li>
+    {{/each}}
+</ul>

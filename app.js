@@ -1,26 +1,34 @@
 // Express
 const express = require('express')
 const app = express()
-const patientRouter = require('./routes/patientRouter')
-app.use(express.urlencoded({ extended: true })) // replaces body-parser
-app.use(express.static('public'))	// define where static assets live
+app.use(express.static('public')) // define where static assets live
+// POST requests, delete json when we do mongo
+app.use(express.json()) // needed if POST data is in JSON format
+app.use(express.urlencoded({ extended: false }))
 
 // Handlebars stuff
 const exphbs = require('express-handlebars')
-app.engine('hbs', exphbs.engine({
-	defaultlayout: 'main',
-	extname: 'hbs'
-}))
+app.engine(
+    'hbs',
+    exphbs.engine({
+        defaultlayout: 'main',
+        extname: 'hbs',
+    })
+)
 app.set('view engine', 'hbs')
 
-// Set default page as the aboutWebsite page for now, until we make an actual home page
-app.get('/', function(req, res) {
-    res.render('recordHealth');
-});
 
+// Set default page as the aboutWebsite page for now, until we make an actual home page
+app.get('/', function (req, res) {
+    res.render('home.hbs')
+})
+
+// connect to router
+const patientRouter = require('./routes/patientRouter')
+
+// send HTTP requests to router
 app.use('/patient', patientRouter)
 
-// to add heroku here i think?
-app.listen(8080, () => {
+app.listen(process.env.PORT || 8080, () => {
     console.log('Diabetes@Home is listening...')
-});
+})

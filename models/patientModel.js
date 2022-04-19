@@ -1,5 +1,4 @@
-module.exports =
-[
+module.exports = [
     {
         patient_id: 1,
         patient_name: 'Pat',
@@ -39,5 +38,5 @@ module.exports =
             entered: false,
             value: -1,
         },
-    }
+    },
 ]

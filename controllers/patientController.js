@@ -3,12 +3,14 @@
 const patientData = require('../models/patientModel')
 
 const getPatientData = (req, res) => {
-    res.send(patientData)
+    res.render('allPatients', {data: patientData})
 }
 
 const getDataByPatient = (req, res) => {
     // search id
-    const data = patientData.find(data => data.patient_id == req.params.patient_id)
+    const data = patientData.find(
+        (data) => data.patient_id == req.params.patient_id
+    )
 
     // return data if id exists
     if (data) {
@@ -19,7 +21,13 @@ const getDataByPatient = (req, res) => {
     }
 }
 
+/*const insertGlucose = (req, res) => {
+    const { today_glucose } = req.body
+    patientData.push({ today_glucose })
+    return res.redirect('back')
+}*/
+
 module.exports = {
     getPatientData,
-    getDataByPatient
+    getDataByPatient,
 }
