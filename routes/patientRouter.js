@@ -5,8 +5,7 @@ const patientRouter = express.Router()
 // connect to controller
 const patientController = require('../controllers/patientController.js')
 
-// express-validator, to validate user data in forms
-const expressValidator = require('express-validator')
+
 
 
 patientRouter.get('/', patientController.getPatientData)
