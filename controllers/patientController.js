@@ -12,7 +12,7 @@ const getAllPatientData = async (req, res, next) => {
     }   
 }
 
-const getDataByPatient = async (req, res) => {
+const getDataByPatient = async (req, res, next) => {
     try {
         const patient = await Patient.findById(req.params.patient_id).lean()
         if (!author) {
