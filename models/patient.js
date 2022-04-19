@@ -5,5 +5,5 @@ const schema = new mongoose.Schema({
     glucose: mongoose.Decimal128
 }) 
 
-const Author = mongoose.model('Patient', schema) 
-module.exports = Author
+const Patient = mongoose.model('Patient', schema) 
+module.exports = Patient
