@@ -7,16 +7,16 @@
     <script> document.write(new Date().toLocaleDateString()); </script>
     </p>
 
-    <form action="/patientData" method="POST">
-        
-        
-        <div>
+    <form action="/patient/record_glucose" method="POST">
             <p class="center">Blood Glucose (mmol/L)</p>
-            
-            <input type="number" step="any" placeholder="mmol/L" name="blood_glucose" min="0" max="999" />
+            <input type="number" step="any" id="glucose" placeholder="mmol/L" name="blood_glucose" min="0" max="999" />
             <br>
-            <input type="text" placeholder="Add comment" name="comment_glucose" />
-        </div>
+            <input type="text" id="comment_glucose" placeholder="Add comment" name="comment_glucose" />
+            <br>
+            <input type="submit" />
+    </form>
+
+    <form action="/patientData" method="POST">
 
         <div>
             <p class="center">Weight (kg)</p>

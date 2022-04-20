@@ -6,8 +6,9 @@ const patientRouter = express.Router()
 const patientController = require('../controllers/patientController.js')
 
 patientRouter.get('/', patientController.getAllPatientData)
-patientRouter.get('/:patient_id', patientController.getDataByPatient)
-//peopleRouter.post('/', patientController.writeGlucose)
+patientRouter.get('/user', patientController.getDataByPatient)
+patientRouter.get('/record_data_form', patientController.getRecordDataForm)
+patientRouter.post('/record_glucose', patientController.insertGlucose)
 
 module.exports = patientRouter
 

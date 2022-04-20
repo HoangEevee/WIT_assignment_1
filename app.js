@@ -11,26 +11,27 @@ const exphbs = require('express-handlebars')
 app.engine(
     'hbs',
     exphbs.engine({
-        defaultlayout: 'main',
         extname: 'hbs',
     })
 )
 app.set('view engine', 'hbs')
 
 // connect to database
-require('./models/index.js')
+require('./models/db.js')
 
 
 // Set default page as the aboutWebsite page for now, until we make an actual home page
 app.get('/', function (req, res) {
-    res.render('home.hbs')
+    res.render('home.hbs', { layout: 'main' })
 })
 
-// connect to router
+// connect to routers
 const patientRouter = require('./routes/patientRouter')
+const clinicianRouter = require('./routes/clinicianRouter')
 
-// send HTTP requests to router
+// send HTTP requests to routers
 app.use('/patient', patientRouter)
+app.use('/clinician', clinicianRouter)
 
 app.listen(process.env.PORT || 8080, () => {
     console.log('Diabetes@Home is listening...')

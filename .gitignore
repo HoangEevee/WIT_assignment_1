@@ -108,3 +108,6 @@ package-lock.json
 
 .idea/
 .vscode/
+
+test_clinician_data.json
+test_patient_data.json
