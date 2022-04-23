@@ -87,8 +87,7 @@ button {
     margin-top: 3rem;
 }
 
-.patientandclinicianbuttons {  
-    
+.allbuttons {  
     justify-content: center;
     align-items: center;
 }
@@ -159,7 +158,7 @@ input {
 
 /* Bordered form */
 form {
-    border: 3px solid #f1f1f1;
+    border: 0px solid #f1f1f1;
   }
   
   /* Full-width inputs */
@@ -168,7 +167,6 @@ form {
     padding: 12px 20px;
     margin: 8px 0;
     display: inline-block;
-    border: 1px solid #ccc;
     box-sizing: border-box;
   }
   
@@ -189,30 +187,29 @@ form {
   }
   
   
-  /* Center the avatar image inside this container */
-  .imgcontainer {
-    text-align: center;
-    margin: 24px 0 12px 0;
-  }
-  
   /* Add padding to containers */
   .container {
     padding: 16px;
   }
   
-  /* The "Forgot password" text */
-  span.psw {
-    float: left;
-    padding-top: 16px;
+
+  /* The "Need Help" text */ 
+  span.psw1 {
+    float: right; 
+    padding-top: 16px; 
   }
   
+  /* The "Forgot password" text */
+  span.psw2 {
+    float:left; 
+    padding-top: 16px;
+  }
+
+
   /* Change styles for span and cancel button on extra small screens */
   @media screen and (max-width: 300px) {
     span.psw {
       display: block;
       float: none;
-    }
-    .cancelbtn {
-      width: 100%;
     }
   }
