@@ -6,37 +6,53 @@
     <p class="center">
     <script> document.write(new Date().toLocaleDateString()); </script>
     </p>
+    {{#if submitted}}
+    <div>Your blood glucose has been recorded</div>
+    {{/if}}
 
-    <form action="/patient/record_glucose" method="POST">
+    <div>
+        <form action="/patient/record-glucose" method="POST">
             <p class="center">Blood Glucose (mmol/L)</p>
-            <input type="number" step="any" id="glucose" placeholder="mmol/L" name="blood_glucose" min="0" max="999" />
+            <input type="number" step="any" id="glucose" placeholder="mmol/L" name="blood_glucose"/>
             <br>
             <input type="text" id="comment_glucose" placeholder="Add comment" name="comment_glucose" />
             <br>
-            <input type="submit" />
-    </form>
+            <input type="submit" id="submitted" value=true />
+        </form>
+    </div>
 
-    <form action="/patientData" method="POST">
-
-        <div>
+    <!--
+    <div>
+        <form action="/patient/record-weight" method="POST">
             <p class="center">Weight (kg)</p>
-            <input type="number" step="any" placeholder="kg" name="weight" min="0" max="999" />
+            <input type="number" step="any" placeholder="kg" name="weight"/>
             <br>
             <input type="text" placeholder="Add comment" name="comment_weight" />
-        </div>
+            <br>
+            <input type="submit" />
+        </form>
+    </div>
 
-        <p class="center">Insulin (no. of doses)</p>
-        <input type="number" placeholder="no. of doses" name="insulin" min="0" max="999" />
-        <br>
-        <input type="text" placeholder="Add comment" name="comment_insulin" />
+    <div>
+        <form action="/patient/record-insulin" method="POST">
+            <p class="center">Insulin (no. of doses)</p>
+            <input type="number" placeholder="no. of doses" name="insulin"/>
+            <br>
+            <input type="text" placeholder="Add comment" name="comment_insulin" />
+            <br>
+            <input type="submit" />
+        </form>
+    </div>
 
-        <p class="center">Exercise (step count)</p>
-        <input type="number" placeholder="step count" name="exercise" min="0" max="999" />
-        <br>
-        <input type="text" placeholder="Add comment" name="comment_exercise" />
-        
-        <br>
-        <br>
-        <input type="submit" />
-    </form>
+    <div>
+        <form action="/patient/record-insulin" method="POST">
+            <p class="center">Exercise (step count)</p>
+            <input type="number" placeholder="step count" name="exercise"/>
+            <br>
+            <input type="text" placeholder="Add comment" name="comment_exercise" />
+            <br>
+            <input type="submit" />
+        </form>
+    </div>
+    -->
 </section>
