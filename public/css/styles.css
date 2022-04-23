@@ -70,6 +70,8 @@ section, .logo {
 button {
     color: #ffffff;
     background-color: #0D2557;
+    width: 180px;  
+    height: 80px;  
 }
 
 .logo {
