@@ -70,8 +70,8 @@ section, .logo {
 button {
     color: #ffffff;
     background-color: #0D2557;
-    width: 180px;  
-    height: 80px;  
+    width: 100px;  
+    height: 60px;
 }
 
 .logo {
@@ -87,10 +87,14 @@ button {
     margin-top: 3rem;
 }
 
-.patientandclinicianbuttons {
+.patientandclinicianbuttons {  
     display: flex;
     justify-content: center;
     align-items: center;
+}
+ 
+.loginbutton {
+    display: flex;
 }
 
 /* for computer size and beyond */
