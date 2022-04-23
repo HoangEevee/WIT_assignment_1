@@ -67,6 +67,11 @@ section, .logo {
     padding: 0 15vw;
 }
 
+button {
+    color: #ffffff;
+    background-color: #0D2557;
+}
+
 .logo {
     text-align: center;
 }
@@ -78,6 +83,12 @@ section, .logo {
 .center {
     text-align: center;
     margin-top: 3rem;
+}
+
+.patientandclinicianbuttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 /* for computer size and beyond */
@@ -133,3 +144,4 @@ footer {
 input {
     width: 100%;
 }
+
