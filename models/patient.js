@@ -5,7 +5,7 @@ const schema = new mongoose.Schema({
     clinician_id: mongoose.Types.ObjectId,
     health_data: [
         {
-            date: Date,
+            date: String,
             glucose: {
                 value: mongoose.Schema.Types.Decimal128,
                 comment: String,
@@ -23,7 +23,25 @@ const schema = new mongoose.Schema({
                 comment: String,
             } 
         }
-    ]
+    ],
+    timeseries: {
+        glucose: {
+            threshold_upper: mongoose.Schema.Types.Decimal128,
+            threshold_lower: mongoose.Schema.Types.Decimal128,
+        },
+        weight: {
+            threshold_upper: mongoose.Schema.Types.Decimal128,
+            threshold_lower: mongoose.Schema.Types.Decimal128,
+        },
+        insulin: {
+            threshold_upper: Number,
+            threshold_lower: Number,
+        },
+        exercise: {
+            threshold_upper: Number,
+            threshold_lower: Number,
+        }
+    }
 }) 
 
 const Patient = mongoose.model('Patient', schema) 

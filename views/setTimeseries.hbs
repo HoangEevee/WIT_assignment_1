@@ -1,0 +1,69 @@
+<h2 class="center">Set your patient's timeseries</h2>
+
+<section>
+    <p class="center">What does you patient need?</p>
+
+    <form action="/clinician/set-timeseries" method="POST">
+        <h3 class="center">Blood glucose (mmol/L)</p>
+        <p class="center">Required?</p>
+        <select id="glucose_required" name="glucose_required">
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+        </select>
+        <br>
+        <p class="center">Upper limit</p>
+        <input type="number" step="any" id="glucose_upper" name="glucose_upper"/>
+        <br>
+        <p class="center">Lower limit</p>
+        <input type="number" step="any" id="glucose_upper" name="glucose_upper"/>
+        <br>
+        <br>
+
+        <h3 class="center">Weight (kg)</p>
+        <p class="center">Required?</p>
+        <select id="weight_required" name="weight_required">
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+        </select>
+        <br>
+        <p class="center">Upper limit</p>
+        <input type="number" step="any" id="weight_upper" name="weight_upper"/>
+        <br>
+        <p class="center">Lower limit</p>
+        <input type="number" step="any" id="weight_upper" name="weight_upper"/>
+        <br>
+        <br>
+
+        <h3 class="center">Insulin (no. of doses)</p>
+        <p class="center">Required?</p>
+        <select id="insulin_required" name="insulin_required">
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+        </select>
+        <br>
+        <p class="center">Upper limit</p>
+        <input type="number" id="insulin_upper" name="insulin_upper"/>
+        <br>
+        <p class="center">Lower limit</p>
+        <input type="number" id="insulin_upper" name="insulin_upper"/>
+        <br>
+        <br>
+
+        <h3 class="center">Exercise (step count)</p>
+        <p class="center">Required?</p>
+        <select id="exercise_required" name="exercise_required">
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+        </select>
+        <br>
+        <p class="center">Upper limit</p>
+        <input type="number" id="exercise_upper" name="exercise_upper"/>
+        <br>
+        <p class="center">Lower limit</p>
+        <input type="number" id="exercise_upper" name="exercise_upper"/>
+        <br>
+        <br>
+
+        <input type="submit"/>
+    </form>
+</section>
