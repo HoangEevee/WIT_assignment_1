@@ -22,7 +22,7 @@ require('./models/db.js')
 
 // Set default page as the aboutWebsite page for now, until we make an actual home page
 app.get('/', function (req, res) {
-    res.render('home.hbs', { layout: 'main' })
+    res.render('whoAreYou.hbs', { layout: 'main' })
 })
 
 // connect to routers

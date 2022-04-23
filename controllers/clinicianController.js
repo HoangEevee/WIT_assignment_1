@@ -15,10 +15,19 @@ const getAllClinicianData = async (req, res, next) => {
     }   
 }
 
+const logInPage = async (req, res, next) => {
+    try {
+        return res.render('signInPage', { layout: 'clinician_main' })
+    } catch (err) {
+        return next(err)
+    }   
+}
+
 const getAllPatientData = async (req, res, next) => {
     try {
-        const patients = await Clinician.find({_id: my_clinician_id}, {patients})
-        return res.render('allPatients', {data: patients, layout: 'patient_main' })
+        //const patients = await Clinician.find({_id: my_clinician_id}, {patients})
+        //return res.render('allPatients', {data: patients, layout: 'patient_main' })
+        return res.render('clinicianDashboard', {layout: 'clinician_main' })
     } catch (err) {
         return next(err)
     }   
@@ -90,6 +99,7 @@ const newTimeseries = async (req, res, next) => {
 }
 
 module.exports = {
+    logInPage,
     getAllClinicianData,
     getAllPatientData,
     createAccountPage,

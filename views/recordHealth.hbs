@@ -1,23 +1,24 @@
-<h2 class="center">Record Health</h2>
+<section>
+    <div class="center">
+        <h2>RECORD HEALTH</h2>
+        <p>Record your health data in the following boxes</p>
+        <p class="center">
+        <script> document.write(new Date().toLocaleDateString()); </script>
+        </p>
+    </div>
+    <br> 
+</section>
 
 <section>
-    <p class="center">Record your health data in the following boxes</p>
-
-    <p class="center">
-    <script> document.write(new Date().toLocaleDateString()); </script>
-    </p>
     {{#if submitted}}
     <div>Your blood glucose has been recorded</div>
     {{/if}}
-
-    <div>
+    <div class="container">
         <form action="/patient/record-glucose" method="POST">
-            <p class="center">Blood Glucose (mmol/L)</p>
-            <input type="number" step="any" id="glucose" placeholder="mmol/L" name="blood_glucose"/>
-            <br>
-            <input type="text" id="comment_glucose" placeholder="Add comment" name="comment_glucose" />
-            <br>
-            <input type="submit" id="submitted" value=true />
+            <label for="uname"><h4>Blood Glucose (nmol/L)</h4></label>
+            <input type="number" step="any" id="glucose" placeholder="Add blood glucose" name="glucose" required>
+            <input type="text" id="comment_glucose" placeholder="Add comment" name="comment">
+            <button type="submit">Save</button>
         </form>
     </div>
 
