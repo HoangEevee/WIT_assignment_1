@@ -26,34 +26,27 @@
 
     <section>
         <p class="center">Please sign in with your personal details including your email and your password</p>
-
-        <div class="parentcontainer">
-
-            <form action="action_page.php" method="post">
-            
-                <div class="centre">
-                  <label for="uname"><h4>Username</h4></label>
-                  <input type="text" placeholder="Enter Username" name="uname" required>
-              
-                  <label for="psw"><h4>Password</h4></label>
-                  <input type="password" placeholder="Enter Password" name="psw" required>
-                  <div class="loginbutton">
-                    <button type="submit">Login</button>
-                  </div> 
-                  
-                  <label>
-                    <input type="checkbox" checked="checked" name="remember"> Remember me
-                  </label>
-                </div>
-              
-                <div class="container" style="background-color:#f1f1f1">
-                  <button type="button" class="cancelbtn">Cancel</button>
-                  <span class="psw">Forgot <a href="#">password?</a></span>
-                </div>
-              </form>
-            
-        
-        </div>
+        <form action="action_page.php" method="post">
+            <div class="imgcontainer">
+             
+            </div>
+          
+            <div class="container">
+              <label for="uname"><h4>Username</h4></label>
+              <input type="text" placeholder="Enter Username" name="uname" required>
+          
+              <label for="psw"><h4>Password</h4></label>
+              <input type="password" placeholder="Enter Password" name="psw" required>
+          
+              <button type="submit">Login</button>
+             
+            </div>
+          
+            <div class="container" style="background-color:#f1f1f1">
+              <span class="psw">Forgot <a href="#">password?</a></span>
+            </div>
+          </form>
+       
 
         
     </section>
