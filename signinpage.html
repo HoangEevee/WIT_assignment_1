@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="UTF-8">
     <link href="https://fonts.googleapis.com/css2?family=Poppins" rel="stylesheet">
-    <link rel="stylesheet" href=".\css\styles.css">
+    <link rel="stylesheet" href=".\public\css\styles.css">
     <title>Sign In</title>
 </head>
 
@@ -22,14 +22,40 @@
         <hr>
     </div>
                                                                                                                              
-    <h2 class="center">SIGN INTO YOUR ACCOUNT</h2> 
+    <h2 class="center">SIGN IN</h2> 
 
     <section>
+        <p class="center">Please sign in with your personal details including your email and your password</p>
+
+        <div class="parentcontainer">
+
+            <form action="action_page.php" method="post">
+                <div class="imgcontainer">
+                </div>
+              
+                <div class="container">
+                  <label for="uname"><b>Username</b></label>
+                  <input type="text" placeholder="Enter Username" name="uname" required>
+              
+                  <label for="psw"><b>Password</b></label>
+                  <input type="password" placeholder="Enter Password" name="psw" required>
+              
+                  <button type="submit">Login</button>
+                  <label>
+                    <input type="checkbox" checked="checked" name="remember"> Remember me
+                  </label>
+                </div>
+              
+                <div class="container" style="background-color:#f1f1f1">
+                  <button type="button" class="cancelbtn">Cancel</button>
+                  <span class="psw">Forgot <a href="#">password?</a></span>
+                </div>
+              </form>
+            
         
-        <div class="SIGNINcontainer">
-            
-            
         </div>
+
+        
     </section>
     <br> 
     <br> 
