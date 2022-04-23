@@ -1,6 +1,6 @@
 @font-face {
     font-family: "Malgun gothic";
-    src: url(..\font\malgun-gothic\malgun-gothic.ttf);
+    src: url(../font/malgun-gothic/malgun.ttf);
 }
 
 body {
@@ -27,8 +27,22 @@ nav {
     justify-content: space-between;
     align-items: center;
 }
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-left {
+    float: left;
+}
+
+.nav-right li{
+    float: right;
+}
 
 nav a {
+    display: block;
     font-weight: bold;
     text-align: center;
     text-decoration: none;
@@ -39,6 +53,10 @@ nav a {
 nav a.active {
     background-color: #0D2557;
     color: white;
+}
+
+nav a.active:hover {
+    background-color: #304e8d;
 }
 
 nav a.menubar:hover {
@@ -110,4 +128,8 @@ footer {
     overflow: hidden; 
     width: 100%;
     padding-top: 50.25%;
+}
+
+input {
+    width: 100%;
 }

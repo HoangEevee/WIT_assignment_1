@@ -1,0 +1,36 @@
+{
+  "name": "diabetes_at_home",
+  "version": "1.0.0",
+  "description": "INFO30005 assignment - a web app that helps people to manage their diabetes and allow their clinicians to monitor them",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "prettier": "prettier --single-quote --no-semi --tab-width 4 --write **/*.js *.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HoangEevee/WIT_assignment_1.git"
+  },
+  "authors": [
+    "Fiona Agustina",
+    "Nguyễn Quốc Hoàng",
+    "Vidhya Kudikyala",
+    "Eric Shi",
+    "Nguyễn Quỳnh Anh"
+  ],
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/HoangEevee/WIT_assignment_1/issues"
+  },
+  "homepage": "https://github.com/HoangEevee/WIT_assignment_1#readme",
+  "dependencies": {
+    "express": "^4.17.3",
+    "express-handlebars": "^6.0.5",
+    "mongoose": "^6.3.0"
+  },
+  "devDependencies": {
+    "dotenv": "^16.0.0",
+    "prettier": "^2.6.2"
+  }
+}
