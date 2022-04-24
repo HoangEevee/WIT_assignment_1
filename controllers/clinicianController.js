@@ -6,18 +6,13 @@ const Patient = require('../models/patient')
 const my_clinician_id = mongoose.Types.ObjectId("62628af9ef4acecb2d31a9e6")
 
 // prolly more suited for clinician but eh testing
-/*const getAllClinicianData = async (req, res, next) => {
+const getAllClinicianData = async (req, res, next) => {
     try {
         const clinicians = await Clinician.find().lean()
         return res.render('allPatients', {data: clinicians, layout: 'clinician_main' })
     } catch (err) {
         return next(err)
     }   
-}*/
-
-const getAllClinicianData = (req, res) => {
-    res.render("allPatients", {layout: "main", data: clinicianData})
-
 }
 
 const logInPage = async (req, res, next) => {
@@ -28,11 +23,21 @@ const logInPage = async (req, res, next) => {
     }   
 }
 
+//all username and password combination will lead to same clinician dashboard 
+const logIn = async (req, res, next) => {
+    try {
+        res.redirect("./dashboard")
+    } catch (err) {
+        return next(err)
+    }
+}
+
 const getAllPatientData = async (req, res, next) => {
     try {
-        //const patients = await Clinician.find({_id: my_clinician_id}, {patients})
-        //return res.render('allPatients', {data: patients, layout: 'patient_main' })
-        return res.render('clinicianDashboard', {layout: 'clinician_main' })
+        const patients = await Clinician.find({_id: my_clinician_id}, "patients")
+        return res.render('allPatients', {data: patients, layout: 'patient_main' })
+        //return res.render('clinicianDashboard', {layout: 'clinician_main' })
+        
     } catch (err) {
         return next(err)
     }   
@@ -105,6 +110,7 @@ const newTimeseries = async (req, res, next) => {
 
 module.exports = {
     logInPage,
+    logIn,
     getAllClinicianData,
     getAllPatientData,
     createAccountPage,

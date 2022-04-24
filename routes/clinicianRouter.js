@@ -7,6 +7,9 @@ const clinicianController = require('../controllers/clinicianController.js')
 
 // localhost:8080/clinician*** where *** is the following
 clinicianRouter.get('/', clinicianController.logInPage)
+clinicianRouter.post('/', clinicianController.logIn)
+
+
 clinicianRouter.get('/dashboard', clinicianController.getAllPatientData)
 
 clinicianRouter.get('/create-new-account', clinicianController.createAccountPage)
