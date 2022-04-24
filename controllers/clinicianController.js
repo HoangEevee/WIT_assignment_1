@@ -6,13 +6,18 @@ const Patient = require('../models/patient')
 const my_clinician_id = mongoose.Types.ObjectId("62628af9ef4acecb2d31a9e6")
 
 // prolly more suited for clinician but eh testing
-const getAllClinicianData = async (req, res, next) => {
+/*const getAllClinicianData = async (req, res, next) => {
     try {
         const clinicians = await Clinician.find().lean()
         return res.render('allPatients', {data: clinicians, layout: 'clinician_main' })
     } catch (err) {
         return next(err)
     }   
+}*/
+
+const getAllClinicianData = (req, res) => {
+    res.render("allPatients", {layout: "main", data: clinicianData})
+
 }
 
 const logInPage = async (req, res, next) => {
