@@ -26,7 +26,8 @@ const logInPage = async (req, res, next) => {
 //all username and password combination will lead to same clinician dashboard 
 const logIn = async (req, res, next) => {
     try {
-        res.redirect("./dashboard")
+        //res.redirect("./clinician/dashboard")
+        res.redirect(`./clinician/:${req.body.uname}`)//testing id out
     } catch (err) {
         return next(err)
     }
@@ -34,7 +35,9 @@ const logIn = async (req, res, next) => {
 
 const getAllPatientData = async (req, res, next) => {
     try {
-        const patients = await Clinician.find({_id: my_clinician_id}, "patients")
+        const patients = await Clinician.findById(my_clinician_id, "patients").lean()
+        //const patients = await Clinician.find({_id: my_clinician_id}, "patients")
+        //const patients = await Clinician.find({clinician_name: "Chris"}, "patients")
         return res.render('allPatients', {data: patients, layout: 'patient_main' })
         //return res.render('clinicianDashboard', {layout: 'clinician_main' })
         
