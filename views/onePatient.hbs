@@ -15,7 +15,8 @@
             {{#each data.timestamp}}
             <tr>
                 <td data label = "Time">{{this.time}}</td>
-                <td data label = "Blood Glucose (mmol/L)">{{this.glucose}}</td>
+                <!--This red highlight for out of range does not work yet-->
+                <td data label = "Blood Glucose (mmol/L)"{{#if (outOfThreshold this.glucose data.glucose.lower data.glucose.higher)}} class="red" {{/if}}>{{this.glucose}}</td> 
             </tr>
             {{/each}}
         </tbody>
