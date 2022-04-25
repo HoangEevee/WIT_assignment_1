@@ -5,8 +5,13 @@ const clinicianRouter = express.Router()
 // connect to controller
 const clinicianController = require('../controllers/clinicianController.js')
 
-// nothing here yet
-clinicianRouter.get('/', clinicianController.getAllClinicianData)
+// localhost:8080/clinician*** where *** is the following
+clinicianRouter.get('/', clinicianController.logInPage)
+
+clinicianRouter.post('/', clinicianController.getAllPatientData) //only get dashboard of clinician Chris
+
+clinicianRouter.get('/:id', clinicianController.getOnePatientData)
+//clinicianRouter.get('/dashboard', clinicianController.getAllPatientData)
 
 clinicianRouter.get('/create-new-account', clinicianController.createAccountPage)
 clinicianRouter.post('/create-clinician', clinicianController.createClinician)

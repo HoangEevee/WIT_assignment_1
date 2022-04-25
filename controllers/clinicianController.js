@@ -1,9 +1,7 @@
 const mongoose = require('mongoose')
 const Clinician = require('../models/clinician')
 const Patient = require('../models/patient')
-
-// Chris
-const my_clinician_id = mongoose.Types.ObjectId("62628af9ef4acecb2d31a9e6")
+const PatientClinician = require("../models/patient-clinicians-test") //This is the database I'm (Hoang) using
 
 // prolly more suited for clinician but eh testing
 const getAllClinicianData = async (req, res, next) => {
@@ -15,10 +13,30 @@ const getAllClinicianData = async (req, res, next) => {
     }   
 }
 
+const logInPage = async (req, res, next) => {
+    try {
+        return res.render('signInPageClinician', { layout: 'clinician_main' })
+    } catch (err) {
+        return next(err)
+    }   
+}
+
+
 const getAllPatientData = async (req, res, next) => {
     try {
-        const patients = await Clinician.find({_id: my_clinician_id}, {patients})
-        return res.render('allPatients', {data: patients, layout: 'patient_main' })
+        const patients = await PatientClinician.find({clinician: "Chris"}).lean()
+        return res.render('allPatients', {data: patients, layout: 'clinician_main'})
+        
+    } catch (err) {
+        return next(err)
+    }   
+}
+
+const getOnePatientData = async (req, res, next) => {
+    try {
+        const patients = await PatientClinician.findById(req.params.id).lean()
+        return res.render('onePatient', {data: patients, layout: 'clinician_main'})
+        
     } catch (err) {
         return next(err)
     }   
@@ -90,8 +108,10 @@ const newTimeseries = async (req, res, next) => {
 }
 
 module.exports = {
+    logInPage,
     getAllClinicianData,
     getAllPatientData,
+    getOnePatientData,
     createAccountPage,
     createPatientPage,
     setTimeseriesPage,

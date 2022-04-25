@@ -33,6 +33,23 @@ const getDataByPatient = async (req, res, next) => {
     }
 }
 
+const logInPage = async (req, res, next) => {
+    try {
+        return res.render('signInPage', { layout: 'patient_main' })
+    } catch (err) {
+        return next(err)
+    }   
+}
+
+const homePage = async (req, res, next) => {
+    try {
+        return res.render('patientHome', { layout: 'patient_main' })
+    } catch (err) {
+        return next(err)
+    }   
+}
+
+
 const getRecordDataForm = async (req, res, next) => {
     try {
         //const patient = await Patient.findById(mongoose.Types.ObjectId('625f871de48eff0202cf9279')).lean()
@@ -94,6 +111,8 @@ const insertGlucose = async (req, res, next) => {
 module.exports = {
     getAllPatientData,
     getDataByPatient,
+    logInPage,
+    homePage,
     getRecordDataForm,
     insertGlucose,
 }

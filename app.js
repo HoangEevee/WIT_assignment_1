@@ -12,6 +12,9 @@ app.engine(
     'hbs',
     exphbs.engine({
         extname: 'hbs',
+        helpers: {
+            outOfThreshold: (value, lower, higher) => {return value < lower || value > higher}
+        }
     })
 )
 app.set('view engine', 'hbs')
@@ -19,10 +22,15 @@ app.set('view engine', 'hbs')
 // connect to database
 require('./models/db.js')
 
+//middleware to see all request in terminal
+app.use((req,res, next) => {
+    console.log("message arrived: " + req.method + " " + req.path)
+    next();
+})
 
 // Set default page as the aboutWebsite page for now, until we make an actual home page
 app.get('/', function (req, res) {
-    res.render('home.hbs', { layout: 'main' })
+    res.render('whoAreYou.hbs', { layout: 'main' })
 })
 
 // connect to routers
