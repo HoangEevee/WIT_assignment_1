@@ -8,6 +8,7 @@ const glucoseSchema = new mongoose.Schema({
 const timestampSchema = new mongoose.Schema({
     time: Date,
     glucose: Number,
+    message: String
 })
 const schema = new mongoose.Schema({ 
     patient: String,
