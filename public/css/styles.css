@@ -251,9 +251,9 @@ form {
     color: #0D2557;
     text-align: center;
     height: 30px;
+}
 
-
-
-
+.red {
+    color: red;
 }
 

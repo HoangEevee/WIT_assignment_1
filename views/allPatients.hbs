@@ -15,7 +15,7 @@
                 <tr>
                     <td data label = "Patient Name">{{this.patient}}</td>
                     <td data label = "Last Updated">{{this.timestamp.0.time}}</td>
-                    <td data label = "Blood Glucose (mmol/L)">{{this.timestamp.0.glucose}}</td>
+                    <td data label = "Blood Glucose (mmol/L)"{{#if (outOfThreshold this.timestamp.0.glucose this.glucose.lower this.glucose.higher)}}class="red"{{/if}}>{{this.timestamp.0.glucose}}</td>
                 </tr>
                 {{/each}}
             </tbody>

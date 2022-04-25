@@ -12,6 +12,9 @@ app.engine(
     'hbs',
     exphbs.engine({
         extname: 'hbs',
+        helpers: {
+            outOfThreshold: (value, lower, higher) => {return value < lower || value > higher}
+        }
     })
 )
 app.set('view engine', 'hbs')
