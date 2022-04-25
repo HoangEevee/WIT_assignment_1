@@ -1,0 +1,23 @@
+<h2 class="center">{{data.patient}}'s Health Record </h2>
+
+<h2>Glucose Record</h2>
+<p>Lower Threshold: {{data.glucose.lower}}</p>
+<p>Upper Threshold: {{data.glucose.upper}}</p>
+<div class="tablecontainer">
+    <table class="table">
+        <thead> 
+            <tr>
+                <th>Time</th>
+                <th>Blood Glucose (mmol/L)</th> 
+            </tr>
+        </thead>
+        <tbody>
+            {{#each data.timestamp}}
+            <tr>
+                <td data label = "Time">{{this.time}}</td>
+                <td data label = "Blood Glucose (mmol/L)">{{this.glucose}}</td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>    

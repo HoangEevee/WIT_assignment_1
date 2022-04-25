@@ -21,17 +21,10 @@ const logInPage = async (req, res, next) => {
     }   
 }
 
-const logIn = async (req, res, next) => {
-    try {
-        res.redirect(`./clinician/${req.body.uname}`)
-    } catch (err) {
-        return next(err)
-    }
-}
 
 const getAllPatientData = async (req, res, next) => {
     try {
-        const patients = await PatientClinician.find({clinician: req.params.id}).lean()
+        const patients = await PatientClinician.find({clinician: "Chris"}).lean()
         return res.render('allPatients', {data: patients, layout: 'clinician_main'})
         
     } catch (err) {
@@ -106,7 +99,6 @@ const newTimeseries = async (req, res, next) => {
 
 module.exports = {
     logInPage,
-    logIn,
     getAllClinicianData,
     getAllPatientData,
     createAccountPage,

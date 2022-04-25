@@ -8,9 +8,8 @@ const clinicianController = require('../controllers/clinicianController.js')
 // localhost:8080/clinician*** where *** is the following
 clinicianRouter.get('/', clinicianController.logInPage)
 
-clinicianRouter.post('/', clinicianController.logIn)
+clinicianRouter.post('/', clinicianController.getAllPatientData) //only get dashboard of clinician Chris
 
-clinicianRouter.get('/:id', clinicianController.getAllPatientData) //testing id out
 
 //clinicianRouter.get('/dashboard', clinicianController.getAllPatientData)
 
