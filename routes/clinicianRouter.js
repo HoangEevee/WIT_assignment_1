@@ -10,7 +10,7 @@ clinicianRouter.get('/', clinicianController.logInPage)
 
 clinicianRouter.post('/', clinicianController.getAllPatientData) //only get dashboard of clinician Chris
 
-
+clinicianRouter.get('/:id', clinicianController.getOnePatientData)
 //clinicianRouter.get('/dashboard', clinicianController.getAllPatientData)
 
 clinicianRouter.get('/create-new-account', clinicianController.createAccountPage)

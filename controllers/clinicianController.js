@@ -32,6 +32,16 @@ const getAllPatientData = async (req, res, next) => {
     }   
 }
 
+const getOnePatientData = async (req, res, next) => {
+    try {
+        const patients = await PatientClinician.findById(req.params.id).lean()
+        return res.render('onePatient', {data: patients, layout: 'clinician_main'})
+        
+    } catch (err) {
+        return next(err)
+    }   
+}
+
 const createAccountPage = async (req, res, next) => {
     try {
         return res.render('createClinicianAccount', {layout: 'clinician_main' })
@@ -101,6 +111,7 @@ module.exports = {
     logInPage,
     getAllClinicianData,
     getAllPatientData,
+    getOnePatientData,
     createAccountPage,
     createPatientPage,
     setTimeseriesPage,

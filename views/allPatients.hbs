@@ -12,7 +12,7 @@
         <tbody>
             {{#each data}}
             <tr>
-                <td data label = "Patient Name"><a href="./{{this._id}}">{{this.patient}}</a></td>
+                <td data label = "Patient Name"><a href="./clinician/{{this._id}}">{{this.patient}}</a></td>
                 <td data label = "Last Updated">{{this.timestamp.0.time}}</td>
                 <td data label = "Blood Glucose (mmol/L)"{{#if (outOfThreshold this.timestamp.0.glucose this.glucose.lower this.glucose.higher)}}class="red"{{/if}}>{{this.timestamp.0.glucose}}</td>
             </tr>
