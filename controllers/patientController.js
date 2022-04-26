@@ -1,10 +1,11 @@
 const mongoose = require('mongoose')
 const Patient = require('../models/patient')
 const Clinician = require('../models/clinician')
+const PatientClinician = require("../models/patient-clinicians-test") //This is the database I'm (Hoang) using
 
 // Pat
 const my_patient_id = mongoose.Types.ObjectId("6262b744254dae87ed375139")
-
+const new_my_patient_id = mongoose.Types.ObjectId("62654b66401a470ae8f67806")
 // prolly more suited for clinician but eh testing
 const getAllPatientData = async (req, res, next) => {
     try {
@@ -60,9 +61,9 @@ const homePage = async (req, res, next) => {
 const getRecordDataForm = async (req, res, next) => {
     try {
         //const patient = await Patient.findById(mongoose.Types.ObjectId('625f871de48eff0202cf9279')).lean()
-        console.log(req.params)
+        // console.log(req.params)
         //console.log(document.getElementById('submitted'))
-        return res.render('recordHealth', { submitted: false, layout: 'patient_main' })
+        return res.render('recordHealth', {/* submitted: false,*/ layout: 'patient_main' })
     } catch (err) {
         return next(err)
     }
@@ -70,6 +71,17 @@ const getRecordDataForm = async (req, res, next) => {
 
 const insertGlucose = async (req, res, next) => {
     try {
+        const today = new Date()
+        const glucoseTimestamp = mongoose.Types.ObjectId()
+        await PatientClinician.updateOne({
+            _id: new_my_patient_id
+        }, {
+            $push: {
+                timestamp: {time: today, glucose: req.body.glucose, message: req.body.comment}
+            }
+        })
+
+        /*
         const today = new Date().toLocaleDateString()
         console.log(today)
         //console.log(Patient.findOne({_id: patient_id}, {health_data: {$elemMatch:{date: today}}}))
@@ -88,7 +100,10 @@ const insertGlucose = async (req, res, next) => {
         if (req.body.comment_glucose) {
             await Patient.updateOne({_id: my_patient_id, health_data: {$elemMatch:{date: today}}},  { $set: { "health_data.$.glucose.comment": req.body.comment}},)
             console.log("in")
-        }
+        }*/
+
+
+
         /*if (Patient.find({_id: my_patient_id, health_data: {$elemMatch:{date: today}}}, {})) {
             await Patient.updateOne({_id: my_patient_id}, {$push: {health_data : {date: today}}})
         }
