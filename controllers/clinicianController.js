@@ -33,6 +33,10 @@ const logIn = async (req, res, next) => {
 const getAllPatientData = async (req, res, next) => {
     try {
         const patients = await PatientClinician.find({clinician: "Chris"}).lean()
+        //show time as DD/MM/YYYY, HH:MM:SS
+        patients.forEach((element) => {
+            element.timestamp[element.timestamp.length-1].time = element.timestamp[element.timestamp.length-1].time.toLocaleString()
+        })
         return res.render('allPatients', {data: patients, layout: 'clinician_main'})
         
     } catch (err) {
@@ -43,6 +47,10 @@ const getAllPatientData = async (req, res, next) => {
 const getOnePatientData = async (req, res, next) => {
     try {
         const patient = await PatientClinician.findById(req.params.id).lean()
+        //show time as DD/MM/YYYY, HH:MM:SS
+        patient.timestamp.forEach((element) => {
+            element.time = element.time.toLocaleString()
+        })
         return res.render('onePatient', {data: patient, layout: 'clinician_main'})
         
     } catch (err) {

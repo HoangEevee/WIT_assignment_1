@@ -8,7 +8,7 @@
         <button type="submit">Update</button>        
     </div>
 </form> 
-<p>Upper Threshold: {{data.glucose.higher}}</p>
+<p>Upper Threshold: {{data.glucose.upper}}</p>
 <form action="./{{data._id}}" method="POST">    
     <div class="container">
         <input type="text" placeholder="Update upper threshold" name="updateUpperThreshold" required>
@@ -25,13 +25,14 @@
             </tr>
         </thead>
         <tbody>
-            {{#each data.timestamp}}
+            {{#with data}}
+            {{#each timestamp}}
             <tr>
                 <td data label = "Time">{{this.time}}</td>
-                <!--This red highlight for out of range does not work yet-->
-                <td data label = "Blood Glucose (mmol/L)"{{#if (outOfThreshold this.glucose data.glucose.lower data.glucose.higher)}} class="red" {{/if}}>{{this.glucose}}</td> 
+                <td data label = "Blood Glucose (mmol/L)"{{#if (outOfThreshold this.glucose ../glucose.lower ../glucose.upper)}} class="red" {{/if}}>{{this.glucose}}</td> 
             </tr>
             {{/each}}
+            {{/with}}
         </tbody>
     </table>
 </div>    
