@@ -12,7 +12,7 @@
         <tbody>
             {{#each data}}
             <tr>
-                <td data label = "Patient Name"><a href="./clinician/{{this._id}}">{{this.patient}}</a></td>
+                <td data label = "Patient Name"><a href="./{{this._id}}">{{this.patient}}</a></td>
                 {{#each this.timestamp}}
                 {{#if @last}}
                 <td data label = "Last Updated">{{this.time}}</td>

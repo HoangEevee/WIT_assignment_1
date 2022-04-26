@@ -1,3 +1,4 @@
+const res = require('express/lib/response')
 const mongoose = require('mongoose')
 const Clinician = require('../models/clinician')
 const Patient = require('../models/patient')
@@ -21,7 +22,13 @@ const logInPage = async (req, res, next) => {
     }   
 }
 
-
+const logIn = async (req, res, next) => {
+    try {
+        return res.redirect("./clinician/dashboard")
+    } catch (err) {
+        return next(err)
+    }
+}
 const getAllPatientData = async (req, res, next) => {
     try {
         const patients = await PatientClinician.find({clinician: "Chris"}).lean()
@@ -42,6 +49,16 @@ const getOnePatientData = async (req, res, next) => {
     }   
 }
 
+const updateName = async (req, res, next) => {
+    try {
+        PatientClinician.updateOne({_id: req.params.id}, {patient: req.body.updateLower})
+        return res.redirect("./dashboard")
+    } catch (err) {
+        return next(err)
+    }
+}
+
+//these stuffs below are not in use right now
 const createAccountPage = async (req, res, next) => {
     try {
         return res.render('createClinicianAccount', {layout: 'clinician_main' })
@@ -109,9 +126,13 @@ const newTimeseries = async (req, res, next) => {
 
 module.exports = {
     logInPage,
+    logIn,
     getAllClinicianData,
     getAllPatientData,
     getOnePatientData,
+    updateName,
+
+    //these stuffs below are not in use right now
     createAccountPage,
     createPatientPage,
     setTimeseriesPage,

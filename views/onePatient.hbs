@@ -3,6 +3,13 @@
 <h2>Glucose Record</h2>
 <p>Lower Threshold: {{data.glucose.lower}}</p>
 <p>Upper Threshold: {{data.glucose.higher}}</p>
+<form action="./{{data._id}}" method="POST">    
+    <div class="container">
+        <input type="text" placeholder="Change name" name="updateName" required>
+        <button type="submit">Update</button>        
+    </div>
+</form> 
+
 <div class="tablecontainer">
     <table class="table">
         <thead> 
