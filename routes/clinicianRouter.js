@@ -11,7 +11,7 @@ clinicianRouter.get('/', clinicianController.logInPage)
 clinicianRouter.post('/', clinicianController.logIn) //only get dashboard of clinician Chris
 clinicianRouter.get("/dashboard", clinicianController.getAllPatientData)
 clinicianRouter.get('/:id', clinicianController.getOnePatientData)
-clinicianRouter.post('/:id', clinicianController.updateName)
+clinicianRouter.post('/:id', clinicianController.updatePatient)
 
 //these stuffs below are not in use right now
 clinicianRouter.get('/create-new-account', clinicianController.createAccountPage)

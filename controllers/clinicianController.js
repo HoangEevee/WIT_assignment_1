@@ -49,9 +49,26 @@ const getOnePatientData = async (req, res, next) => {
     }   
 }
 
-const updateName = async (req, res, next) => {
+const updatePatient = async (req, res, next) => {
     try {
-        PatientClinician.updateOne({_id: req.params.id}, {patient: req.body.updateLower})
+        if (req.body.updateLowerThreshold) {
+            await PatientClinician.updateOne({
+                _id: req.params.id
+            }, {
+                $set: {
+                  "glucose.lower": req.body.updateLowerThreshold
+                }
+            })
+        }
+        else if (req.body.updateUpperThreshold) {
+            await PatientClinician.updateOne({
+                _id: req.params.id
+            }, {
+                $set: {
+                  "glucose.higher": req.body.updateUpperThreshold
+                }
+            })
+        }
         return res.redirect("./dashboard")
     } catch (err) {
         return next(err)
@@ -130,7 +147,7 @@ module.exports = {
     getAllClinicianData,
     getAllPatientData,
     getOnePatientData,
-    updateName,
+    updatePatient,
 
     //these stuffs below are not in use right now
     createAccountPage,
