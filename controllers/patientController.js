@@ -68,6 +68,11 @@ const homePage = async (req, res, next) => {
 const getPastHealth = async(req, res, next) => {
     try {
         const patient = await PatientClinician.findById(new_my_patient_id).lean()
+        
+        //show time as DD/MM/YYYY, HH:MM:SS
+        patient.timestamp.forEach((element) => {
+            element.time = element.time.toLocaleString()
+        })
         return res.render('patientPastHealth', {data: patient, layout: 'patient_main'})
     } catch(err) {
         return next(err)
