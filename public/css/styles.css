@@ -258,3 +258,7 @@ form {
     color: white !important;
 }
 
+/* Record Health */
+.submitted {
+    color: rgb(30, 255, 0);
+}

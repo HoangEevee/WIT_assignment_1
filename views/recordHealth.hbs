@@ -14,12 +14,22 @@
     {{#if submitted}}
     <div>Your blood glucose has been recorded</div>
     {{/if}}-->
+    
     <div class="container">
         <form action="/patient/record-glucose" method="POST">
             <label for="uname"><h4>Blood Glucose (nmol/L)</h4></label>
             <input type="number" step="any" id="glucose" placeholder="Add blood glucose" name="glucose" required>
             <input type="text" id="comment_glucose" placeholder="Add comment" name="comment">
+            {{#if submitted}}
+            <div class="parentcontainer">
+                <small class="submitted">Submitted!</small>
+                <small>Last updated at {{time}}</small>
+            </div>
+            {{/if}}
+            {{#unless submitted}}
             <button type="submit">Save</button>
+            {{/unless}}
+            
         </form>
     </div>
 
