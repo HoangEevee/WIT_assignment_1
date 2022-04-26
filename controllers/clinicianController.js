@@ -65,7 +65,7 @@ const updatePatient = async (req, res, next) => {
                 _id: req.params.id
             }, {
                 $set: {
-                  "glucose.higher": req.body.updateUpperThreshold
+                  "glucose.upper": req.body.updateUpperThreshold
                 }
             })
         }

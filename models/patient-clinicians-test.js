@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 
 const glucoseSchema = new mongoose.Schema({
     lower: Number,
-    higher: Number,
+    upper: Number,
 })
 
 const timestampSchema = new mongoose.Schema({
