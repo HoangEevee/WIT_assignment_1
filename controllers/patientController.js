@@ -40,6 +40,13 @@ const logInPage = async (req, res, next) => {
         return next(err)
     }   
 }
+const logIn = async (req, res, next) => {
+    try {
+        return res.redirect("./patient/home")
+    } catch (err) {
+        return next(err)
+    }
+}
 
 const homePage = async (req, res, next) => {
     try {
@@ -112,6 +119,7 @@ module.exports = {
     getAllPatientData,
     getDataByPatient,
     logInPage,
+    logIn,
     homePage,
     getRecordDataForm,
     insertGlucose,

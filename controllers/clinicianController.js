@@ -29,6 +29,7 @@ const logIn = async (req, res, next) => {
         return next(err)
     }
 }
+
 const getAllPatientData = async (req, res, next) => {
     try {
         const patients = await PatientClinician.find({clinician: "Chris"}).lean()
