@@ -16,7 +16,15 @@ const getAllPatientData = async (req, res, next) => {
     }   
 }
 
-const getDataByPatient = async (req, res, next) => {
+const getDataByPatient = async (req, res, next) => { 
+    try{
+        const patient = await PatientClinician.findById(new_my_patient_id).lean()
+        return res.render('patientData', {oneItem: patient, layout: 'patient_main'})
+    } catch (err) {
+        return next(err)
+    }
+
+    /* (Hoang) Just switching to different database
     // connect to database
     //req = db.patients.findOne({_id: mongoose.Types.ObjectId('625f871de48eff0202cf9279')});
     try {
@@ -31,7 +39,7 @@ const getDataByPatient = async (req, res, next) => {
         return res.render('patientData', { oneItem: patient, layout: 'patient_main' })
     } catch (err) {
         return next(err)
-    }
+    }*/
 }
 
 const logInPage = async (req, res, next) => {
@@ -57,6 +65,14 @@ const homePage = async (req, res, next) => {
     }   
 }
 
+const getPastHealth = async(req, res, next) => {
+    try {
+        const patient = await PatientClinician.findById(new_my_patient_id).lean()
+        return res.render('patientPastHealth', {data: patient, layout: 'patient_main'})
+    } catch(err) {
+        return next(err)
+    }
+}
 
 const getRecordDataForm = async (req, res, next) => {
     try {
@@ -136,6 +152,7 @@ module.exports = {
     logInPage,
     logIn,
     homePage,
+    getPastHealth,
     getRecordDataForm,
     insertGlucose,
 }

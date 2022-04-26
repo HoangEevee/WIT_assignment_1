@@ -42,8 +42,8 @@ const getAllPatientData = async (req, res, next) => {
 
 const getOnePatientData = async (req, res, next) => {
     try {
-        const patients = await PatientClinician.findById(req.params.id).lean()
-        return res.render('onePatient', {data: patients, layout: 'clinician_main'})
+        const patient = await PatientClinician.findById(req.params.id).lean()
+        return res.render('onePatient', {data: patient, layout: 'clinician_main'})
         
     } catch (err) {
         return next(err)

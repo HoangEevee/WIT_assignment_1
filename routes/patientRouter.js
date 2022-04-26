@@ -10,6 +10,7 @@ patientRouter.get('/', patientController.logInPage)
 patientRouter.post('/', patientController.logIn)
 
 patientRouter.get('/home', patientController.homePage)
+patientRouter.get('/past-health', patientController.getPastHealth)
 patientRouter.get('/user', patientController.getDataByPatient)
 patientRouter.get('/record-health-form', patientController.getRecordDataForm)
 patientRouter.post('/record-glucose', patientController.insertGlucose)
