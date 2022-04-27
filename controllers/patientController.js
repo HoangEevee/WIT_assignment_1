@@ -81,10 +81,39 @@ const getPastHealth = async(req, res, next) => {
 
 const getRecordDataForm = async (req, res, next) => {
     try {
-        //const patient = await Patient.findById(mongoose.Types.ObjectId('625f871de48eff0202cf9279')).lean()
-        // console.log(req.params)
-        //console.log(document.getElementById('submitted'))
-        return res.render('recordHealth', {/* submitted: false,*/ layout: 'patient_main' })
+        // It's called "today" but it will be modified to not be that way
+        const today = new Date()
+        
+        // Check Melb time to UTC
+        if (today.getUTCHours < today.getTimezoneOffset()) {
+            today.setDate(today.getDate()+1)
+        }
+
+        const today_start = new Date(today.setHours(0,0,0,0))
+        const tmr_start = new Date(today.setDate(today.getDate()+1))
+
+        var submit = false
+        var date_result = await PatientClinician.findOne({
+            _id: new_my_patient_id,
+            timestamp: {
+                $elemMatch: {
+                    time: {
+                        $gte: today_start,
+                        $lt: tmr_start,
+                    }
+                }
+            }
+        },
+        {
+            'timestamp.$' : 1
+        }).lean()
+
+        var time_result = date_result.timestamp[0].time
+
+        if (date_result) {
+            submit = true
+        }
+        return res.render('recordHealth', { submitted: submit, time: time_result, layout: 'patient_main' })
     } catch (err) {
         return next(err)
     }
