@@ -3,6 +3,7 @@
     src: url(../font/malgun-gothic/malgun.ttf);
 }
 
+/*-----------*/
 body {
     color: #0D2557;
     font-family: "Malgun gothic", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -11,6 +12,31 @@ body {
     font-size: 1.2rem;
     text-align: justify;
 }
+
+main {
+    overflow-y: auto;
+}
+
+.menu-side {
+    display: none;
+    flex: 1 0 20%;
+}
+
+
+.menu-side ul {
+    list-style-type: none;
+}
+
+.menu-side a {
+    text-decoration:none;
+}
+
+.menu-main-wrapper {
+    display: flex;
+    height: 100%;
+}
+
+/*-----------*/
 
 nav, .logo, h1, h2, h3, h4, h5, h6 {
     font-family: Poppins;

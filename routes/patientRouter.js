@@ -7,7 +7,7 @@ const patientController = require('../controllers/patientController.js')
 
 // localhost:8080/patient*** where *** is the following
 patientRouter.get('/', patientController.logInPage)
-patientRouter.post('/', patientController.logIn)
+patientRouter.post('/loggedin', patientController.logIn)
 
 patientRouter.get('/home', patientController.homePage)
 patientRouter.get('/past-health', patientController.getPastHealth)
