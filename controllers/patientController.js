@@ -108,12 +108,11 @@ const getRecordDataForm = async (req, res, next) => {
             'timestamp.$' : 1
         }).lean()
 
-        var time_result = date_result.timestamp[0].time
-
+        var patient_data = await PatientClinician.findOne({_id: new_my_patient_id}).lean()
         if (date_result) {
             submit = true
         }
-        return res.render('recordHealth', { submitted: submit, time: time_result, layout: 'patient_main' })
+        return res.render('recordHealth', { submitted: submit, patient: patient_data, layout: 'patient_main' })
     } catch (err) {
         return next(err)
     }

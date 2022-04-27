@@ -20,14 +20,22 @@
             <label for="uname"><h4>Blood Glucose (nmol/L)</h4></label>
             <input type="number" step="any" id="glucose" placeholder="Add blood glucose" name="glucose" required>
             <input type="text" id="comment_glucose" placeholder="Add comment" name="comment">
-            {{#if submitted}}
+            
             <div class="parentcontainer">
-                <small class="submitted">Submitted!</small>
-                <small>Last updated at {{time}}</small>
+                {{#if submitted}}
+                    <small class="submitted">Submitted!</small>
+                {{else}}
+                    <small>  </small>
+                {{/if}}
+                {{#each patient.timestamp}}
+                {{#if @last}}
+                    <small>Last updated at {{this.time}}</small>
+                {{/if}}
+                {{/each}}
             </div>
-            {{/if}}
+            
             {{#unless submitted}}
-            <button type="submit">Save</button>
+                <button type="submit">Save</button>
             {{/unless}}
             
         </form>
