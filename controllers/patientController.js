@@ -51,7 +51,7 @@ const logInPage = async (req, res, next) => {
 }
 const logIn = async (req, res, next) => {
     try {
-        return res.redirect("./patient/home")
+        return res.redirect("/patient/home")
     } catch (err) {
         return next(err)
     }
