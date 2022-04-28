@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 const Patient = require('../models/patient')
 const Clinician = require('../models/clinician')
 const PatientClinician = require("../models/patient-clinicians-test") //This is the database I'm (Hoang) using
+const { off } = require('../models/patient')
 
 // Pat
 const my_patient_id = mongoose.Types.ObjectId("6262b744254dae87ed375139")
@@ -93,9 +94,10 @@ const getRecordDataForm = async (req, res, next) => {
         const tmr_start = new Date(today.setDate(today.getDate()+1))
 
         var submit = false
+        const attributes = ['glucose', 'weight', 'insulin', 'exercise']
         var date_result = await PatientClinician.findOne({
             _id: new_my_patient_id,
-            timestamp: {
+            glucoseTimestamp: {
                 $elemMatch: {
                     time: {
                         $gte: today_start,
@@ -105,8 +107,75 @@ const getRecordDataForm = async (req, res, next) => {
             }
         },
         {
-            'timestamp.$' : 1
+            'glucoseTimestamp.$' : 1
         }).lean()
+
+        // my attempt at making the submit ticks appear individually
+        // for now we're just using glucose for d2
+        /*
+        var date_result = {}
+        date_result[0] = await PatientClinician.findOne({
+            _id: new_my_patient_id,
+            glucoseTimestamp: {
+                $elemMatch: {
+                    time: {
+                        $gte: today_start,
+                        $lt: tmr_start,
+                    }
+                }
+            }
+        },
+        {
+            'glucoseTimestamp.$' : 1
+        }).lean()
+        date_result[1] = await PatientClinician.findOne({
+            _id: new_my_patient_id,
+            weightTimestamp: {
+                $elemMatch: {
+                    time: {
+                        $gte: today_start,
+                        $lt: tmr_start,
+                    }
+                }
+            }
+        },
+        {
+            'weightTimestamp.$' : 1
+        }).lean()
+        date_result[2] = await PatientClinician.findOne({
+            _id: new_my_patient_id,
+            insulinTimestamp: {
+                $elemMatch: {
+                    time: {
+                        $gte: today_start,
+                        $lt: tmr_start,
+                    }
+                }
+            }
+        },
+        {
+            'insulinTimestamp.$' : 1
+        }).lean()
+        date_result[3] = await PatientClinician.findOne({
+            _id: new_my_patient_id,
+            exerciseTimestamp: {
+                $elemMatch: {
+                    time: {
+                        $gte: today_start,
+                        $lt: tmr_start,
+                    }
+                }
+            }
+        },
+        {
+            'exerciseTimestamp.$' : 1
+        }).lean()
+
+        for (result of date_result) {
+
+        }
+
+        */
 
         var patient_data = await PatientClinician.findOne({_id: new_my_patient_id}).lean()
         if (date_result) {
@@ -126,53 +195,60 @@ const insertGlucose = async (req, res, next) => {
             _id: new_my_patient_id
         }, {
             $push: {
-                timestamp: {time: today, glucose: req.body.glucose, message: req.body.comment}
+                glucoseTimestamp: {time: today, value: req.body.glucose, message: req.body.comment}
             }
         })
+        return res.redirect('/patient/record-health-form')
+    } catch (err) {
+        return next(err)
+    }
+}
 
-        /*
-        const today = new Date().toLocaleDateString()
-        console.log(today)
-        //console.log(Patient.findOne({_id: patient_id}, {health_data: {$elemMatch:{date: today}}}))
-        const result = await Patient.findOne({_id: my_patient_id, health_data: {$elemMatch:{date: today}}}).lean()
-        if (!result) {
-            await Patient.updateOne({_id: my_patient_id}, {$push: {health_data : {date: today}}})
-            console.log("pls stop going in")
-        }
-        // PUSH TO ARRAY WORKS BUT I CAN'T EDIT A NESTED OBJECT IN AN ARRAY WHAT AM I DOING WRONG
-        var date_id = Patient.findOne({_id: my_patient_id, health_data: {$elemMatch:{date: today}}}).lean()
-        var update = {
-            value: req.body.glucose,
-            comment: req.body.comment
-        }
-        await Patient.updateOne({_id: my_patient_id, health_data: {$elemMatch:{date: today}}}, {$push: {health_data : {glucose: update}}})
-        if (req.body.comment_glucose) {
-            await Patient.updateOne({_id: my_patient_id, health_data: {$elemMatch:{date: today}}},  { $set: { "health_data.$.glucose.comment": req.body.comment}},)
-            console.log("in")
-        }*/
+const insertWeight = async (req, res, next) => {
+    try {
+        const today = new Date()
+        const weightTimestamp = mongoose.Types.ObjectId()
+        await PatientClinician.updateOne({
+            _id: new_my_patient_id
+        }, {
+            $push: {
+                weightTimestamp: {time: today, value: req.body.weight, message: req.body.comment}
+            }
+        })
+        return res.redirect('/patient/record-health-form')
+    } catch (err) {
+        return next(err)
+    }
+}
 
+const insertInsulin = async (req, res, next) => {
+    try {
+        const today = new Date()
+        const insulinTimestamp = mongoose.Types.ObjectId()
+        await PatientClinician.updateOne({
+            _id: new_my_patient_id
+        }, {
+            $push: {
+                insulinTimestamp: {time: today, value: req.body.insulin, message: req.body.comment}
+            }
+        })
+        return res.redirect('/patient/record-health-form')
+    } catch (err) {
+        return next(err)
+    }
+}
 
-
-        /*if (Patient.find({_id: my_patient_id, health_data: {$elemMatch:{date: today}}}, {})) {
-            await Patient.updateOne({_id: my_patient_id}, {$push: {health_data : {date: today}}})
-        }
-        await Patient.updateOne({_id: my_patient_id, health_data: {$elemMatch:{date: today}}}, { $set: {'health_data.glucose.value': req.body.glucose}})
-        if (req.body.comment_glucose) {
-            await Patient.updateOne({_id: my_patient_id, health_data: {$elemMatch:{date: today}}},  { $set: {'health_data.glucose.comment': req.body.comment}})
-        }*/
-        /*
-        await Patient.findOneAndUpdate(
-            {_id: my_patient_id, health_data: {$elemMatch:{date: today}}},
-            {$set: {health_data : { glucose: { value: req.body.glucose}}}},
-            {upsert: true}
-        );
-        if (req.body.comment_glucose) {
-            await Patient.findOneAndUpdate(
-                {_id: my_patient_id, health_data: {$elemMatch:{date: today}}},
-                {$set: {health_data : { glucose: { comment: req.body.comment}}}}
-            )
-        }*/
-        //await Patient.save()
+const insertExercise = async (req, res, next) => {
+    try {
+        const today = new Date()
+        const exerciseTimestamp = mongoose.Types.ObjectId()
+        await PatientClinician.updateOne({
+            _id: new_my_patient_id
+        }, {
+            $push: {
+                exerciseTimestamp: {time: today, value: req.body.exercise, message: req.body.comment}
+            }
+        })
         return res.redirect('/patient/record-health-form')
     } catch (err) {
         return next(err)
@@ -188,4 +264,7 @@ module.exports = {
     getPastHealth,
     getRecordDataForm,
     insertGlucose,
+    insertWeight,
+    insertInsulin,
+    insertExercise,
 }

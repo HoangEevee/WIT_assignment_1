@@ -1,48 +1,32 @@
 const mongoose = require('mongoose') 
 
+const thresholdSchema = new mongoose.Schema({
+    lower: Number,
+    upper: Number,
+})
+
+const timestampSchema = new mongoose.Schema({
+    time: Date,
+    glucose: Number,
+    message: String
+})
 const schema = new mongoose.Schema({ 
-    patient_name: String,
-    clinician_id: mongoose.Types.ObjectId,
-    health_data: [
-        {
-            date: String,
-            glucose: {
-                value: mongoose.Schema.Types.Decimal128,
-                comment: String,
-            },
-            weight: {
-                value: mongoose.Schema.Types.Decimal128,
-                comment: String,
-            },
-            insulin: {
-                value: Number,
-                comment: String,
-            },
-            exercise: {
-                value: Number,
-                comment: String,
-            } 
-        }
-    ],
-    timeseries: {
-        glucose: {
-            threshold_upper: mongoose.Schema.Types.Decimal128,
-            threshold_lower: mongoose.Schema.Types.Decimal128,
-        },
-        weight: {
-            threshold_upper: mongoose.Schema.Types.Decimal128,
-            threshold_lower: mongoose.Schema.Types.Decimal128,
-        },
-        insulin: {
-            threshold_upper: Number,
-            threshold_lower: Number,
-        },
-        exercise: {
-            threshold_upper: Number,
-            threshold_lower: Number,
-        }
-    }
-}) 
+    patient: String,
+    clinicianId: mongoose.Types.ObjectId,
+    clinician: String,
+    glucoseRecord: Boolean,
+    glucoseThreshold: [thresholdSchema],
+    glucoseTimestamp: [timestampSchema],
+    weightRecord: Boolean,
+    weightThreshold: [thresholdSchema],
+    weightTimestamp: [timestampSchema],
+    insulinRecord: Boolean,
+    insulinThreshold: [thresholdSchema],
+    insulinTimestamp: [timestampSchema],
+    exerciseRecord: Boolean,
+    exerciseThreshold: [thresholdSchema],
+    exerciseTimestamp: [timestampSchema],
+})
 
 const Patient = mongoose.model('Patient', schema) 
 module.exports = Patient
