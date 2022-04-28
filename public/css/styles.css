@@ -264,8 +264,7 @@ form {
 .tablecontainer {
     padding: 0 10%; 
     margin: 40px auto 0; 
-
-  }
+}
 
 .table {
     width: 100%; 
@@ -293,8 +292,8 @@ form {
     letter-spacing: 0.35px;
     font-weight: normal;
     color: #0D2557;
+    padding:6px;
     text-align: center;
-    height: 30px;
 }
 
 .red {
@@ -312,3 +311,21 @@ form {
     display: block;
 }
 
+
+.profile-container {
+    display: flex;
+    gap: 25px;
+    align-items: center;
+}
+td .profile-container {
+    margin-left:12%;
+}
+nav .profile-container a{
+    padding-left: 0;
+    white-space: nowrap;
+}
+.profile-pic {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+}
