@@ -90,35 +90,29 @@ nav ul {
     float: right;
 }
 
-/*all links only show dashed line when hover and visited link same color*/
-a {
-    text-decoration: none;
-}
 a:visited {
     color:inherit;
-}
-a:hover {
-    text-decoration: underline;
 }
 
 nav a {
     display: block;
     font-weight: bold;
     text-align: center;
+    text-decoration: none;
     color: #0D2557;
     padding: 1rem;
 }
 
-nav a.active {
+nav .active {
     background-color: #0D2557;
     color: white;
 }
 
-nav a.active:hover {
+nav .active:hover {
     background-color: #304e8d;
 }
 
-nav a.menubar:hover {
+nav .menubar:hover {
     background-color: #8693B4;
 }
 
