@@ -98,16 +98,16 @@ nav a {
     padding: 1rem;
 }
 
-nav a.active {
+nav .active {
     background-color: #0D2557;
     color: white;
 }
 
-nav a.active:hover {
+nav .active:hover {
     background-color: #304e8d;
 }
 
-nav a.menubar:hover {
+nav .menubar:hover {
     background-color: #8693B4;
 }
 
