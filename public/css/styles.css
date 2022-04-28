@@ -219,6 +219,7 @@ footer {
 
 input {
     width: 100%;
+    box-sizing: border-box;
 }
 
 /* Bordered form */
@@ -265,7 +266,7 @@ form {
       padding: 16px;
   }
   
-  #sign_out {
+  .signinout {
     width: 50%;
     margin-left: auto;
     margin-right: auto;
