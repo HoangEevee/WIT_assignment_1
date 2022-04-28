@@ -12,7 +12,12 @@
         <tbody>
             {{#each data}}
             <tr>
-                <td data label = "Patient Name"><a href="./{{this._id}}">{{this.patient}}</a></td>
+                <td data label = "Patient Name">
+                    <div class="profile-container">
+                        <img src="\img\profile-pic.jpg" alt="profile pic" class="profile-pic">
+                        <a href="./{{this._id}}">{{this.patient}}</a>
+                    </div>
+                </td>
                 {{#each this.timestamp}}
                 {{#if @last}}
                 <td data label = "Last Updated">{{this.time}}</td>
