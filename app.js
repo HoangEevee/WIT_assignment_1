@@ -23,7 +23,7 @@ app.set('view engine', 'hbs')
 require('./models/db.js')
 
 //middleware to see all request in terminal
-app.use((req,res, next) => {
+app.use((req, res, next) => {
     console.log("message arrived: " + req.method + " " + req.path)
     next();
 })

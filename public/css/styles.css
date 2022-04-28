@@ -17,7 +17,7 @@ main {
     overflow-y: auto;
 }
 
-.menu-side {
+/* .menu-side {
     display: none;
     flex: 1 0 20%;
 }
@@ -29,6 +29,23 @@ main {
 
 .menu-side a {
     text-decoration:none;
+} */
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    overflow: auto;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+
+.dropdown-menu a {
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-menu a:hover {
+    background-color: #CED7EA;
 }
 
 .menu-main-wrapper {
@@ -61,6 +78,7 @@ nav ul {
 
 .nav-left {
     float: left;
+    /* padding-left: 3rem; */
 }
 
 .nav-right li{
@@ -288,3 +306,9 @@ form {
 .submitted {
     color: rgb(30, 255, 0);
 }
+
+
+.show {
+    display: block;
+}
+
