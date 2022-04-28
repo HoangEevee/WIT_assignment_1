@@ -4,6 +4,11 @@
 }
 
 /*-----------*/
+
+/* * {
+    border: 1px solid red;
+} */
+
 body {
     color: #0D2557;
     font-family: "Malgun gothic", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -122,13 +127,13 @@ button {
     text-align: center;
 }
 .logo img {
-    margin-top: 4rem;
+    margin-top: 2rem;
     margin-bottom: -2rem;
 }
 
 .center {
     text-align: center;
-    margin-top: 3rem;
+    /* margin-top: 3rem; */
 }
 
 .allbuttons {  
@@ -167,6 +172,7 @@ button {
 }
 
 footer {
+    bottom: 0;
     padding: 2rem;
 }
 
@@ -233,9 +239,23 @@ form {
   
   /* Add padding to containers */
   .container {
+    text-align: center;
+    margin: 0 auto;
     padding: 16px;
   }
+
+  .child_container {
+      width: 50%;
+      margin: 0 auto;
+      padding: 16px;
+  }
   
+  #sign_out {
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 16px;
+}
 
   /* The "Need Help" text */ 
   span.psw1 {
@@ -264,12 +284,12 @@ form {
 .tablecontainer {
     padding: 0 10%; 
     margin: 40px auto 0; 
-
   }
 
 .table {
     width: 100%; 
     border-collapse: collapse;
+    table-layout: fixed;
   }
 
 .table thead {
@@ -312,3 +332,12 @@ form {
     display: block;
 }
 
+.intro_text {
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+}
+
+#glucose {
+    margin: 0 auto;
+}

@@ -1,8 +1,12 @@
 <h1 class="center">Patient Data</h1>
 {{#with oneItem}}
-<ul>
+    <p class="center">id: {{this._id}}</p>
+    <p class="center">Patient's name: {{this.patient}}</p>
+    <p class="center">Clinician's name: {{this.clinician}}</p>
+
+{{!-- <ul>
     <li>id: {{this._id}}</li>
     <li>Patient's name: {{this.patient}}</li>
     <li>Clinician's name: {{this.clinician}}</li>
-</ul>
+</ul> --}}
 {{/with}}

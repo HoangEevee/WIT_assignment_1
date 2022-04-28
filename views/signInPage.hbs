@@ -5,20 +5,24 @@
     <form action="./patient/login" method="POST">
     
         <div class="container">
-            <label for="uname"><h4>Username</h4></label>
-            <input type="text" placeholder="Enter Username" name="uname" required>
-        
-            <label for="psw"><h4>Password</h4></label>
-            <input type="password" placeholder="Enter Password" name="psw" required>
+            <div class="child_container">
+                            {{!-- <label for="uname"><h4>Username</h4></label> --}}
+                <input type="text" placeholder="Username / email" name="uname" required>
             
-            
-            <button type="submit">Login</button>
-            
+                {{!-- <label for="psw"><h4>Password</h4></label> --}}
+                <input type="password" placeholder="Password" name="psw" required>
+                
+                <button 
+                
+                <button type="submit">Login</button>
+            </div>
         </div>
         
         <div class="container" style="background-color:#ffffff">
-            <span class="psw1">Forgot <a href="#">password?</a></span>
-            <span class="psw2">Need <a href="#">help?</a></span>
+            <div class="child_container">
+                <span class="psw1"><a href="#">Forgot password?</a></span>
+                <span class="psw2"><a href="#">Need help?</a></span>
+            </div>
         </div>
     </form> 
 </section>

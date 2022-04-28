@@ -6,13 +6,13 @@
         <script> document.write(new Date().toLocaleDateString()); </script>
         </p>
     </div>
-    <br> 
 </section>
 
 <section>
     
     <div class="container">
         <form action="/patient/record-glucose" method="POST">
+        
             <label for="uname"><h4>Blood Glucose (nmol/L)</h4></label>
             <input type="number" step="any" id="glucose" placeholder="Add blood glucose" name="glucose" required>
             <input type="text" id="comment_glucose" placeholder="Add comment" name="comment">
