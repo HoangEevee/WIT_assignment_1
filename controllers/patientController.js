@@ -45,7 +45,7 @@ const getDataByPatient = async (req, res, next) => {
 
 const logInPage = async (req, res, next) => {
     try {
-        return res.render('signInPage', { layout: 'patient_main' })
+        return res.render('signInPage', { layout: 'main' })
     } catch (err) {
         return next(err)
     }   

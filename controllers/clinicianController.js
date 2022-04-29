@@ -16,7 +16,7 @@ const getAllClinicianData = async (req, res, next) => {
 
 const logInPage = async (req, res, next) => {
     try {
-        return res.render('signInPageClinician', { layout: 'clinician_main' })
+        return res.render('signInPageClinician', { layout: 'main' })
     } catch (err) {
         return next(err)
     }   
