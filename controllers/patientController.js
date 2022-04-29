@@ -185,7 +185,9 @@ const getRecordDataForm = async (req, res, next) => {
         if (date_result) {
             submit = true
         }
-        //console.log(date_result)
+        //show time as DD/MM/YYYY, HH:MM:SS
+        patient_data.timestamp[patient_data.timestamp.length-1].time = patient_data.timestamp[patient_data.timestamp.length-1].time.toLocaleString()
+
         return res.render('recordHealth', { submitted: submit, patient: patient_data, layout: 'patient_main' })
     } catch (err) {
         return next(err)
