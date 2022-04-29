@@ -14,7 +14,7 @@ body {
     font-family: "Malgun gothic", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     font-weight: 400;
     margin: 0;
-    font-size: 1.2rem;
+    font-size: 1rem;
     text-align: justify;
 }
 
@@ -162,7 +162,11 @@ button {
         margin:1rem 0 1rem 3rem;
     }
 }
-
+@media screen and (max-width: 1200px) {
+    .small-screen-disappear {
+        display: none;
+    }
+}
 footer {
     bottom: 0;
     padding: 2rem;
@@ -290,7 +294,7 @@ form {
   }
 
 .table thead tr th {
-    font-size: 25px;
+    font-size: 1rem;
     font-weight: 200; 
     letter-spacing: 0.35px;
     color: white; 
@@ -302,7 +306,7 @@ form {
 }
 
 .table tbody tr td {
-    font-size: 20px;
+    font-size: 1rem;
     letter-spacing: 0.35px;
     font-weight: normal;
     color: #0D2557;
@@ -322,7 +326,7 @@ form {
 
 .profile-container {
     display: flex;
-    gap: 25px;
+    gap: 1rem;
     align-items: center;
 }
 td .profile-container {
@@ -333,8 +337,8 @@ nav .profile-container a{
     white-space: nowrap;
 }
 .profile-pic {
-    width: 45px;
-    height: 45px;
+    width: 2.2rem;
+    height: 2.2rem;
     border-radius: 50%;
 }
   
