@@ -226,6 +226,7 @@ form {
     border: none;
     cursor: pointer;
     width: 100%;
+    text-align: center;
   }
   
   /* Add a hover effect for buttons */
@@ -243,6 +244,7 @@ form {
 
   .child_container {
       width: 50%;
+      min-width: auto;
       margin: 0 auto;
       padding: 16px;
   }
@@ -274,6 +276,14 @@ form {
       float: none;
     }
   }
+
+  @media screen and (max-width: 600px) {
+    .child_container {
+        align-items: center;
+        justify-content: center;
+        width: 80%;
+        }
+    }
 
 
 /* Clinician Dashboard */
