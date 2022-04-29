@@ -51,6 +51,9 @@ const getOnePatientData = async (req, res, next) => {
         patient.timestamp.forEach((element) => {
             element.time = element.time.toLocaleString()
         })
+        //reverse timestamp so it show newest on top 
+        //TODO: might want to change push timestamp to begin of list instead so don't need this
+        patient.timestamp = patient.timestamp.reverse() 
         return res.render('onePatient', {data: patient, layout: 'clinician_main'})
         
     } catch (err) {
