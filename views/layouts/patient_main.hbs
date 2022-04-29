@@ -35,16 +35,20 @@
 
     <nav>
         <div class="nav-left">
-            <a class="menubar" onclick="myFunction()">Menu</a>
-            <div id="my_menu" class="dropdown-menu">
-                <a href="/patient/home">Patient Home</a>
-                {{!-- <a href="/aboutWebsite">About This Website</a>
-                <a href="/aboutDiabetes">About Diabetes</a> --}}
-                <a href="/patient/record-health-form">Record Health</a>
-                <a href="/patient/past-health">View Past Health</a>
-                <a href="/patient/user">Personal Details</a>
-                <a href="/">Sign Out</a>
+            <div class="dropdown">
+                <a class="menubar">Menu</a>
+                <div class="dropdown-content">
+                    <a href="/patient/home">Patient Home</a>
+                    {{!-- <a href="/aboutWebsite">About This Website</a>
+                    <a href="/aboutDiabetes">About Diabetes</a> --}}
+                    <a href="/patient/record-health-form">Record Health</a>
+                    <a href="/patient/past-health">View Past Health</a>
+                    <a href="/patient/user">Personal Details</a>
+                    <a href="/">Sign Out</a>
+                </div>
             </div>
+            </div>
+            
         </div>
         <ul class="nav-right">            
             <li><a class="active" href="#bell">
@@ -87,11 +91,5 @@
     <footer>
 
     </footer>
-
-    <script>
-        function myFunction() {
-            document.getElementById("my_menu").classList.toggle("show");
-        }
-    </script>
 
 </body>
