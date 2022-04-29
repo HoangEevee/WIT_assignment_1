@@ -3,6 +3,12 @@
     src: url(../font/malgun-gothic/malgun.ttf);
 }
 
+/*-----------*/
+
+/* * {
+    border: 1px solid red;
+} */
+
 body {
     color: #0D2557;
     font-family: "Malgun gothic", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -12,7 +18,32 @@ body {
     text-align: justify;
 }
 
-nav, .logo, h1, h2, h3, h4, h5, h6 {
+main {
+    overflow-y: auto;
+}
+
+/* .menu-side {
+    display: none;
+    flex: 1 0 20%;
+}
+
+
+.menu-side ul {
+    list-style-type: none;
+}
+
+.menu-side a {
+    text-decoration:none;
+} */
+
+.menu-main-wrapper {
+    display: flex;
+    height: 100%;
+}
+
+/*-----------*/
+
+nav, .logo, h1, h2, h3, h4, h5, h6, th, td {
     font-family: Poppins;
 }
 .logo, h1, h2, h3, h4, h5, h6 {
@@ -35,10 +66,15 @@ nav ul {
 
 .nav-left {
     float: left;
+    /* padding-left: 3rem; */
 }
 
 .nav-right li{
     float: right;
+}
+
+a:visited {
+    color:inherit;
 }
 
 nav a {
@@ -50,16 +86,16 @@ nav a {
     padding: 1rem;
 }
 
-nav a.active {
+nav .active {
     background-color: #0D2557;
     color: white;
 }
 
-nav a.active:hover {
+nav .active:hover {
     background-color: #304e8d;
 }
 
-nav a.menubar:hover {
+nav .menubar:hover {
     background-color: #8693B4;
 }
 
@@ -78,13 +114,13 @@ button {
     text-align: center;
 }
 .logo img {
-    margin-top: 4rem;
+    margin-top: 2rem;
     margin-bottom: -2rem;
 }
 
 .center {
     text-align: center;
-    margin-top: 3rem;
+    /* margin-top: 3rem; */
 }
 
 .allbuttons {  
@@ -112,6 +148,11 @@ button {
         justify-content: space-between;   
     }
 
+    .bigcontainer {
+        display: flex;
+        flex-direction: row;
+    }
+
     .embedimg {
         max-width: 400px;
         margin: 1rem 3rem 1rem 0;
@@ -123,6 +164,7 @@ button {
 }
 
 footer {
+    bottom: 0;
     padding: 2rem;
 }
 
@@ -154,6 +196,7 @@ footer {
 
 input {
     width: 100%;
+    box-sizing: border-box;
 }
 
 /* Bordered form */
@@ -189,9 +232,23 @@ form {
   
   /* Add padding to containers */
   .container {
+    text-align: center;
+    margin: 0 auto;
     padding: 16px;
   }
+
+  .child_container {
+      width: 50%;
+      margin: 0 auto;
+      padding: 16px;
+  }
   
+  .signinout {
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 16px;
+}
 
   /* The "Need Help" text */ 
   span.psw1 {
@@ -220,12 +277,12 @@ form {
 .tablecontainer {
     padding: 0 10%; 
     margin: 40px auto 0; 
-
-  }
+}
 
 .table {
     width: 100%; 
     border-collapse: collapse;
+    table-layout: fixed;
   }
 
 .table thead {
@@ -249,8 +306,8 @@ form {
     letter-spacing: 0.35px;
     font-weight: normal;
     color: #0D2557;
+    padding:6px;
     text-align: center;
-    height: 30px;
 }
 
 .red {
@@ -258,3 +315,52 @@ form {
     color: white !important;
 }
 
+/* Record Health */
+.submitted {
+    color: rgb(30, 255, 0);
+}
+
+.profile-container {
+    display: flex;
+    gap: 25px;
+    align-items: center;
+}
+td .profile-container {
+    margin-left:12%;
+}
+nav .profile-container a{
+    padding-left: 0;
+    white-space: nowrap;
+}
+.profile-pic {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+}
+  
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+  
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: max-content;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+  
+.dropdown-content a {   
+    color: black;
+    text-decoration: none;
+    display: block;
+  }
+  
+  .dropdown-content a:hover {background-color: #f1f1f1}
+  
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }
+  

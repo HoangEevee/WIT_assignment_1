@@ -1,0 +1,24 @@
+<h2 class="center">{{data.patient}}'s Health Record </h2>
+
+{{!-- <h2 class = "center">Glucose Record</h2> --}}
+<div class="tablecontainer">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Time</th>
+                <th>Blood Glucose (mmol/L)</th> 
+                <th>Message</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each data.timestamp}}
+            <tr>
+                <td data label = "Time">{{this.time}}</td>
+                <!--This red highlight for out of range does not work yet-->
+                <td data label = "Blood Glucose (mmol/L)"{{#if (outOfThreshold this.glucose data.glucose.lower data.glucose.higher)}} class="red" {{/if}}>{{this.glucose}}</td>
+                <td data label = "Message">{{this.message}}</td> 
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>    

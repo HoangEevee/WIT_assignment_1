@@ -2,12 +2,13 @@ const mongoose = require('mongoose')
 
 const glucoseSchema = new mongoose.Schema({
     lower: Number,
-    higher: Number,
+    upper: Number,
 })
 
 const timestampSchema = new mongoose.Schema({
     time: Date,
     glucose: Number,
+    message: String
 })
 const schema = new mongoose.Schema({ 
     patient: String,

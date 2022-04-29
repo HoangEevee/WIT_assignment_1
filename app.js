@@ -23,23 +23,22 @@ app.set('view engine', 'hbs')
 require('./models/db.js')
 
 //middleware to see all request in terminal
-app.use((req,res, next) => {
+app.use((req, res, next) => {
     console.log("message arrived: " + req.method + " " + req.path)
     next();
 })
 
-// Set default page as the aboutWebsite page for now, until we make an actual home page
-app.get('/', function (req, res) {
-    res.render('whoAreYou.hbs', { layout: 'main' })
-})
 
 // connect to routers
+const mainRouter = require('./routes/mainRouter')
 const patientRouter = require('./routes/patientRouter')
 const clinicianRouter = require('./routes/clinicianRouter')
 
 // send HTTP requests to routers
+app.use('/', mainRouter)
 app.use('/patient', patientRouter)
 app.use('/clinician', clinicianRouter)
+
 
 app.listen(process.env.PORT || 8080, () => {
     console.log('Diabetes@Home is listening...')

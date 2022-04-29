@@ -12,11 +12,16 @@
         <tbody>
             {{#each data}}
             <tr>
-                <td data label = "Patient Name"><a href="./clinician/{{this._id}}">{{this.patient}}</a></td>
+                <td data label = "Patient Name">
+                    <div class="profile-container">
+                        <img src="\img\profile-pic.jpg" alt="profile pic" class="profile-pic">
+                        <a href="./{{this._id}}">{{this.patient}}</a>
+                    </div>
+                </td>
                 {{#each this.timestamp}}
                 {{#if @last}}
                 <td data label = "Last Updated">{{this.time}}</td>
-                <td data label = "Blood Glucose (mmol/L)"{{#if (outOfThreshold this.glucose ../glucose.lower ../glucose.higher)}} class="red" {{/if}}>{{this.glucose}}</td>
+                <td data label = "Blood Glucose (mmol/L)"{{#if (outOfThreshold this.glucose ../glucose.lower ../glucose.upper)}} class="red" {{/if}}>{{this.glucose}}</td>
                 {{/if}}
                 {{/each}}
             </tr>

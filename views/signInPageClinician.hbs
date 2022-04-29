@@ -1,25 +1,22 @@
-<h2 class="center">SIGN IN</h2> 
+<h2 class="center">CLINICIAN SIGN IN</h2> 
 
 <section>
     <p class="center">Please sign in with your personal details including your email and your password</p>
     <form action="./clinician" method="POST">
     
         <div class="container">
-            
-            <label for="uname"><h4>Username</h4></label>
-            <input type="text" placeholder="Enter Username" name="uname" required>
-            <p>Please enter anything to get to Chris' Dashboard</p>
-            <label for="psw"><h4>Password</h4></label>
-            <input type="password" placeholder="Enter Password" name="psw" required>
-            
-            
-            <button type="submit">Login</button>
-            
+            <div class="child_container">
+                <input type="text" placeholder="Username / email" name="uname" required>
+                <input type="password" placeholder="Password" name="psw" required>
+                <button type="submit">Login</button>
+            </div>
         </div>
         
         <div class="container" style="background-color:#ffffff">
-            <span class="psw1">Forgot <a href="#">password?</a></span>
-            <span class="psw2">Need <a href="#">help?</a></span>
+            <div class="child_container">
+                <span class="psw1"><a href="#">Forgot password?</a></span>
+                <span class="psw2"><a href="#">Need help?</a></span>
+            </div>
         </div>
     </form> 
 </section>
