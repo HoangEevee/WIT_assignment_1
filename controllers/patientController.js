@@ -98,10 +98,9 @@ const getRecordDataForm = async (req, res, next) => {
         const tmr_start = new Date(today.setDate(today.getDate()+1))
 
         var submit = false
-        const attributes = ['glucose', 'weight', 'insulin', 'exercise']
         var date_result = await PatientClinician.findOne({
             _id: new_my_patient_id,
-            glucoseTimestamp: {
+            timestamp: {
                 $elemMatch: {
                     time: {
                         $gte: today_start,
@@ -111,11 +110,12 @@ const getRecordDataForm = async (req, res, next) => {
             }
         },
         {
-            'glucoseTimestamp.$' : 1
+            'timestamp.$' : 1
         }).lean()
 
         // my attempt at making the submit ticks appear individually
         // for now we're just using glucose for d2
+        //const attributes = ['glucose', 'weight', 'insulin', 'exercise']
         /*
         var date_result = {}
         date_result[0] = await PatientClinician.findOne({
@@ -185,6 +185,7 @@ const getRecordDataForm = async (req, res, next) => {
         if (date_result) {
             submit = true
         }
+        //console.log(date_result)
         return res.render('recordHealth', { submitted: submit, patient: patient_data, layout: 'patient_main' })
     } catch (err) {
         return next(err)
