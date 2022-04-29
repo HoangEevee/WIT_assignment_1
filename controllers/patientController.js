@@ -202,7 +202,7 @@ const insertGlucose = async (req, res, next) => {
             _id: new_my_patient_id
         }, {
             $push: {
-                timestamp: {time: today, value: req.body.glucose, message: req.body.comment}
+                timestamp: {time: today, glucose: req.body.glucose, message: req.body.comment}
             }
         })
         return res.redirect('/patient/record-health-form')
