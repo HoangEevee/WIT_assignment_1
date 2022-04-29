@@ -12,10 +12,15 @@
 <body>
 
     <nav>
-
-        <ul class="nav-left">
-            <a class="menubar" href="/clinician/dashboard">Menu</a>
-        </ul>
+        <div class="nav-left">
+            <div class="dropdown">
+                <a class="menubar">Menu</a>
+                <div class="dropdown-content">
+                    <a href="/clinician/dashboard">Dashboard</a>
+                    <a href="/">Sign Out</a>
+                </div>
+            </div>
+        </div>
         <ul class="nav-right">    
             <div class="profile-container menubar">
                <img src="\img\profile-pic.jpg" alt="profile pic" class="profile-pic">
