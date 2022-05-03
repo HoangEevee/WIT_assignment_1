@@ -17,6 +17,22 @@ const getAllPatientData = async (req, res, next) => {
     }   
 }
 
+const getAboutDiabetes = (req, res, next) => {
+    try{
+        res.render('aboutDiabetes', {layout: 'patient_main'})
+    } catch (err) {
+        next(err)
+    }
+}
+
+const getAboutWebsite = (req, res, next) => {
+    try{
+        res.render('aboutWebsite', {layout: 'patient_main'})
+    } catch (err) {
+        next(err)
+    }
+}
+
 const getDataByPatient = async (req, res, next) => { 
     try{
         const patient = await PatientClinician.findById(new_my_patient_id).lean()
@@ -58,9 +74,17 @@ const logIn = async (req, res, next) => {
     }
 }
 
-const homePage = async (req, res, next) => {
+const getHomePage = async (req, res, next) => {
     try {
         return res.render('patientHome', { layout: 'patient_main' })
+    } catch (err) {
+        return next(err)
+    }   
+}
+
+const getPersonal = async (req, res, next) => {
+    try {
+        return res.render('patientYourAccount', { layout: 'patient_main' })
     } catch (err) {
         return next(err)
     }   
@@ -265,9 +289,12 @@ const insertExercise = async (req, res, next) => {
 module.exports = {
     getAllPatientData,
     getDataByPatient,
+    getAboutDiabetes,
+    getAboutWebsite,
     logInPage,
     logIn,
-    homePage,
+    getHomePage,
+    getPersonal,
     getPastHealth,
     getRecordDataForm,
     insertGlucose,
