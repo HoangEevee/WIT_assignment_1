@@ -1,8 +1,8 @@
-const res = require('express/lib/response')
 const mongoose = require('mongoose')
 const Clinician = require('../models/clinician')
 const Patient = require('../models/patient')
-const PatientClinician = require("../models/patient-clinicians-test") //This is the database I'm (Hoang) using
+
+const my_clinician_id = mongoose.Types.ObjectId("62713547ab750c0e07f6387f")
 
 // prolly more suited for clinician but eh testing
 const getAllClinicianData = async (req, res, next) => {
@@ -32,13 +32,15 @@ const logIn = async (req, res, next) => {
 
 const getAllPatientData = async (req, res, next) => {
     try {
-        const patients = await PatientClinician.find({clinician: "Chris"}).lean()
+        const ids = await Clinician.findById(my_clinician_id).lean()
+        const patients = await Patient.find({ '_id': { $in: ids.patients } }).lean();
         //show time as DD/MM/YYYY, HH:MM:SS
         patients.forEach((element) => {
-            element.timestamp[element.timestamp.length-1].time = element.timestamp[element.timestamp.length-1].time.toLocaleString()
+            if (element.glucoseTimestamp) {
+                element.glucoseTimestamp[element.glucoseTimestamp.length-1].time = element.glucoseTimestamp[element.glucoseTimestamp.length-1].time.toLocaleString()
+            }
         })
         return res.render('allPatients', {data: patients, layout: 'clinician_main'})
-        
     } catch (err) {
         return next(err)
     }   
@@ -46,14 +48,16 @@ const getAllPatientData = async (req, res, next) => {
 
 const getOnePatientData = async (req, res, next) => {
     try {
-        const patient = await PatientClinician.findById(req.params.id).lean()
-        //show time as DD/MM/YYYY, HH:MM:SS
-        patient.timestamp.forEach((element) => {
-            element.time = element.time.toLocaleString()
-        })
-        //reverse timestamp so it show newest on top 
-        //TODO: might want to change push timestamp to begin of list instead so don't need this
-        patient.timestamp = patient.timestamp.reverse() 
+        const patient = await Patient.findById(req.params.id).lean()
+        if (patient.glucoseTimestamp) {
+            //show time as DD/MM/YYYY, HH:MM:SS
+            patient.glucoseTimestamp.forEach((element) => {
+                element.time = element.time.toLocaleString()
+            })
+            //reverse timestamp so it show newest on top 
+            //TODO: might want to change push timestamp to begin of list instead so don't need this
+            patient.glucoseTimestamp = patient.glucoseTimestamp.reverse() 
+        }
         return res.render('onePatient', {data: patient, layout: 'clinician_main'})
         
     } catch (err) {
@@ -64,24 +68,24 @@ const getOnePatientData = async (req, res, next) => {
 const updatePatient = async (req, res, next) => {
     try {
         if (req.body.updateLowerThreshold) {
-            await PatientClinician.updateOne({
+            await Patient.updateOne({
                 _id: req.params.id
             }, {
                 $set: {
-                  "glucose.lower": req.body.updateLowerThreshold
+                  "glucoseThreshold.lower": req.body.updateLowerThreshold
                 }
             })
         }
         else if (req.body.updateUpperThreshold) {
-            await PatientClinician.updateOne({
+            await Patient.updateOne({
                 _id: req.params.id
             }, {
                 $set: {
-                  "glucose.upper": req.body.updateUpperThreshold
+                  "glucoseThreshold.upper": req.body.updateUpperThreshold
                 }
             })
         }
-        return res.redirect("./dashboard")
+        return res.redirect("./".concat(req.params.id.toString()))
     } catch (err) {
         return next(err)
     }
@@ -91,14 +95,6 @@ const updatePatient = async (req, res, next) => {
 const createAccountPage = async (req, res, next) => {
     try {
         return res.render('createClinicianAccount', {layout: 'clinician_main' })
-    } catch (err) {
-        return next(err)
-    }
-}
-
-const createPatientPage = async (req, res, next) => {
-    try {
-        return res.render('createPatientAccount', {layout: 'clinician_main' })
     } catch (err) {
         return next(err)
     }
@@ -117,12 +113,18 @@ const createClinician = async (req, res, next) => {
     }
 }
 
+const createPatientPage = async (req, res, next) => {
+    try {
+        return res.render('createPatientAccount', {layout: 'clinician_main' })
+    } catch (err) {
+        return next(err)
+    }
+}
+
+
 const createPatient = async (req, res, next) => {
     try {
-        newPatient = new Patient( 
-            {patient_name: req.body.patient_name,
-            clinician_id: my_clinician_id,}
-         )
+        newPatient = new Patient( {...req.body, clinicianId: my_clinician_id} )
         await newPatient.save(function (err) {
             if (err) return console.error(err);
         })

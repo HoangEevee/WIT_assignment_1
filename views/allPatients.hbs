@@ -15,13 +15,13 @@
                 <td data label = "Patient Name">
                     <div class="profile-container">
                         <img src="\img\profile-pic.jpg" alt="profile pic" class="profile-pic small-screen-disappear">
-                        <a href="./{{this._id}}">{{this.patient}}</a>
+                        <a href="./{{this._id}}">{{this.firstName}} {{this.lastName}}</a>
                     </div>
                 </td>
-                {{#each this.timestamp}}
+                {{#each this.glucoseTimestamp}}
                 {{#if @last}}
                 <td data label = "Last Updated">{{this.time}}</td>
-                <td data label = "Blood Glucose (mmol/L)"{{#if (outOfThreshold this.glucose ../glucose.lower ../glucose.upper)}} class="red" {{/if}}>{{this.glucose}}</td>
+                <td data label = "Blood Glucose (mmol/L)"{{#if (outOfThreshold this.value ../glucoseThreshold.lower ../glucoseThreshold.upper)}} class="red" {{/if}}>{{this.value}}</td>
                 {{/if}}
                 {{/each}}
             </tr>

@@ -1,10 +1,10 @@
 <div class="container">
-    <h2 class="center">{{data.patient}}'s Health Record </h2>
+    <h2 class="center">{{data.firstName}} {{data.lastName}}'s Health Record </h2>
 
     <h2>Glucose Record</h2>
     <div class="bigcontainer">
         <div class="child_container">
-            <p>Lower Threshold: {{data.glucose.lower}}</p>
+            <p>Lower Threshold: {{data.glucoseThreshold.lower}}</p>
             <form action="./{{data._id}}" method="POST">    
                 <div class="container">
                     <input type="text" placeholder="Update lower threshold" name="updateLowerThreshold" required>
@@ -13,7 +13,7 @@
             </form> 
         </div>
         <div class="child_container">
-            <p>Upper Threshold: {{data.glucose.upper}}</p>
+            <p>Upper Threshold: {{data.glucoseThreshold.upper}}</p>
             <form action="./{{data._id}}" method="POST">    
                 <div class="container">
                     <input type="text" placeholder="Update upper threshold" name="updateUpperThreshold" required>
@@ -34,10 +34,10 @@
             </thead>
             <tbody>
                 {{#with data}}
-                {{#each timestamp}}
+                {{#each glucoseTimestamp}}
                 <tr>
                     <td data label = "Time">{{this.time}}</td>
-                    <td data label = "Blood Glucose (mmol/L)"{{#if (outOfThreshold this.glucose ../glucose.lower ../glucose.upper)}} class="red" {{/if}}>{{this.glucose}}</td> 
+                    <td data label = "Blood Glucose (mmol/L)"{{#if (outOfThreshold this.value ../glucoseThreshold.lower ../glucoseThreshold.upper)}} class="red" {{/if}}>{{this.value}}</td> 
                 </tr>
                 {{/each}}
                 {{/with}}

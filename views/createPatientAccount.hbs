@@ -4,9 +4,41 @@
     <p class="center">Put your patient's information below</p>
 
     <form action="/clinician/create-patient" method="POST">
-        <p class="center">Name</p>
-        <input type="text" id="patient_name" name="patient_name"/>
-        <br>
+        <h4>Title</h4>
+            <select type="text" id="title" name="title"/>
+                <option hidden selected>Select one...</option>
+                <option value="mr">Mr.</option>
+                <option value="miss">Miss</option>
+                <option value="mrs">Mrs.</option>
+                <option value="ms">Ms.</option>
+                <option value="mx">Mx.</option>
+                <option value="other">other</option>
+            </select>
+            <br>
+            <h4>First name</h4>
+            <input type="text" id="firstName" name="firstName" placeholder="Enter first name" required/>
+            <br>
+            <h4>Last name</h4>
+            <input type="text" id="lastName" name="lastName" placeholder="Enter last name" required/>
+            <br>
+            <h4>Date of birth</h4>
+            <input type="text" id="dob" name="dob" placeholder="Enter date of birth" required/>
+            <br>
+            <h4>Email</h4>
+            <input type="text" id="email" name="email" placeholder="Enter email" required/>
+            <br>
+            <h4>Contact number</h4>
+            <input type="text" id="contactNumber" name="contactNumber" placeholder="Enter contact number" required/>
+            <br>
+            <br>
+            <h4>Emergency contact name</h4>
+            <input type="text" id="emergencyName" name="emergencyName" placeholder="Enter name" required/>
+            <br>
+            <h4>Emergency contact number</h4>
+            <input type="text" id="emergencyNumber" name="emergencyNumber" placeholder="Enter emergency contact number" required/>
+            <br>
+
+            <br>
         <input type="submit"/>
     </form>
 </section>

@@ -1,12 +1,10 @@
 const mongoose = require('mongoose')
 const Patient = require('../models/patient')
 const Clinician = require('../models/clinician')
-const PatientClinician = require("../models/patient-clinicians-test") //This is the database I'm (Hoang) using
-const { off } = require('../models/patient')
+//const { off } = require('../models/patient')
 
 // Pat
-const my_patient_id = mongoose.Types.ObjectId("6262b744254dae87ed375139")
-const new_my_patient_id = mongoose.Types.ObjectId("62654b66401a470ae8f67806")
+const my_patient_id = mongoose.Types.ObjectId("62713910a76e24742ae2aa9d")
 // prolly more suited for clinician but eh testing
 const getAllPatientData = async (req, res, next) => {
     try {
@@ -35,7 +33,7 @@ const getAboutWebsite = (req, res, next) => {
 
 const getDataByPatient = async (req, res, next) => { 
     try{
-        const patient = await PatientClinician.findById(new_my_patient_id).lean()
+        const patient = await Patient.findById(my_patient_id).lean()
         return res.render('patientData', {oneItem: patient, layout: 'patient_main'})
     } catch (err) {
         return next(err)
@@ -92,16 +90,17 @@ const getPersonal = async (req, res, next) => {
 
 const getPastHealth = async(req, res, next) => {
     try {
-        const patient = await PatientClinician.findById(new_my_patient_id).lean()
+        const patient = await Patient.findById(my_patient_id).lean()
         
-        //show time as DD/MM/YYYY, HH:MM:SS
-        patient.timestamp.forEach((element) => {
-            element.time = element.time.toLocaleString()
-        })
-        //reverse timestamp so it show newest timestamp on top 
-        //TODO: might want to change push timestamp to begin of list instead so don't need this
-        patient.timestamp = patient.timestamp.reverse()
-
+        if (patient.glucoseTimestamp) {
+            //show time as DD/MM/YYYY, HH:MM:SS
+            patient.glucoseTimestamp.forEach((element) => {
+                element.time = element.time.toLocaleString()
+            })
+            //reverse timestamp so it show newest timestamp on top 
+            //TODO: might want to change push timestamp to begin of list instead so don't need this
+            patient.glucoseTimestamp = patient.glucoseTimestamp.reverse()
+        }
         return res.render('patientPastHealth', {data: patient, layout: 'patient_main'})
     } catch(err) {
         return next(err)
@@ -122,9 +121,9 @@ const getRecordDataForm = async (req, res, next) => {
         const tmr_start = new Date(today.setDate(today.getDate()+1))
 
         var submit = false
-        var date_result = await PatientClinician.findOne({
-            _id: new_my_patient_id,
-            timestamp: {
+        var date_result = await Patient.findOne({
+            _id: my_patient_id,
+            glucoseTimestamp: {
                 $elemMatch: {
                     time: {
                         $gte: today_start,
@@ -134,7 +133,7 @@ const getRecordDataForm = async (req, res, next) => {
             }
         },
         {
-            'timestamp.$' : 1
+            'glucoseTimestamp.$' : 1
         }).lean()
 
         // my attempt at making the submit ticks appear individually
@@ -143,7 +142,7 @@ const getRecordDataForm = async (req, res, next) => {
         /*
         var date_result = {}
         date_result[0] = await PatientClinician.findOne({
-            _id: new_my_patient_id,
+            _id: my_patient_id,
             glucoseTimestamp: {
                 $elemMatch: {
                     time: {
@@ -157,7 +156,7 @@ const getRecordDataForm = async (req, res, next) => {
             'glucoseTimestamp.$' : 1
         }).lean()
         date_result[1] = await PatientClinician.findOne({
-            _id: new_my_patient_id,
+            _id: my_patient_id,
             weightTimestamp: {
                 $elemMatch: {
                     time: {
@@ -171,7 +170,7 @@ const getRecordDataForm = async (req, res, next) => {
             'weightTimestamp.$' : 1
         }).lean()
         date_result[2] = await PatientClinician.findOne({
-            _id: new_my_patient_id,
+            _id: my_patient_id,
             insulinTimestamp: {
                 $elemMatch: {
                     time: {
@@ -185,7 +184,7 @@ const getRecordDataForm = async (req, res, next) => {
             'insulinTimestamp.$' : 1
         }).lean()
         date_result[3] = await PatientClinician.findOne({
-            _id: new_my_patient_id,
+            _id: my_patient_id,
             exerciseTimestamp: {
                 $elemMatch: {
                     time: {
@@ -205,12 +204,15 @@ const getRecordDataForm = async (req, res, next) => {
 
         */
 
-        var patient_data = await PatientClinician.findOne({_id: new_my_patient_id}).lean()
+        var patient_data = await Patient.findOne({_id: my_patient_id}).lean()
         if (date_result) {
             submit = true
         }
-        //show time as DD/MM/YYYY, HH:MM:SS
-        patient_data.timestamp[patient_data.timestamp.length-1].time = patient_data.timestamp[patient_data.timestamp.length-1].time.toLocaleString()
+        
+        if (patient_data.glucoseTimestamp.length) {
+            //show time as DD/MM/YYYY, HH:MM:SS
+            patient_data.glucoseTimestamp[patient_data.glucoseTimestamp.length-1].time = patient_data.glucoseTimestamp[patient_data.glucoseTimestamp.length-1].time.toLocaleString()
+        }
 
         return res.render('recordHealth', { submitted: submit, patient: patient_data, layout: 'patient_main' })
     } catch (err) {
@@ -222,11 +224,11 @@ const insertGlucose = async (req, res, next) => {
     try {
         const today = new Date()
         const glucoseTimestamp = mongoose.Types.ObjectId()
-        await PatientClinician.updateOne({
-            _id: new_my_patient_id
+        await Patient.updateOne({
+            _id: my_patient_id
         }, {
             $push: {
-                timestamp: {time: today, glucose: req.body.glucose, message: req.body.comment}
+                glucoseTimestamp: {time: today, value: req.body.glucose, message: req.body.comment}
             }
         })
         return res.redirect('/patient/record-health-form')
@@ -239,8 +241,8 @@ const insertWeight = async (req, res, next) => {
     try {
         const today = new Date()
         const weightTimestamp = mongoose.Types.ObjectId()
-        await PatientClinician.updateOne({
-            _id: new_my_patient_id
+        await Patient.updateOne({
+            _id: my_patient_id
         }, {
             $push: {
                 weightTimestamp: {time: today, value: req.body.weight, message: req.body.comment}
@@ -256,8 +258,8 @@ const insertInsulin = async (req, res, next) => {
     try {
         const today = new Date()
         const insulinTimestamp = mongoose.Types.ObjectId()
-        await PatientClinician.updateOne({
-            _id: new_my_patient_id
+        await Patient.updateOne({
+            _id: my_patient_id
         }, {
             $push: {
                 insulinTimestamp: {time: today, value: req.body.insulin, message: req.body.comment}
@@ -273,8 +275,8 @@ const insertExercise = async (req, res, next) => {
     try {
         const today = new Date()
         const exerciseTimestamp = mongoose.Types.ObjectId()
-        await PatientClinician.updateOne({
-            _id: new_my_patient_id
+        await Patient.updateOne({
+            _id: my_patient_id
         }, {
             $push: {
                 exerciseTimestamp: {time: today, value: req.body.exercise, message: req.body.comment}
