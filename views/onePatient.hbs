@@ -1,6 +1,24 @@
 <div class="container">
     <h2 class="center">{{data.firstName}} {{data.lastName}}'s Health Record </h2>
 
+    <p>Chosen timeseries<br>
+        {{#if data.glucoseRecord}}
+        Glucose<br>
+        {{/if}}
+        {{#if data.weightRecord}}
+        Weight<br>
+        {{/if}}
+        {{#if data.insulinRecord}}
+        Insulin<br>
+        {{/if}}
+        {{#if data.exerciseRecord}}
+        exerciseRecord<br>
+        {{/if}}
+        
+    </p>
+    
+    <button onclick= window.location.href="/clinician/{{data._id}}/set-timeseries">Set Timeseries</button>
+
     <h2>Glucose Record</h2>
     <div class="bigcontainer">
         <div class="child_container">

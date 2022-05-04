@@ -36,7 +36,7 @@ const getAllPatientData = async (req, res, next) => {
         const patients = await Patient.find({ '_id': { $in: ids.patients } }).lean();
         //show time as DD/MM/YYYY, HH:MM:SS
         patients.forEach((element) => {
-            if (element.glucoseTimestamp) {
+            if (element.glucoseTimestamp.length) {
                 element.glucoseTimestamp[element.glucoseTimestamp.length-1].time = element.glucoseTimestamp[element.glucoseTimestamp.length-1].time.toLocaleString()
             }
         })
@@ -65,33 +65,6 @@ const getOnePatientData = async (req, res, next) => {
     }   
 }
 
-const updatePatient = async (req, res, next) => {
-    try {
-        if (req.body.updateLowerThreshold) {
-            await Patient.updateOne({
-                _id: req.params.id
-            }, {
-                $set: {
-                  "glucoseThreshold.lower": req.body.updateLowerThreshold
-                }
-            })
-        }
-        else if (req.body.updateUpperThreshold) {
-            await Patient.updateOne({
-                _id: req.params.id
-            }, {
-                $set: {
-                  "glucoseThreshold.upper": req.body.updateUpperThreshold
-                }
-            })
-        }
-        return res.redirect("./".concat(req.params.id.toString()))
-    } catch (err) {
-        return next(err)
-    }
-}
-
-//these stuffs below are not in use right now
 const createAccountPage = async (req, res, next) => {
     try {
         return res.render('createClinicianAccount', {layout: 'clinician_main' })
@@ -106,7 +79,6 @@ const createClinician = async (req, res, next) => {
         await newClinician.save(function (err) {
             if (err) return console.error(err);
         })
-        //await Clinician.create(newClinician);
         return res.redirect('/clinician/create-new-account')
     } catch (err) {
         return next(err)
@@ -139,7 +111,8 @@ const createPatient = async (req, res, next) => {
 
 const setTimeseriesPage = async (req, res, next) => {
     try {
-        return res.render('setTimeseries', {layout: 'clinician_main' })
+        const patient = await Patient.findById(req.params.id).lean()
+        return res.render('setTimeseries', {data: patient,layout: 'clinician_main' })
     } catch (err) {
         return next(err)
     }
@@ -147,9 +120,93 @@ const setTimeseriesPage = async (req, res, next) => {
 
 const newTimeseries = async (req, res, next) => {
     try {
-        var timeseries= {            
+        await Patient.updateOne({
+            _id: req.params.id
+        }, {
+            $set: {
+                "glucoseRecord": Boolean(req.body.glucose),
+                "weightRecord": Boolean(req.body.weight),
+                "insulinRecord": Boolean(req.body.insulin),
+                "exerciseRecord": Boolean(req.body.exercise),
+            }
+        })
+        return res.redirect('/clinician/'.concat(req.params.id.toString(), '/set-timeseries'))
+    } catch (err) {
+        return next(err)
+    }
+}
+
+const setThreshold = async (req, res, next) => {
+    try {
+        // lowerbound
+        if (req.body.glucose_lower) {
+            await Patient.updateOne({
+                _id: req.params.id
+            }, {
+                $set: {
+                  "glucoseThreshold.lower": req.body.glucose_lower
+                }
+            })
+        } else if (req.body.weight_lower) {
+            await Patient.updateOne({
+                _id: req.params.id
+            }, {
+                $set: {
+                  "weightThreshold.lower": req.body.weight_lower
+                }
+            })
+        } else if (req.body.insulin_lower) {
+            await Patient.updateOne({
+                _id: req.params.id
+            }, {
+                $set: {
+                  "insulinThreshold.lower": req.body.insulin_lower
+                }
+            })
+        } else if (req.body.exercise_lower) {
+            await Patient.updateOne({
+                _id: req.params.id
+            }, {
+                $set: {
+                  "exerciseThreshold.lower": req.body.exercise_lower
+                }
+            })
         }
-        return res.redirect('/clinician/set-timeseries')
+        // upperbound
+        if (req.body.glucose_upper) {
+            await Patient.updateOne({
+                _id: req.params.id
+            }, {
+                $set: {
+                  "glucoseThreshold.upper": req.body.glucose_upper
+                }
+            })
+        } else if (req.body.weight_upper) {
+            await Patient.updateOne({
+                _id: req.params.id
+            }, {
+                $set: {
+                  "weightThreshold.upper": req.body.weight_upper
+                }
+            })
+        } else if (req.body.insulin_upper) {
+            await Patient.updateOne({
+                _id: req.params.id
+            }, {
+                $set: {
+                  "insulinThreshold.upper": req.body.insulin_upper
+                }
+            })
+        } else if (req.body.exercise_upper) {
+            await Patient.updateOne({
+                _id: req.params.id
+            }, {
+                $set: {
+                  "exerciseThreshold.upper": req.body.exercise_upper
+                }
+            })
+        }
+        return res.redirect('/clinician/'.concat(req.params.id.toString(), '/set-timeseries'))
     } catch (err) {
         return next(err)
     }
@@ -161,13 +218,11 @@ module.exports = {
     getAllClinicianData,
     getAllPatientData,
     getOnePatientData,
-    updatePatient,
-
-    //these stuffs below are not in use right now
     createAccountPage,
     createPatientPage,
     setTimeseriesPage,
     newTimeseries,
+    setThreshold,
     createClinician,
     createPatient,
 }

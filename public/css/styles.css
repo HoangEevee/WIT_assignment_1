@@ -216,6 +216,12 @@ form {
     display: inline-block;
     box-sizing: border-box;
   }
+
+  input[type=checkbox] {
+    width: 30px;
+    margin: 0;
+    box-sizing: none;
+  }
   
   /* Set for all buttons */
   button {
