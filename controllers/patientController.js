@@ -120,28 +120,12 @@ const getRecordDataForm = async (req, res, next) => {
         const today_start = new Date(today.setHours(0,0,0,0))
         const tmr_start = new Date(today.setDate(today.getDate()+1))
 
-        var submit = false
-        var date_result = await Patient.findOne({
-            _id: my_patient_id,
-            glucoseTimestamp: {
-                $elemMatch: {
-                    time: {
-                        $gte: today_start,
-                        $lt: tmr_start,
-                    }
-                }
-            }
-        },
-        {
-            'glucoseTimestamp.$' : 1
-        }).lean()
-
         // my attempt at making the submit ticks appear individually
         // for now we're just using glucose for d2
-        //const attributes = ['glucose', 'weight', 'insulin', 'exercise']
-        /*
+        const attributes = ['glucose', 'weight', 'insulin', 'exercise']
+        
         var date_result = {}
-        date_result[0] = await PatientClinician.findOne({
+        date_result[attributes[0]] = await Patient.findOne({
             _id: my_patient_id,
             glucoseTimestamp: {
                 $elemMatch: {
@@ -155,7 +139,7 @@ const getRecordDataForm = async (req, res, next) => {
         {
             'glucoseTimestamp.$' : 1
         }).lean()
-        date_result[1] = await PatientClinician.findOne({
+        date_result[attributes[1]] = await Patient.findOne({
             _id: my_patient_id,
             weightTimestamp: {
                 $elemMatch: {
@@ -169,7 +153,7 @@ const getRecordDataForm = async (req, res, next) => {
         {
             'weightTimestamp.$' : 1
         }).lean()
-        date_result[2] = await PatientClinician.findOne({
+        date_result[attributes[2]] = await Patient.findOne({
             _id: my_patient_id,
             insulinTimestamp: {
                 $elemMatch: {
@@ -183,7 +167,7 @@ const getRecordDataForm = async (req, res, next) => {
         {
             'insulinTimestamp.$' : 1
         }).lean()
-        date_result[3] = await PatientClinician.findOne({
+        date_result[attributes[3]] = await Patient.findOne({
             _id: my_patient_id,
             exerciseTimestamp: {
                 $elemMatch: {
@@ -198,20 +182,24 @@ const getRecordDataForm = async (req, res, next) => {
             'exerciseTimestamp.$' : 1
         }).lean()
 
-        for (result of date_result) {
-
+        var submit = {}
+        for (let i = 0; i < 4; i++) {
+            submit[attributes[i]] = (date_result[attributes[i]]!=null)
         }
-
-        */
 
         var patient_data = await Patient.findOne({_id: my_patient_id}).lean()
-        if (date_result) {
-            submit = true
-        }
-        
+        //show time as DD/MM/YYYY, HH:MM:SS
         if (patient_data.glucoseTimestamp.length) {
-            //show time as DD/MM/YYYY, HH:MM:SS
             patient_data.glucoseTimestamp[patient_data.glucoseTimestamp.length-1].time = patient_data.glucoseTimestamp[patient_data.glucoseTimestamp.length-1].time.toLocaleString()
+        }
+        if (patient_data.weightTimestamp.length) {
+            patient_data.weightTimestamp[patient_data.weightTimestamp.length-1].time = patient_data.weightTimestamp[patient_data.weightTimestamp.length-1].time.toLocaleString()
+        }
+        if (patient_data.insulinTimestamp.length) {
+            patient_data.insulinTimestamp[patient_data.insulinTimestamp.length-1].time = patient_data.insulinTimestamp[patient_data.insulinTimestamp.length-1].time.toLocaleString()
+        }
+        if (patient_data.exerciseTimestamp.length) {
+            patient_data.exerciseTimestamp[patient_data.exerciseTimestamp.length-1].time = patient_data.exerciseTimestamp[patient_data.exerciseTimestamp.length-1].time.toLocaleString()
         }
 
         return res.render('recordHealth', { submitted: submit, patient: patient_data, layout: 'patient_main' })
@@ -220,17 +208,43 @@ const getRecordDataForm = async (req, res, next) => {
     }
 }
 
-const insertGlucose = async (req, res, next) => {
+const insertHealthData = async (req, res, next) => {
     try {
         const today = new Date()
-        const glucoseTimestamp = mongoose.Types.ObjectId()
-        await Patient.updateOne({
-            _id: my_patient_id
-        }, {
-            $push: {
-                glucoseTimestamp: {time: today, value: req.body.glucose, message: req.body.comment}
-            }
-        })
+
+        if (req.body.glucose) {
+            await Patient.updateOne({
+                _id: my_patient_id
+            }, {
+                $push: {
+                    glucoseTimestamp: {time: today, value: req.body.glucose, message: req.body.comment}
+                }
+            })
+        } else if (req.body.weight) {
+            await Patient.updateOne({
+                _id: my_patient_id
+            }, {
+                $push: {
+                    weightTimestamp: {time: today, value: req.body.weight, message: req.body.comment}
+                }
+            })
+        } else if (req.body.insulin) {
+            await Patient.updateOne({
+                _id: my_patient_id
+            }, {
+                $push: {
+                    insulinTimestamp: {time: today, value: req.body.insulin, message: req.body.comment}
+                }
+            })
+        } else if (req.body.exercise) {
+            await Patient.updateOne({
+                _id: my_patient_id
+            }, {
+                $push: {
+                    exerciseTimestamp: {time: today, value: req.body.exercise, message: req.body.comment}
+                }
+            })
+        }
         return res.redirect('/patient/record-health-form')
     } catch (err) {
         return next(err)
@@ -299,8 +313,5 @@ module.exports = {
     getPersonal,
     getPastHealth,
     getRecordDataForm,
-    insertGlucose,
-    insertWeight,
-    insertInsulin,
-    insertExercise,
+    insertHealthData,
 }

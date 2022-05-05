@@ -17,13 +17,21 @@
         
     </p>
     
-    <button onclick= window.location.href="/clinician/{{data._id}}/set-timeseries">Set Timeseries</button>
+    <div class="container">
+        <div class="child_container">
+            <button onclick= window.location.href="/clinician/{{data._id}}/set-timeseries">Set Timeseries</button>
+            <button onclick= window.location.href="#notes">Clinician Notes</button>
+            <button onclick= window.location.href="#support">Support Messages and Comments</button>
+        </div>
+    </div>
 
+    
+<!--
     <h2>Glucose Record</h2>
     <div class="bigcontainer">
         <div class="child_container">
             <p>Lower Threshold: {{data.glucoseThreshold.lower}}</p>
-            <form action="./{{data._id}}" method="POST">    
+            <form action="./{{data._id}}/set-timeseries" method="POST">    
                 <div class="container">
                     <input type="text" placeholder="Update lower threshold" name="updateLowerThreshold" required>
                     <button type="submit">Update</button>        
@@ -39,7 +47,7 @@
                 </div>
             </form> 
         </div>
-    </div>
+    </div>-->
     
 
     <div class="tablecontainer">

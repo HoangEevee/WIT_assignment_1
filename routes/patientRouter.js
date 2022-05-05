@@ -16,10 +16,7 @@ patientRouter.get('/yourAccount', patientController.getPersonal) // will change 
 patientRouter.get('/past-health', patientController.getPastHealth)
 patientRouter.get('/user', patientController.getDataByPatient)
 patientRouter.get('/record-health-form', patientController.getRecordDataForm)
-patientRouter.post('/record-glucose', patientController.insertGlucose)
-patientRouter.post('/record-weight', patientController.insertWeight)
-patientRouter.post('/record-insulin', patientController.insertInsulin)
-patientRouter.post('/record-exercise', patientController.insertExercise)
+patientRouter.post('/insert-health-data', patientController.insertHealthData)
 
 module.exports = patientRouter
 

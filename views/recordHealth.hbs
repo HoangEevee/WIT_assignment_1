@@ -10,109 +10,123 @@
 
 <section>
     
-    <div class="container">
-        <form action="/patient/record-glucose" method="POST">
-        
-            <h4>Blood Glucose (nmol/L)</h4>
-            <input type="number" step="any" id="glucose" placeholder="Add blood glucose" name="glucose" required>
-            <input type="text" id="comment_glucose" placeholder="Add comment" name="comment">
-            
-            <div class="parentcontainer">
-                {{#if submitted}}
-                    <small class="submitted">Submitted!</small>
-                {{else}}
-                    <small>  </small>
-                {{/if}}
-                {{#each patient.glucoseTimestamp}}
-                {{#if @last}}
-                    <small>Last updated at {{this.time}}</small>
-                {{/if}}
-                {{/each}}
-            </div>
-            
-            {{#unless submitted}}
-                <button type="submit">Save</button>
-            {{/unless}}
-        </form>
+    <div class="bigcontainer">
+        {{#if patient.glucoseRecord}}
+        <div class="child_container">
+            <form action="/patient/insert-health-data" method="POST">
+                <h3 class="center">Blood Glucose (nmol/L)</h3>
+                <div class="container">
+                <input type="number" step="any" id="glucose" placeholder="Add blood glucose" name="glucose" required>
+                <input type="text" id="comment_glucose" placeholder="Add comment" name="comment">
+                
+                <div class="parentcontainer">
+                    {{#if submitted.glucose}}
+                        <small class="submitted">Submitted!</small>
+                    {{else}}
+                        <small>  </small>
+                    {{/if}}
+                    {{#each patient.glucoseTimestamp}}
+                    {{#if @last}}
+                        <small>Last updated at {{this.time}}</small>
+                    {{/if}}
+                    {{/each}}
+                </div>
+                
+                {{#unless submitted.glucose}}
+                    <button type="submit">Save</button>
+                {{/unless}}
+                </div>
+            </form>
+        </div>
+        {{/if}}
+        {{#if patient.weightRecord}}
+        <div class="child_container">
+            <form action="/patient/insert-health-data" method="POST">
+                <h3 class="center">Weight (kg)</h3>
+                <div class="container">
+                <input type="number" step="any" id="weight" placeholder="Add weight" name="weight" required>
+                <input type="text" id="comment_weight" placeholder="Add comment" name="comment">
+                
+                <div class="parentcontainer">
+                    {{#if submitted.weight}}
+                        <small class="submitted">Submitted!</small>
+                    {{else}}
+                        <small>  </small>
+                    {{/if}}
+                    {{#each patient.weightTimestamp}}
+                    {{#if @last}}
+                        <small>Last updated at {{this.time}}</small>
+                    {{/if}}
+                    {{/each}}
+                </div>
+                
+                {{#unless submitted.weight}}
+                    <button type="submit">Save</button>
+                {{/unless}}
+                </div>
+            </form>
+        </div>
+        {{/if}}
     </div>
 
-    <!--I rewrote the other attributes but until I figure out the who submit tick thing, they'll be commented out-->
-<!--
-    <div class="container">
-        <form action="/patient/record-weight" method="POST">
-            <label for="uname"><h4>Weight (kg)</h4></label>
-            <input type="number" step="any" id="weight" placeholder="Add weight" name="weight" required>
-            <input type="text" id="comment_weight" placeholder="Add comment" name="comment">
-            
-            <div class="parentcontainer">
-                {{#if submitted}}
-                    <small class="submitted">Submitted!</small>
-                {{else}}
-                    <small>  </small>
-                {{/if}}
-                {{#each patient.weightTimestamp}}
-                {{#if @last}}
-                    <small>Last updated at {{this.time}}</small>
-                {{/if}}
-                {{/each}}
-            </div>
-            
-            {{#unless submitted}}
-                <button type="submit">Save</button>
-            {{/unless}}
-        </form>
-    </div>
-    
-    <div class="container">
-        <form action="/patient/record-insulin" method="POST">
-            <label for="uname"><h4>Insulin (no. of doses)</h4></label>
-            <input type="number" step="any" id="insulin" placeholder="Add no. of insulin doses" name="insulin" required>
-            <input type="text" id="comment_insulin" placeholder="Add comment" name="comment">
-            
-            <div class="parentcontainer">
-                {{#if submitted}}
-                    <small class="submitted">Submitted!</small>
-                {{else}}
-                    <small>  </small>
-                {{/if}}
-                {{#each patient.insulinTimestamp}}
-                {{#if @last}}
-                    <small>Last updated at {{this.time}}</small>
-                {{/if}}
-                {{/each}}
-            </div>
-            
-            {{#unless submitted}}
-                <button type="submit">Save</button>
-            {{/unless}}
-            
-        </form>
+
+    <div class="bigcontainer">
+        {{#if patient.insulinRecord}}
+        <div class="child_container">
+            <form action="/patient/insert-health-data" method="POST">
+                <h3 class="center">Insulin (no. of doses)</h3>
+                <div class="container">
+                <input type="number" step="any" id="insulin" placeholder="Add no. of insulin doses" name="insulin" required>
+                <input type="text" id="comment_insulin" placeholder="Add comment" name="comment">
+                
+                <div class="parentcontainer">
+                    {{#if submitted.insulin}}
+                        <small class="submitted">Submitted!</small>
+                    {{else}}
+                        <small>  </small>
+                    {{/if}}
+                    {{#each patient.insulinTimestamp}}
+                    {{#if @last}}
+                        <small>Last updated at {{this.time}}</small>
+                    {{/if}}
+                    {{/each}}
+                </div>
+                
+                {{#unless submitted.insulin}}
+                    <button type="submit">Save</button>
+                {{/unless}}
+                </div>
+            </form>
+        </div>
+        {{/if}}
+        {{#if patient.exerciseRecord}}
+        <div class="child_container">
+            <form action="/patient/insert-health-data" method="POST">
+                <h3 class="center">Exercise (step count)</h3>
+                <div class="container">
+                <input type="number" step="any" id="exercise" placeholder="Add step count" name="exercise" required>
+                <input type="text" id="comment_exercise" placeholder="Add comment" name="comment">
+                
+                <div class="parentcontainer">
+                    {{#if submitted.exercise}}
+                        <small class="submitted">Submitted!</small>
+                    {{else}}
+                        <small>  </small>
+                    {{/if}}
+                    {{#each patient.exerciseTimestamp}}
+                    {{#if @last}}
+                        <small>Last updated at {{this.time}}</small>
+                    {{/if}}
+                    {{/each}}
+                </div>
+                
+                {{#unless submitted.exercise}}
+                    <button type="submit">Save</button>
+                {{/unless}}
+                </div>
+            </form>
+        </div>
+        {{/if}}
     </div>
 
-    <div class="container">
-        <form action="/patient/record-insulin" method="POST">
-            <label for="uname"><h4>Exercise (step count)</h4></label>
-            <input type="number" step="any" id="exercise" placeholder="Add step count" name="exercise" required>
-            <input type="text" id="comment_exercise" placeholder="Add comment" name="comment">
-            
-            <div class="parentcontainer">
-                {{#if submitted}}
-                    <small class="submitted">Submitted!</small>
-                {{else}}
-                    <small>  </small>
-                {{/if}}
-                {{#each patient.exerciseTimestamp}}
-                {{#if @last}}
-                    <small>Last updated at {{this.time}}</small>
-                {{/if}}
-                {{/each}}
-            </div>
-            
-            {{#unless submitted}}
-                <button type="submit">Save</button>
-            {{/unless}}
-            
-        </form>
-    </div>
-    -->
 </section>

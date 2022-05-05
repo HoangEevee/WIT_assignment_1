@@ -120,14 +120,16 @@ const setTimeseriesPage = async (req, res, next) => {
 
 const newTimeseries = async (req, res, next) => {
     try {
+        const patient = await Patient.findById(req.params.id).lean()
+        // XOR: how to find the feature with the changed state
         await Patient.updateOne({
             _id: req.params.id
         }, {
             $set: {
-                "glucoseRecord": Boolean(req.body.glucose),
-                "weightRecord": Boolean(req.body.weight),
-                "insulinRecord": Boolean(req.body.insulin),
-                "exerciseRecord": Boolean(req.body.exercise),
+                "glucoseRecord": Boolean(req.body.glucose) != patient.glucoseRecord,
+                "weightRecord": Boolean(req.body.weight) != patient.weightRecord,
+                "insulinRecord": Boolean(req.body.insulin) != patient.insulinRecord,
+                "exerciseRecord": Boolean(req.body.exercise) != patient.exerciseRecord,
             }
         })
         return res.redirect('/clinician/'.concat(req.params.id.toString(), '/set-timeseries'))
