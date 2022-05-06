@@ -4,7 +4,8 @@ Assignment 1/2/3 for WIT sem1 2022
 
 
 Notes for assignment submission 2: 
-1. When a user sign in there is a sign in option for clinician and for patient. In order to see the patient's informaton then click on patient sign in for (pat), and to view clinican dashboard then click on clinician sign in. 
+1. When a user sign in there is a sign in option for clinician and for patient. In order to see the patient's informaton then click on patient sign in for (pat), and to view clinican dashboard then click on clinician sign in.
+2. 'Patient-clinicians-test' DBS collection being used in MongoDB for the purposes of D2. We will seperate this into patient and clinician for D3. 
 
 Assumptions and notes for patient (mobile) and clinical UI (desktop) screens:
 Assumptions and notes for assignment 1: 
