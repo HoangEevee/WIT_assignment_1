@@ -3,67 +3,88 @@
 <section>
     <p class="center">What does you patient need?</p>
 
-    <form action="/clinician/set-timeseries" method="POST">
-        <h3 class="center">Blood glucose (mmol/L)</p>
-        <p class="center">Required?</p>
-        <select id="glucose_required" name="glucose_required">
-            <option value="yes">Yes</option>
-            <option value="no">No</option>
-        </select>
-        <br>
-        <p class="center">Upper limit</p>
-        <input type="number" step="any" id="glucose_upper" name="glucose_upper"/>
-        <br>
-        <p class="center">Lower limit</p>
-        <input type="number" step="any" id="glucose_upper" name="glucose_upper"/>
-        <br>
-        <br>
+    <div class="bigcontainer">
+        <div class="child_container">
+            <form action="/clinician/{{data._id}}/new-timeseries" method="POST">
+                <h3 class="center">Blood glucose (mmol/L)<span>
+                <input type='hidden' value={{data.glucoseRecord}} name='glucose'>
+                <input type ="checkbox" name="glucose" value = "glucose" onchange="this.form.submit()" {{#if data.glucoseRecord}}checked{{/if}}>
+                </span></h3>
+            </form>
+            {{#if data.glucoseRecord}}
+            <form action="/clinician/{{data._id}}/new-threshold" method="POST">
+                <p class="center">Lower limit: {{data.glucoseThreshold.lower}}</p>
+                <input type="number" step="any" id="glucose_lower" name="glucose_lower" placeholder="Update lower threshold"/>
+                <p class="center">Upper limit: {{data.glucoseThreshold.upper}}</p>
+                <input type="number" step="any" id="glucose_upper" name="glucose_upper" placeholder="Update upper threshold"/>
+                <button type="submit">Update</button>  
+            </form>
+            {{/if}}
+        </div>
 
-        <h3 class="center">Weight (kg)</p>
-        <p class="center">Required?</p>
-        <select id="weight_required" name="weight_required">
-            <option value="yes">Yes</option>
-            <option value="no">No</option>
-        </select>
-        <br>
-        <p class="center">Upper limit</p>
-        <input type="number" step="any" id="weight_upper" name="weight_upper"/>
-        <br>
-        <p class="center">Lower limit</p>
-        <input type="number" step="any" id="weight_upper" name="weight_upper"/>
-        <br>
-        <br>
+        <div class="child_container">
+            <form action="/clinician/{{data._id}}/new-timeseries" method="POST">
+                <h3 class="center">Weight (kg)<span>
+                <input type='hidden' value={{data.weightRecord}} name='weight'>
+                <input type ="checkbox" name="weight" value = "weight" onchange="this.form.submit()" {{#if data.weightRecord}}checked{{/if}}>
+                </span></h3>
+            </form>
+            {{#if data.weightRecord}}
+            <form action="/clinician/{{data._id}}/new-threshold" method="POST">
+                <p class="center">Lower limit: {{data.weightThreshold.lower}}</p>
+                <input type="number" step="any" id="weight_lower" name="weight_lower" placeholder="Update lower threshold"/>
+                <p class="center">Upper limit: {{data.weightThreshold.upper}}</p>
+                <input type="number" step="any" id="weight_upper" name="weight_upper" placeholder="Update upper threshold"/>
+                <button type="submit">Update</button>
+            </form>
+            {{/if}}
+        </div>
+        
 
-        <h3 class="center">Insulin (no. of doses)</p>
-        <p class="center">Required?</p>
-        <select id="insulin_required" name="insulin_required">
-            <option value="yes">Yes</option>
-            <option value="no">No</option>
-        </select>
-        <br>
-        <p class="center">Upper limit</p>
-        <input type="number" id="insulin_upper" name="insulin_upper"/>
-        <br>
-        <p class="center">Lower limit</p>
-        <input type="number" id="insulin_upper" name="insulin_upper"/>
-        <br>
-        <br>
+    </div>
 
-        <h3 class="center">Exercise (step count)</p>
-        <p class="center">Required?</p>
-        <select id="exercise_required" name="exercise_required">
-            <option value="yes">Yes</option>
-            <option value="no">No</option>
-        </select>
-        <br>
-        <p class="center">Upper limit</p>
-        <input type="number" id="exercise_upper" name="exercise_upper"/>
-        <br>
-        <p class="center">Lower limit</p>
-        <input type="number" id="exercise_upper" name="exercise_upper"/>
-        <br>
-        <br>
+    <div class="bigcontainer">
+        <div class="child_container">
+            <form action="/clinician/{{data._id}}/new-timeseries" method="POST">
+                <h3 class="center">Insulin (no. of doses)<span>
+                <input type='hidden' value={{data.insulinRecord}} name='insulin'>
+                <input type ="checkbox" name="insulin" value = "insulin" onchange="this.form.submit()" {{#if data.insulinRecord}}checked{{/if}}>
+                </span></h3>
+            </form>
+            {{#if data.insulinRecord}}
+            <form action="/clinician/{{data._id}}/new-threshold" method="POST">
+                <p class="center">Lower limit: {{data.insulinThreshold.lower}}</p>
+                <input type="number" step="any" id="insulin_lower" name="insulin_lower" placeholder="Update lower threshold"/>
+                <p class="center">Upper limit: {{data.insulinThreshold.upper}}</p>
+                <input type="number" step="any" id="insulin_upper" name="insulin_upper" placeholder="Update upper threshold"/>
+                <button type="submit">Update</button>
+            </form>
+            {{/if}}
+        </div>
 
-        <input type="submit"/>
-    </form>
+        <div class="child_container">
+            <form action="/clinician/{{data._id}}/new-timeseries" method="POST">
+                <h3 class="center">Exercise (step count)<span>
+                <input type='hidden' value={{data.exerciseRecord}} name='exercise'>
+                <input type ="checkbox" name="exercise" value = "exercise" onchange="this.form.submit()" {{#if data.exerciseRecord}}checked{{/if}}>
+                </span></h3>
+            </form>
+            {{#if data.exerciseRecord}}
+            <form action="/clinician/{{data._id}}/new-threshold" method="POST">
+                <p class="center">Lower limit: {{data.exerciseThreshold.lower}}</p>
+                <input type="number" step="any" id="exercise_lower" name="exercise_lower" placeholder="Update lower threshold"/>
+                <p class="center">Upper limit: {{data.exerciseThreshold.upper}}</p>
+                <input type="number" step="any" id="exercise_upper" name="exercise_upper" placeholder="Update upper threshold"/>
+                <button type="submit">Update</button>
+            </form>
+            {{/if}}
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="child_container">
+            <button onclick= window.location.href="/clinician/{{data._id}}">Back to Patient Page</button>
+        </div>
+    </div>
+
 </section>

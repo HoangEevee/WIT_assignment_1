@@ -11,9 +11,6 @@ clinicianRouter.post('/', clinicianController.logIn) //only get dashboard of cli
 
 clinicianRouter.get("/dashboard", clinicianController.getAllPatientData)
 
-clinicianRouter.get('/:id', clinicianController.getOnePatientData)
-clinicianRouter.post('/:id', clinicianController.updatePatient)
-
 //these stuffs below are not in use right now
 clinicianRouter.get('/create-new-account', clinicianController.createAccountPage)
 clinicianRouter.post('/create-clinician', clinicianController.createClinician)
@@ -21,8 +18,11 @@ clinicianRouter.post('/create-clinician', clinicianController.createClinician)
 clinicianRouter.get('/create-patient-account', clinicianController.createPatientPage)
 clinicianRouter.post('/create-patient', clinicianController.createPatient)
 
-clinicianRouter.get('/set-timeseries', clinicianController.setTimeseriesPage)
-clinicianRouter.post('/new-timeseries', clinicianController.newTimeseries)
+// LEAVE THESE AT THE END
+clinicianRouter.get('/:id', clinicianController.getOnePatientData)
 
+clinicianRouter.get('/:id/set-timeseries', clinicianController.setTimeseriesPage)
+clinicianRouter.post('/:id/new-timeseries', clinicianController.newTimeseries)
+clinicianRouter.post('/:id/new-threshold', clinicianController.setThreshold)
 
 module.exports = clinicianRouter

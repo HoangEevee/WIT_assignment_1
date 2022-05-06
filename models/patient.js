@@ -7,24 +7,30 @@ const thresholdSchema = new mongoose.Schema({
 
 const timestampSchema = new mongoose.Schema({
     time: Date,
-    glucose: Number,
+    value: Number,
     message: String
 })
 const schema = new mongoose.Schema({ 
-    patient: String,
     clinicianId: mongoose.Types.ObjectId,
-    clinician: String,
+    title: String,
+    firstName: String,
+    lastName: String,
+    dob: String,
+    email: String,
+    contactNumber: String,
+    emergencyName: String, 
+    emergencyNumber: String,
     glucoseRecord: Boolean,
-    glucoseThreshold: [thresholdSchema],
+    glucoseThreshold: thresholdSchema,
     glucoseTimestamp: [timestampSchema],
     weightRecord: Boolean,
-    weightThreshold: [thresholdSchema],
+    weightThreshold: thresholdSchema,
     weightTimestamp: [timestampSchema],
     insulinRecord: Boolean,
-    insulinThreshold: [thresholdSchema],
+    insulinThreshold: thresholdSchema,
     insulinTimestamp: [timestampSchema],
     exerciseRecord: Boolean,
-    exerciseThreshold: [thresholdSchema],
+    exerciseThreshold: thresholdSchema,
     exerciseTimestamp: [timestampSchema],
 })
 
