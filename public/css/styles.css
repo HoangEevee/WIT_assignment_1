@@ -74,6 +74,10 @@ nav ul {
     /* padding-left: 3rem; */
 }
 
+.nav-left:hover {
+    background-color: #8693B4;
+}
+
 .nav-right li{
     float: right;
 }

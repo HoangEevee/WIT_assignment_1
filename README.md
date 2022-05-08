@@ -53,7 +53,7 @@ List of (get) routes (proposed by Quynh)
                 /badges             # ADD TO MENU/NAV???
         /support-messages           # list of support msgs :) - NOTE: add the red mark "you've got new msg" thing on the icon
         /settings                   # optional when we have time - custom colours
-/clinician                          # login OR asks "new or existing?" // prolly too much work - I'll just make 2 acc already
+/clinician                          # login OR asks "new or existing?" // prolly too much work - we can just make 2 acc already
         /dashboard
         /all-comments
         /create-patient-account

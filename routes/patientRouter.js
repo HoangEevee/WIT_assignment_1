@@ -10,13 +10,18 @@ patientRouter.get('/', patientController.logInPage)
 patientRouter.post('/login', patientController.logIn)
 
 patientRouter.get('/home', patientController.getHomePage)
-patientRouter.get('/aboutDiabetes', patientController.getAboutDiabetes)
-patientRouter.get('/aboutWebsite', patientController.getAboutWebsite)
-patientRouter.get('/yourAccount', patientController.getPersonal) // will change this to 'your account' later
-patientRouter.get('/past-health', patientController.getPastHealth)
-patientRouter.get('/user', patientController.getDataByPatient)
-patientRouter.get('/record-health-form', patientController.getRecordDataForm)
-patientRouter.post('/insert-health-data', patientController.insertHealthData)
+patientRouter.get('/about-diabetes', patientController.getAboutDiabetes)
+patientRouter.get('/about-website', patientController.getAboutWebsite)
+
+// yet to be implemented
+// NOTE: add whatever method after the controller + add any post routes
+// These routes only follow what Quynh suggested
+// patientRouter.get('/support-messages', patientController)
+// patientRouter.get('/settings', patientController)
+
+// onwards to other routers!
+patientRouter.use('/account', require('./patientAccountRouter'))
+patientRouter.use('/achievements', require('./achievementRouter'))
 
 module.exports = patientRouter
 
