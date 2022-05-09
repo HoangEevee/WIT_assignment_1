@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const Patient = require('../models/patient')
 const Clinician = require('../models/clinician')
+const helpers = require('../utils/helper')
 
 // Pat
 const my_patient_id = mongoose.Types.ObjectId("62713910a76e24742ae2aa9d")
@@ -25,16 +26,7 @@ const getPersonal = async (req, res, next) => {
 const getPastHealth = async(req, res, next) => {
     try {
         const patient = await Patient.findById(my_patient_id).lean()
-        
-        if (patient.glucoseTimestamp) {
-            //show time as DD/MM/YYYY, HH:MM:SS
-            patient.glucoseTimestamp.forEach((element) => {
-                element.time = element.time.toLocaleString()
-            })
-            //reverse timestamp so it show newest timestamp on top 
-            //TODO: might want to change push timestamp to begin of list instead so don't need this
-            patient.glucoseTimestamp = patient.glucoseTimestamp.reverse()
-        }
+        helpers.changePatientTimestampFormat(patient.glucoseTimestamp)
         return res.render('patientPastHealth', {data: patient, layout: 'patient_main'})
     } catch(err) {
         return next(err)
@@ -54,8 +46,7 @@ const getRecordDataForm = async (req, res, next) => {
         const today_start = new Date(today.setHours(0,0,0,0))
         const tmr_start = new Date(today.setDate(today.getDate()+1))
 
-        // my attempt at making the submit ticks appear individually
-        // for now we're just using glucose for d2
+        // Making the "submitted" ticks appear individually
         const attributes = ['glucose', 'weight', 'insulin', 'exercise']
         
         var date_result = {}
@@ -123,18 +114,10 @@ const getRecordDataForm = async (req, res, next) => {
 
         var patient_data = await Patient.findOne({_id: my_patient_id}).lean()
         //show time as DD/MM/YYYY, HH:MM:SS
-        if (patient_data.glucoseTimestamp.length) {
-            patient_data.glucoseTimestamp[patient_data.glucoseTimestamp.length-1].time = patient_data.glucoseTimestamp[patient_data.glucoseTimestamp.length-1].time.toLocaleString()
-        }
-        if (patient_data.weightTimestamp.length) {
-            patient_data.weightTimestamp[patient_data.weightTimestamp.length-1].time = patient_data.weightTimestamp[patient_data.weightTimestamp.length-1].time.toLocaleString()
-        }
-        if (patient_data.insulinTimestamp.length) {
-            patient_data.insulinTimestamp[patient_data.insulinTimestamp.length-1].time = patient_data.insulinTimestamp[patient_data.insulinTimestamp.length-1].time.toLocaleString()
-        }
-        if (patient_data.exerciseTimestamp.length) {
-            patient_data.exerciseTimestamp[patient_data.exerciseTimestamp.length-1].time = patient_data.exerciseTimestamp[patient_data.exerciseTimestamp.length-1].time.toLocaleString()
-        }
+        helpers.changeLastTimestampFormat(patient_data.glucoseTimestamp)
+        helpers.changeLastTimestampFormat(patient_data.weightTimestamp)
+        helpers.changeLastTimestampFormat(patient_data.insulinTimestamp)
+        helpers.changeLastTimestampFormat(patient_data.exerciseTimestamp)
 
         return res.render('recordHealth', { submitted: submit, patient: patient_data, layout: 'patient_main' })
     } catch (err) {

@@ -345,10 +345,6 @@ form {
 }
 
 /* Record Health */
-.submitted {
-    color: rgb(30, 255, 0);
-}
-
 .profile-container {
     display: flex;
     gap: 1rem;

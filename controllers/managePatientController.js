@@ -1,24 +1,14 @@
 const mongoose = require('mongoose')
 const Clinician = require('../models/clinician')
 const Patient = require('../models/patient')
+const helpers = require('../utils/helper')
 
 const my_clinician_id = mongoose.Types.ObjectId("62713547ab750c0e07f6387f")
 
 const getOnePatientData = async (req, res, next) => {
     try {
         const patient = await Patient.findById(req.params.id).lean()
-        console.log(patient)
-        console.log(patient.glucoseTimestamp)
-        
-        if (patient.glucoseTimestamp) {
-            //show time as DD/MM/YYYY, HH:MM:SS
-            patient.glucoseTimestamp.forEach((element) => {
-                element.time = element.time.toLocaleString()
-            })
-            //reverse timestamp so it show newest on top 
-            //TODO: might want to change push timestamp to begin of list instead so don't need this
-            patient.glucoseTimestamp = patient.glucoseTimestamp.reverse() 
-        }
+        helpers.changePatientTimestampFormat(patient.glucoseTimestamp)
         return res.render('onePatient', {data: patient, layout: 'clinician_main'})
         
     } catch (err) {
