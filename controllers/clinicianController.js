@@ -25,7 +25,7 @@ const logInPage = async (req, res, next) => {
 
 const logIn = async (req, res, next) => {
     try {
-        return res.redirect("./clinician/dashboard")
+        return res.redirect("./dashboard")
     } catch (err) {
         return next(err)
     }
