@@ -13,7 +13,7 @@
     <div class="bigcontainer">
         {{#if patient.glucoseRecord}}
         <div class="child_container">
-            <form action="/patient/insert-health-data" method="POST">
+            <form action="/patient/account/insert-health-data" method="POST">
                 <h3 class="center">Blood Glucose (nmol/L)</h3>
                 <div class="container">
                 <input type="number" step="any" id="glucose" placeholder="Add blood glucose" name="glucose" required>
@@ -41,7 +41,7 @@
         {{/if}}
         {{#if patient.weightRecord}}
         <div class="child_container">
-            <form action="/patient/insert-health-data" method="POST">
+            <form action="/patient/account/insert-health-data" method="POST">
                 <h3 class="center">Weight (kg)</h3>
                 <div class="container">
                 <input type="number" step="any" id="weight" placeholder="Add weight" name="weight" required>
@@ -73,10 +73,10 @@
     <div class="bigcontainer">
         {{#if patient.insulinRecord}}
         <div class="child_container">
-            <form action="/patient/insert-health-data" method="POST">
+            <form action="/patient/account/insert-health-data" method="POST">
                 <h3 class="center">Insulin (no. of doses)</h3>
                 <div class="container">
-                <input type="number" step="any" id="insulin" placeholder="Add no. of insulin doses" name="insulin" required>
+                <input type="number" id="insulin" placeholder="Add no. of insulin doses" name="insulin" required>
                 <input type="text" id="comment_insulin" placeholder="Add comment" name="comment">
                 
                 <div class="parentcontainer">
@@ -101,15 +101,15 @@
         {{/if}}
         {{#if patient.exerciseRecord}}
         <div class="child_container">
-            <form action="/patient/insert-health-data" method="POST">
+            <form action="/patient/account/insert-health-data" method="POST">
                 <h3 class="center">Exercise (step count)</h3>
                 <div class="container">
-                <input type="number" step="any" id="exercise" placeholder="Add step count" name="exercise" required>
+                <input type="number" id="exercise" placeholder="Add step count" name="exercise" required>
                 <input type="text" id="comment_exercise" placeholder="Add comment" name="comment">
                 
                 <div class="parentcontainer">
                     {{#if submitted.exercise}}
-                        <small class="submitted">Submitted!</small>
+                        <small>Submitted!</small>
                     {{else}}
                         <small>  </small>
                     {{/if}}

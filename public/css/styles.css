@@ -74,6 +74,10 @@ nav ul {
     /* padding-left: 3rem; */
 }
 
+.nav-left:hover {
+    background-color: #8693B4;
+}
+
 .nav-right li{
     float: right;
 }
@@ -341,10 +345,6 @@ form {
 }
 
 /* Record Health */
-.submitted {
-    color: rgb(30, 255, 0);
-}
-
 .profile-container {
     display: flex;
     gap: 1rem;

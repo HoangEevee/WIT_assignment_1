@@ -54,9 +54,9 @@
             {{#if data.insulinRecord}}
             <form action="/clinician/{{data._id}}/new-threshold" method="POST">
                 <p class="center">Lower limit: {{data.insulinThreshold.lower}}</p>
-                <input type="number" step="any" id="insulin_lower" name="insulin_lower" placeholder="Update lower threshold"/>
+                <input type="number" id="insulin_lower" name="insulin_lower" placeholder="Update lower threshold"/>
                 <p class="center">Upper limit: {{data.insulinThreshold.upper}}</p>
-                <input type="number" step="any" id="insulin_upper" name="insulin_upper" placeholder="Update upper threshold"/>
+                <input type="number" id="insulin_upper" name="insulin_upper" placeholder="Update upper threshold"/>
                 <button type="submit">Update</button>
             </form>
             {{/if}}
@@ -72,9 +72,9 @@
             {{#if data.exerciseRecord}}
             <form action="/clinician/{{data._id}}/new-threshold" method="POST">
                 <p class="center">Lower limit: {{data.exerciseThreshold.lower}}</p>
-                <input type="number" step="any" id="exercise_lower" name="exercise_lower" placeholder="Update lower threshold"/>
+                <input type="number" id="exercise_lower" name="exercise_lower" placeholder="Update lower threshold"/>
                 <p class="center">Upper limit: {{data.exerciseThreshold.upper}}</p>
-                <input type="number" step="any" id="exercise_upper" name="exercise_upper" placeholder="Update upper threshold"/>
+                <input type="number" id="exercise_upper" name="exercise_upper" placeholder="Update upper threshold"/>
                 <button type="submit">Update</button>
             </form>
             {{/if}}
