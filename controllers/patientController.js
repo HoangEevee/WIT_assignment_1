@@ -36,6 +36,8 @@ const logInPage = async (req, res, next) => {
         return next(err)
     }   
 }
+
+//this is not in use
 const logIn = async (req, res, next) => {
     try {
         return res.redirect("/patient/home")
