@@ -1,6 +1,7 @@
 # WIT_assignment
 Assignment 1/2/3 for WIT sem1 2022
 
+Notes for submission 3: 
 
 Notes for assignment submission 2: 
 1. When a user sign in there is a sign in option for clinician and for patient. In order to see the patient's informaton then click on patient sign in for (pat), and to view clinican dashboard then click on clinician sign in.
