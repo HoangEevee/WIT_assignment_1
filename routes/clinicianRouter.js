@@ -1,15 +1,21 @@
 // add router
+const passport = require('passport')
 const express = require('express')
 const clinicianRouter = express.Router()
-
+const isAuthenticated = require("../utils/helper").isAuthenticated
 // connect to controller
 const clinicianController = require('../controllers/clinicianController.js')
 
 // localhost:8080/clinician*** where *** is the following
 clinicianRouter.get('/', clinicianController.logInPage)
-clinicianRouter.post('/login', clinicianController.logIn) //only get dashboard of clinician Chris
 
-clinicianRouter.get("/dashboard", clinicianController.getAllPatientData)
+clinicianRouter.post('/login',
+passport.authenticate('local', {
+    successRedirect: '/clinician/dashboard', failureRedirect: '/clinician', failureFlash: true
+})
+)
+
+clinicianRouter.get("/dashboard", isAuthenticated, clinicianController.getAllPatientData)
 
 clinicianRouter.get('/create-patient-account', clinicianController.createPatientPage)
 clinicianRouter.post('/create-patient', clinicianController.createPatient)

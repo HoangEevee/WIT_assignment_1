@@ -20,11 +20,12 @@ passport.deserializeUser((userId, done) => {
         return done(undefined, user)
         })
 })
-    
+
 // Define local authentication strategy for Passport
 // http://www.passportjs.org/docs/downloads/html/#strategies
 passport.use(
     new LocalStrategy((username, password, done) => {
+        console.log("hi")
         Account.findOne({ username }, {}, {}, (err, user) => {
             if (err) {
                 return done(undefined, false, {
@@ -56,14 +57,5 @@ passport.use(
         })
     })
 )
-
-Account.find({}, (err, users) => {
-    console.log('A')
-    //if (users.length > 0) return;
-    Account.create({ username: 'user2', password: 'hashed!', role: 'INFO30005-2' }, (err) => {
-        if (err) { console.log(err); return; }
-        console.log('Dummy user inserted')
-    })
-})
 
 module.exports = passport

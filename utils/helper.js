@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const Patient = require('../models/patient')
 const Clinician = require('../models/clinician')
+const passport = require('passport')
 
 const changePatientTimestampFormat = (timestamp) => {
     if (timestamp.length) {
@@ -21,7 +22,18 @@ const changeLastTimestampFormat = (timestamp) => {
     }
 }
 
+// Authentication middleware
+const isAuthenticated = (req, res, next) => {
+    // If user is not authenticated via passport, redirect to login page
+    if (!req.isAuthenticated()) {
+        return res.redirect('/clinician')
+    }
+    // Otherwise, proceed to next middleware function
+    return next()
+}
+
 module.exports = {
     changePatientTimestampFormat,
     changeLastTimestampFormat,
+    isAuthenticated,
 }

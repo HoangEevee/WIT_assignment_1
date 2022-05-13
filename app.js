@@ -46,7 +46,7 @@ if (app.get('env') === 'production') {
 }
 
 // Initialise Passport.js
-const passport = require('./passport')
+const passport = require('./passport.js')
 app.use(passport.authenticate('session'))
 
 // connect to database
@@ -63,6 +63,9 @@ app.use((req, res, next) => {
 const mainRouter = require('./routes/mainRouter')
 //const patientRouter = require('./routes/patientRouter')
 //const clinicianRouter = require('./routes/clinicianRouter')
+
+//const clinicianRouter = require('./routes/clinicianRouter')
+//app.use(clinicianRouter)
 
 // send HTTP requests to routers
 app.use('/', mainRouter)
