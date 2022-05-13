@@ -33,7 +33,10 @@ const logIn = async (req, res, next) => {
 
 const getAllPatientData = async (req, res, next) => {
     try {
-        const ids = await Clinician.findById(my_clinician_id).lean()
+        //id associated with the account id
+        const clinician_id = req.user.data_id
+
+        const ids = await Clinician.findById(clinician_id).lean()
         const patients = await Patient.find({ '_id': { $in: ids.patients } }).lean();
         //show time as DD/MM/YYYY, HH:MM:SS
         patients.forEach((element) => {
