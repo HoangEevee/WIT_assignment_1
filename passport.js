@@ -57,4 +57,13 @@ passport.use(
     })
 )
 
+Account.find({}, (err, users) => {
+    console.log('A')
+    //if (users.length > 0) return;
+    Account.create({ username: 'user2', password: 'hashed!', role: 'INFO30005-2' }, (err) => {
+        if (err) { console.log(err); return; }
+        console.log('Dummy user inserted')
+    })
+})
+
 module.exports = passport
