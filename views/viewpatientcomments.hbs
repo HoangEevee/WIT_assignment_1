@@ -1,0 +1,19 @@
+<h2 class="center">Patient's Health Comments </h2>
+
+<div class="tablecontainer">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Patient Name</th>
+                <th>Patient Comment</th> 
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td data label = "Patient Name">{{data.firstName}} {{data.lastName}}</td>
+                <td data label = "Message">{{this.message}}</td> 
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>   
