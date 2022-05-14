@@ -4,11 +4,12 @@ const Clinician = require('../models/clinician')
 const helpers = require('../utils/helper')
 
 // Pat
-const my_patient_id = mongoose.Types.ObjectId("62713910a76e24742ae2aa9d")
+//const my_patient_id = mongoose.Types.ObjectId("62713910a76e24742ae2aa9d")
 
 const getDataByPatient = async (req, res, next) => { 
     try{
-        const patient = await Patient.findById(my_patient_id).lean()
+        const patient_id = req.user.data_id
+        const patient = await Patient.findById(patient_id).lean()
         return res.render('patientData', {oneItem: patient, layout: 'patient_main'})
     } catch (err) {
         return next(err)
@@ -25,7 +26,8 @@ const getPersonal = async (req, res, next) => {
 
 const getPastHealth = async(req, res, next) => {
     try {
-        const patient = await Patient.findById(my_patient_id).lean()
+        const patient_id = req.user.data_id
+        const patient = await Patient.findById(patient_id).lean()
         helpers.changePatientTimestampFormat(patient.glucoseTimestamp)
         return res.render('patientPastHealth', {data: patient, layout: 'patient_main'})
     } catch(err) {
@@ -49,9 +51,10 @@ const getRecordDataForm = async (req, res, next) => {
         // Making the "submitted" ticks appear individually
         const attributes = ['glucose', 'weight', 'insulin', 'exercise']
         
+        const patient_id = req.user.data_id
         var date_result = {}
         date_result[attributes[0]] = await Patient.findOne({
-            _id: my_patient_id,
+            _id: patient_id,
             glucoseTimestamp: {
                 $elemMatch: {
                     time: {
@@ -65,7 +68,7 @@ const getRecordDataForm = async (req, res, next) => {
             'glucoseTimestamp.$' : 1
         }).lean()
         date_result[attributes[1]] = await Patient.findOne({
-            _id: my_patient_id,
+            _id: patient_id,
             weightTimestamp: {
                 $elemMatch: {
                     time: {
@@ -79,7 +82,7 @@ const getRecordDataForm = async (req, res, next) => {
             'weightTimestamp.$' : 1
         }).lean()
         date_result[attributes[2]] = await Patient.findOne({
-            _id: my_patient_id,
+            _id: patient_id,
             insulinTimestamp: {
                 $elemMatch: {
                     time: {
@@ -93,7 +96,7 @@ const getRecordDataForm = async (req, res, next) => {
             'insulinTimestamp.$' : 1
         }).lean()
         date_result[attributes[3]] = await Patient.findOne({
-            _id: my_patient_id,
+            _id: patient_id,
             exerciseTimestamp: {
                 $elemMatch: {
                     time: {
@@ -112,7 +115,7 @@ const getRecordDataForm = async (req, res, next) => {
             submit[attributes[i]] = (date_result[attributes[i]]!=null)
         }
 
-        var patient_data = await Patient.findOne({_id: my_patient_id}).lean()
+        var patient_data = await Patient.findOne({_id: patient_id}).lean()
         //show time as DD/MM/YYYY, HH:MM:SS
         helpers.changeLastTimestampFormat(patient_data.glucoseTimestamp)
         helpers.changeLastTimestampFormat(patient_data.weightTimestamp)
@@ -128,10 +131,10 @@ const getRecordDataForm = async (req, res, next) => {
 const insertHealthData = async (req, res, next) => {
     try {
         const today = new Date()
-
+        const patient_id = req.user.data_id
         if (req.body.glucose) {
             await Patient.updateOne({
-                _id: my_patient_id
+                _id: patient_id
             }, {
                 $push: {
                     glucoseTimestamp: {time: today, value: req.body.glucose, message: req.body.comment}
@@ -139,7 +142,7 @@ const insertHealthData = async (req, res, next) => {
             })
         } else if (req.body.weight) {
             await Patient.updateOne({
-                _id: my_patient_id
+                _id: patient_id
             }, {
                 $push: {
                     weightTimestamp: {time: today, value: req.body.weight, message: req.body.comment}
@@ -147,7 +150,7 @@ const insertHealthData = async (req, res, next) => {
             })
         } else if (req.body.insulin) {
             await Patient.updateOne({
-                _id: my_patient_id
+                _id: patient_id
             }, {
                 $push: {
                     insulinTimestamp: {time: today, value: req.body.insulin, message: req.body.comment}
@@ -155,7 +158,7 @@ const insertHealthData = async (req, res, next) => {
             })
         } else if (req.body.exercise) {
             await Patient.updateOne({
-                _id: my_patient_id
+                _id: patient_id
             }, {
                 $push: {
                     exerciseTimestamp: {time: today, value: req.body.exercise, message: req.body.comment}

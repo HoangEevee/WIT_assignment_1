@@ -2,7 +2,7 @@
 const passport = require('passport')
 const express = require('express')
 const patientRouter = express.Router()
-
+const isAuthenticated = require("../utils/helper").isAuthenticated
 // connect to controller
 const patientController = require('../controllers/patientController.js')
 
@@ -13,7 +13,7 @@ passport.authenticate('local', {
     successRedirect: '/patient/home', failureRedirect: '/patient', failureFlash: true
 }))
 
-patientRouter.get('/home', patientController.getHomePage)
+patientRouter.get('/home', isAuthenticated, patientController.getHomePage)
 patientRouter.get('/about-diabetes', patientController.getAboutDiabetes)
 patientRouter.get('/about-website', patientController.getAboutWebsite)
 
@@ -24,8 +24,8 @@ patientRouter.get('/about-website', patientController.getAboutWebsite)
 // patientRouter.get('/settings', patientController)
 
 // onwards to other routers!
-patientRouter.use('/account', require('./patientAccountRouter'))
-patientRouter.use('/achievements', require('./achievementRouter'))
+patientRouter.use('/account', isAuthenticated, require('./patientAccountRouter'))
+patientRouter.use('/achievements',  isAuthenticated, require('./achievementRouter'))
 
 module.exports = patientRouter
 

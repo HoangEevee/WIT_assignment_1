@@ -18,7 +18,7 @@ passport.authenticate('local', {
 clinicianRouter.get("/dashboard", isAuthenticated, clinicianController.getAllPatientData)
 
 clinicianRouter.get('/create-patient-account', clinicianController.createPatientPage)
-clinicianRouter.post('/create-patient', clinicianController.createPatient)
+//clinicianRouter.post('/create-patient', clinicianController.createPatient)
 
 // yet to be implemented
 // NOTE: add whatever method after the controller + add any post routes
@@ -30,6 +30,6 @@ clinicianRouter.get('/create-new-account', clinicianController.createAccountPage
 clinicianRouter.post('/create-clinician', clinicianController.createClinician)
 
 // onwards to other routers!
-clinicianRouter.use('/:id', require('./managePatientRouter'))
+clinicianRouter.use('/:id', isAuthenticated, require('./managePatientRouter'))
 
 module.exports = clinicianRouter

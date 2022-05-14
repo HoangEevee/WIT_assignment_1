@@ -3,7 +3,7 @@ const Clinician = require('../models/clinician')
 const Patient = require('../models/patient')
 const helpers = require('../utils/helper')
 
-const my_clinician_id = mongoose.Types.ObjectId("62713547ab750c0e07f6387f")
+//const my_clinician_id = mongoose.Types.ObjectId("62713547ab750c0e07f6387f")
 
 // prolly more suited for clinician but eh testing
 const getAllClinicianData = async (req, res, next) => {
@@ -77,8 +77,8 @@ const createPatientPage = async (req, res, next) => {
     }
 }
 
-
-const createPatient = async (req, res, next) => {
+//Dont use this yet. Hardcode to patient CHRIST
+/*const createPatient = async (req, res, next) => {
     try {
         newPatient = new Patient( {...req.body, clinicianId: my_clinician_id} )
         await newPatient.save(function (err) {
@@ -91,7 +91,7 @@ const createPatient = async (req, res, next) => {
     } catch (err) {
         return next(err)
     }
-}
+}*/
 
 module.exports = {
     logInPage,
@@ -101,5 +101,5 @@ module.exports = {
     createAccountPage,
     createPatientPage,
     createClinician,
-    createPatient,
+    //createPatient,
 }
