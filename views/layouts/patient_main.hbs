@@ -19,25 +19,13 @@
         <a href="/patient/account/record-health-form">Record Health</a>
         <a href="/patient/account/past-health">View Past Health</a>
         <a href="/patient/account/account-info">Personal Details</a>
-        <a href="/">Sign Out</a>
+        <a href="/patient/achievements">Achievement</a>
+        <a href="/patient/view-support-messages">Support Messages</a>
+        
+        <a href="/logout">Sign Out</a>
     </div>
 
     <nav>
-        <!--
-        <div class="nav-left">
-            <div class="dropdown">
-                <a class="menubar">Menu</a>
-                <div class="dropdown-content">
-                    <a href="/patient/home">Home</a>
-                    <a href="/patient/aboutWebsite">About This Website</a>
-                    <a href="/patient/aboutDiabetes">About Diabetes</a>
-                    <a href="/patient/record-health-form">Record Health</a>
-                    <a href="/patient/past-health">View Past Health</a>
-                    <a href="/patient/user">Personal Details</a>
-                    <a href="/">Sign Out</a>
-                </div>
-            </div>
-        </div>-->
         <div class="nav-left">
             <a onclick="openNav()">&#9776; Menu</a>
         </div>
@@ -50,7 +38,7 @@
             <li><a class="active" href="#bell">
                 <img src="\img\Icon-w-material-message.png" alt="icon for message">
             </a></li>
-            <li><a class="active" href="#trophy">
+            <li><a class="active" href="/patient/achievements">
                 <img src="\img\Icon-w-awesome-trophy.png" alt="icon for achivements">
             </a></li>
         </ul>
@@ -59,7 +47,7 @@
     <main onclick="closeNav()">
         <br><br><br>
         <div class="logo">
-            <img src="\img\logo.png" alt="logo of DIABETES@HOME">
+            <img src="\img\logo.png" alt="logo of DIABETES@HOME"  onclick= window.location.href="/patient/home">
             <h1>DIABETES@HOME</h1>
             <hr>
         </div>

@@ -7,11 +7,6 @@ const isAuthenticated = require("../utils/helper").isAuthenticated
 const patientController = require('../controllers/patientController.js')
 
 // localhost:8080/patient*** where *** is the following
-patientRouter.get('/', patientController.logInPage)
-patientRouter.post('/login',
-passport.authenticate('local', {
-    successRedirect: '/patient/home', failureRedirect: '/patient', failureFlash: true
-}))
 
 patientRouter.get('/home', isAuthenticated, patientController.getHomePage)
 patientRouter.get('/about-diabetes', patientController.getAboutDiabetes)

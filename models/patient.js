@@ -10,8 +10,15 @@ const timestampSchema = new mongoose.Schema({
     value: Number,
     message: String
 })
+
+const stringSchema = new mongoose.Schema({
+    message: String
+})
+
 const schema = new mongoose.Schema({ 
     clinicianId: mongoose.Types.ObjectId,
+    registeredDate: Date,
+    activeDays: Number,
     title: String,
     firstName: String,
     lastName: String,
@@ -32,7 +39,8 @@ const schema = new mongoose.Schema({
     exerciseRecord: Boolean,
     exerciseThreshold: thresholdSchema,
     exerciseTimestamp: [timestampSchema],
-    supportMessages: [String]
+    supportMessages: [stringSchema],
+    clinicianNotes: [stringSchema]
 })
 
 const Patient = mongoose.model('Patient', schema) 
