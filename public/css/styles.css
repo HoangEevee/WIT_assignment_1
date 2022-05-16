@@ -344,8 +344,7 @@ form {
 }
 
 .red {
-    background-color: red;
-    color: white !important;
+    color: red !important;
 }
 
 /* Record Health */

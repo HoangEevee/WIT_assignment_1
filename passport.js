@@ -1,7 +1,6 @@
 const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
 
-
 const Account = require('./models/account')
 
 // Serialize information to be stored in session/cookie
