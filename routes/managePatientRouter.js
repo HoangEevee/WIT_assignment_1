@@ -10,6 +10,8 @@ managePatientRouter.get('/', managePatientController.getOnePatientData)
 managePatientRouter.get('/set-timeseries', managePatientController.setTimeseriesPage)
 managePatientRouter.post('/new-timeseries', managePatientController.newTimeseries)
 managePatientRouter.post('/new-threshold', managePatientController.setThreshold)
+managePatientRouter.get('/send-support-messages', managePatientController.getsupportmessages)
+managePatientRouter.post('/send-support-messages', managePatientController.sendSupportmessages)
 
 // yet to be implemented
 // NOTE: add whatever method after the controller + add any post routes

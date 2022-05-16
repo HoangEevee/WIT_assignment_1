@@ -121,9 +121,28 @@ const setThreshold = async (req, res, next) => {
     }
 }
 
+const getsupportmessages = async (req, res, next) => {
+    try {
+        return res.render('sendsupportmessage', {layout: 'clinician_main'})
+    } catch (err) {
+        return next(err)
+    }
+} 
+    
+
+const sendSupportmessages = async (req, res, next) => {
+    try {
+        return res.redirect("/clinician/send-support-messages")
+    } catch (err) {
+        return next(err)
+    }
+} 
+
 module.exports = {
     getOnePatientData,
     setTimeseriesPage,
     newTimeseries,
     setThreshold,
+    getsupportmessages,
+    sendSupportmessages,
 }
