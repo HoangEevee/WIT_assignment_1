@@ -54,6 +54,15 @@ const getHomePage = async (req, res, next) => {
     }   
 }
 
+
+const getSupportmessages = async (req, res, next) => {
+    try {
+        return res.render('viewsupportmessages', {layout: 'patient_main'})
+    } catch (err) {
+        return next(err)
+    }
+} 
+
 module.exports = {
     getAllPatientData,
     getAboutDiabetes,
@@ -61,4 +70,12 @@ module.exports = {
     logInPage,
     logIn,
     getHomePage,
+    getSupportmessages, 
 }
+
+
+
+
+
+
+

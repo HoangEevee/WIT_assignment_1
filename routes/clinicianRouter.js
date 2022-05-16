@@ -28,6 +28,8 @@ clinicianRouter.get('/create-patient-account', clinicianController.createPatient
 //clinicianRouter.get('/current-user-login', clinicianController)
 clinicianRouter.get('/create-new-account', clinicianController.createAccountPage)
 clinicianRouter.post('/create-clinician', clinicianController.createClinician)
+clinicianRouter.get('/view-patient-comments', clinicianController.getPatientcomments)
+clinicianRouter.post('/send-support-messages', clinicianController.getSendsupportmessages)
 
 // onwards to other routers!
 clinicianRouter.use('/:id', isAuthenticated, require('./managePatientRouter'))

@@ -16,6 +16,8 @@ passport.authenticate('local', {
 patientRouter.get('/home', isAuthenticated, patientController.getHomePage)
 patientRouter.get('/about-diabetes', patientController.getAboutDiabetes)
 patientRouter.get('/about-website', patientController.getAboutWebsite)
+patientRouter.get('/view-support-messages',patientController.getSupportmessages)
+
 
 // yet to be implemented
 // NOTE: add whatever method after the controller + add any post routes

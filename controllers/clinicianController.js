@@ -77,6 +77,22 @@ const createPatientPage = async (req, res, next) => {
     }
 }
 
+const getPatientcomments = async (req, res, next) => {
+    try {
+        return res.render('viewpatientcomments', {layout: 'clinician_main'})
+    } catch (err) {
+        return next(err)
+    }
+} 
+
+const getSendsupportmessages = async (req, res, next) => {
+    try {
+        return res.render('sendsupportmessages', {layout: 'clinician_main'})
+    } catch (err) {
+        return next(err)
+    }
+} 
+
 //Dont use this yet. Hardcode to patient CHRIST
 /*const createPatient = async (req, res, next) => {
     try {
@@ -101,5 +117,7 @@ module.exports = {
     createAccountPage,
     createPatientPage,
     createClinician,
+    getPatientcomments, 
+    getSendsupportmessages, 
     //createPatient,
 }

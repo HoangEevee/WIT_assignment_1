@@ -5,6 +5,7 @@ const Clinician = require('../models/clinician')
 // Pat
 const my_patient_id = mongoose.Types.ObjectId("62713910a76e24742ae2aa9d")
 
+<<<<<<< HEAD
 const getAchievement = async (req, res, next) => { 
     try{
         //const patient_id = req.user.data_id
@@ -32,6 +33,10 @@ const getleaderboard = async (req, res, next) => {
         return next(err)
     }
 }
+=======
+
+
+>>>>>>> b18b1bc1c29c315a0e7fbc8cca693412914241d6
 module.exports = {
     getAchievement,
     getDigitalBadge, 
