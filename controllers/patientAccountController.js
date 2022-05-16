@@ -132,6 +132,24 @@ const insertHealthData = async (req, res, next) => {
     try {
         const today = new Date()
         const patient_id = req.user.data_id
+        last_entered = await Patient.findOne({
+            id: patient_id
+        }, {
+            _id: 0,
+            timestampedDates: 1
+        })
+        last_date = last_entered.timestampedDates
+        if (!last_date.length 
+            || (today.toLocaleDateString().localeCompare(last_date[last_date.length-1].toLocaleDateString()) > 0)) {
+            await Patient.updateOne({
+                id: patient_id
+            }, {
+                $push: {
+                    timestampedDates: today
+                }
+            })
+        }
+
         if (req.body.glucose) {
             await Patient.updateOne({
                 _id: patient_id

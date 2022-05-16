@@ -19,7 +19,7 @@ const stringSchema = new mongoose.Schema({
 const schema = new mongoose.Schema({ 
     clinicianId: mongoose.Types.ObjectId,
     registeredDate: Date,
-    activeDays: Number,
+    //activeDays: Number,
     title: String,
     firstName: String,
     lastName: String,
@@ -28,6 +28,7 @@ const schema = new mongoose.Schema({
     contactNumber: String,
     emergencyName: String, 
     emergencyNumber: String,
+    timestampedDates: [Date],
     glucoseRecord: Boolean,
     glucoseThreshold: thresholdSchema,
     glucoseTimestamp: [timestampSchema],
