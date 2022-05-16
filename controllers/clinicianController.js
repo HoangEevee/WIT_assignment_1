@@ -15,23 +15,6 @@ const getAllClinicianData = async (req, res, next) => {
     }   
 }
 
-const logInPage = async (req, res, next) => {
-    try {
-        return res.render('signInPageClinician', { layout: 'main' })
-    } catch (err) {
-        return next(err)
-    }   
-}
-
-//this is not in use
-const logIn = async (req, res, next) => {
-    try {
-        return res.redirect("./dashboard")
-    } catch (err) {
-        return next(err)
-    }
-}
-
 const getAllPatientData = async (req, res, next) => {
     try {
         //id associated with the account id
@@ -110,8 +93,6 @@ const getSendsupportmessages = async (req, res, next) => {
 }*/
 
 module.exports = {
-    logInPage,
-    logIn,
     getAllClinicianData,
     getAllPatientData,
     createAccountPage,

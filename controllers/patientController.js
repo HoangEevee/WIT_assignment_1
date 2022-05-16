@@ -29,22 +29,6 @@ const getAboutWebsite = (req, res, next) => {
     }
 }
 
-const logInPage = async (req, res, next) => {
-    try {
-        return res.render('signInPage', { layout: 'main' })
-    } catch (err) {
-        return next(err)
-    }   
-}
-
-//this is not in use
-const logIn = async (req, res, next) => {
-    try {
-        return res.redirect("/patient/home")
-    } catch (err) {
-        return next(err)
-    }
-}
 
 const getHomePage = async (req, res, next) => {
     try {
@@ -67,8 +51,6 @@ module.exports = {
     getAllPatientData,
     getAboutDiabetes,
     getAboutWebsite,
-    logInPage,
-    logIn,
     getHomePage,
     getSupportmessages, 
 }

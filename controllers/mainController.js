@@ -24,7 +24,7 @@ const getAboutWebsite = (req, res, next) => {
 
 const getSignin = (req, res, next) => {
     try{
-        res.render("whoAreYou", {layout:"main"})
+        res.render("signInPage", {layout:"main"})
     } catch (err) {
         next(err)
     }
