@@ -3,7 +3,7 @@ const Clinician = require('../models/clinician')
 const Patient = require('../models/patient')
 const helpers = require('../utils/helper')
 
-const my_clinician_id = mongoose.Types.ObjectId("62713547ab750c0e07f6387f")
+//const my_clinician_id = mongoose.Types.ObjectId("62713547ab750c0e07f6387f")
 
 // prolly more suited for clinician but eh testing
 const getAllClinicianData = async (req, res, next) => {
@@ -23,9 +23,10 @@ const logInPage = async (req, res, next) => {
     }   
 }
 
+//this is not in use
 const logIn = async (req, res, next) => {
     try {
-        return res.redirect("./clinician/dashboard")
+        return res.redirect("./dashboard")
     } catch (err) {
         return next(err)
     }
@@ -33,7 +34,10 @@ const logIn = async (req, res, next) => {
 
 const getAllPatientData = async (req, res, next) => {
     try {
-        const ids = await Clinician.findById(my_clinician_id).lean()
+        //id associated with the account id
+        const clinician_id = req.user.data_id
+
+        const ids = await Clinician.findById(clinician_id).lean()
         const patients = await Patient.find({ '_id': { $in: ids.patients } }).lean();
         //show time as DD/MM/YYYY, HH:MM:SS
         patients.forEach((element) => {
@@ -73,8 +77,8 @@ const createPatientPage = async (req, res, next) => {
     }
 }
 
-
-const createPatient = async (req, res, next) => {
+//Dont use this yet. Hardcode to patient CHRIST
+/*const createPatient = async (req, res, next) => {
     try {
         newPatient = new Patient( {...req.body, clinicianId: my_clinician_id} )
         await newPatient.save(function (err) {
@@ -87,7 +91,7 @@ const createPatient = async (req, res, next) => {
     } catch (err) {
         return next(err)
     }
-}
+}*/
 
 module.exports = {
     logInPage,
@@ -97,5 +101,5 @@ module.exports = {
     createAccountPage,
     createPatientPage,
     createClinician,
-    createPatient,
+    //createPatient,
 }

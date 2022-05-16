@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const Patient = require('../models/patient')
 
 // Pat
-const my_patient_id = mongoose.Types.ObjectId("62713910a76e24742ae2aa9d")
+//const my_patient_id = mongoose.Types.ObjectId("62713910a76e24742ae2aa9d")
 // prolly more suited for clinician but eh testing
 const getAllPatientData = async (req, res, next) => {
     try {
@@ -36,6 +36,8 @@ const logInPage = async (req, res, next) => {
         return next(err)
     }   
 }
+
+//this is not in use
 const logIn = async (req, res, next) => {
     try {
         return res.redirect("/patient/home")
