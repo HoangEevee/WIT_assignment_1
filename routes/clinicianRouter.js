@@ -10,6 +10,7 @@ const clinicianController = require('../controllers/clinicianController.js')
 clinicianRouter.get("/dashboard", isAuthenticated, clinicianController.getAllPatientData)
 
 clinicianRouter.get('/create-patient-account', clinicianController.createPatientPage)
+clinicianRouter.post('/create-patient-account', clinicianController.createPatient)
 //clinicianRouter.post('/create-patient', clinicianController.createPatient)
 
 // yet to be implemented

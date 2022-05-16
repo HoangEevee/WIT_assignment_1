@@ -3,7 +3,7 @@
 <section>
     <p class="center">Put your patient's information below</p>
 
-    <form action="/clinician/create-patient" method="POST">
+    <form action="/clinician/create-patient-account" method="POST">
         <h4>Title</h4>
             <select type="text" id="title" name="title"/>
                 <option hidden selected>Select one...</option>
@@ -36,6 +36,11 @@
             <br>
             <h4>Emergency contact number</h4>
             <input type="text" id="emergencyNumber" name="emergencyNumber" placeholder="Enter emergency contact number" required/>
+
+            <h4>Username</h4>
+            <input type="text" id="username" name="username" placeholder="Enter username" required/>
+            <h4>Password</h4>
+            <input type="text" id="password" name="password" placeholder="Enter password" required/>
             <br>
 
             <br>

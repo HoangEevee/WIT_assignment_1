@@ -3,10 +3,9 @@
 <section>
     <p class="center">Please sign in with your personal details including your email and your password</p>
     <form action="./login" method="POST">
-    
         <div class="container">
             <div class="child_container">
-                            {{!-- <label for="uname"><h4>Username</h4></label> --}}
+                {{!-- <label for="uname"><h4>Username</h4></label> --}}
                 <input type="text" placeholder="Username / email" name="username" required>
             
                 {{!-- <label for="psw"><h4>Password</h4></label> --}}
@@ -14,9 +13,11 @@
                 
                 <button type="submit">Login</button>
             </div>
-        </div>
-        
-        <div class="container" style="background-color:#ffffff">
+
+            {{#each flash}}
+            <p class="red">{{this}}</p>
+            {{/each}}
+
             <div class="child_container">
                 <span class="psw1"><a href="#">Forgot password?</a></span>
                 <span class="psw2"><a href="#">Need help?</a></span>
