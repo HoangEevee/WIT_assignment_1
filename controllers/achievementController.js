@@ -27,6 +27,25 @@ const getleaderboard = async (req, res, next) => {
     try{
         const patients = await Patient.find().lean()
         console.log(patients)
+
+        const today = new Date()
+
+        const dates = Patient.aggregate(
+            [
+                {$project: {
+                    _id: 0,
+                    firstName: 1,
+                    lastName: 1,
+                    registeredDate: 1,
+                    result: {
+                        $dateSubtract: 
+                    }
+                }}
+            ]
+        )
+
+        console.log(dates)
+
         return res.render('leaderboard', {data: patients, layout: 'patient_main'})
     } catch (err) {
         return next(err)
