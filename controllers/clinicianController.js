@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const Clinician = require('../models/clinician')
 const Patient = require('../models/patient')
+const Account = require('../models/account')
 const helpers = require('../utils/helper')
 
 //const my_clinician_id = mongoose.Types.ObjectId("62713547ab750c0e07f6387f")
@@ -71,20 +72,31 @@ const getPatientcomments = async (req, res, next) => {
 
 
 //Dont use this yet. Hardcode to patient CHRIST
-/*const createPatient = async (req, res, next) => {
+const createPatient = async (req, res, next) => {
     try {
-        newPatient = new Patient( {...req.body, clinicianId: my_clinician_id} )
+        //id associated with the account id
+        const clinician_id = req.user.data_id
+
+        //new patient for the patient database
+        newPatient = new Patient( {...req.body, clinicianId: clinician_id} )
         await newPatient.save(function (err) {
             if (err) return console.error(err);
         })
+        
+        //new account for the account database
+        newAccount = new Account( {...req.body, role: "patient", data_id: newPatient._id})
+        await newAccount.save(function (err) {
+            if (err) return console.error(err);
+        })
+        
         await Clinician.updateOne(
-            {_id: my_clinician_id}, 
+            {_id: clinician_id}, 
             {$push: {patients: newPatient}})
         return res.redirect('/clinician/create-patient-account')
     } catch (err) {
         return next(err)
     }
-}*/
+}
 
 module.exports = {
     getAllClinicianData,
@@ -93,5 +105,5 @@ module.exports = {
     createPatientPage,
     createClinician,
     getPatientcomments, 
-    //createPatient,
+    createPatient,
 }
