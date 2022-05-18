@@ -438,3 +438,17 @@ nav .profile-container a{
 }
 
 /* for sending support message */
+
+/*patient profile*/
+.flex-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.flex-container>.a {
+    color: #CED7EA;
+}
+
+.flex-container>.a:hover {
+    color: #0D2557;
+}
