@@ -11,15 +11,19 @@
 
 <body>
 
+    <div id="sidenav" class="sidenav">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <a href="/clinician/dashboard">Dashboard</a>
+        <a href="/clinician/view-patient-comments">Patient Comments</a>
+        <a href="/clinician/create-patient-account">Add Patient</a>
+        <a href="/logout">Sign Out</a>
+    </div>
+
+    <div id="main">
     <nav>
+
         <div class="nav-left">
-            <div class="dropdown">
-                <a class="menubar">Menu</a>
-                <div class="dropdown-content">
-                    <a href="/clinician/dashboard">Dashboard</a>
-                    <a href="/">Sign Out</a>
-                </div>
-            </div>
+            <a onclick="openNav()">&#9776; Menu</a>
         </div>
         <ul class="nav-right">    
             <div class="profile-container menubar">
@@ -28,9 +32,8 @@
             </div>
         </ul>
  
-
     </nav>
-
+    <br><br><br>
     <div class="logo">
         <img src="\img\logo.png" alt="logo of DIABETES@HOME">
         <h1>DIABETES@HOME</h1>
@@ -38,6 +41,7 @@
     </div>
 
     <main>
+        
         {{{body}}}
     </main>
 
@@ -46,4 +50,17 @@
     <footer>
 
     </footer>
+    </div>
+
+    <script>
+        function openNav() {
+            document.getElementById("sidenav").style.width = "250px";
+            document.getElementById("main").style.marginLeft = "250px";
+        }
+
+        function closeNav() {
+            document.getElementById("sidenav").style.width = "0";
+            document.getElementById("main").style.marginLeft= "0";
+        }
+    </script>
 </body>

@@ -14,7 +14,7 @@ body {
     font-family: "Malgun gothic", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     font-weight: 400;
     margin: 0;
-    font-size: 1.2rem;
+    font-size: 1rem;
     text-align: justify;
 }
 
@@ -54,19 +54,28 @@ footer, nav {
 }
 
 nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    
 }
 nav ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
+    
 }
 
 .nav-left {
     float: left;
     /* padding-left: 3rem; */
+}
+
+.nav-left:hover {
+    background-color: #8693B4;
 }
 
 .nav-right li{
@@ -123,6 +132,10 @@ button {
     /* margin-top: 3rem; */
 }
 
+.centerimage {
+    
+}
+
 .allbuttons {  
     justify-content: center;
     align-items: center;
@@ -162,7 +175,11 @@ button {
         margin:1rem 0 1rem 3rem;
     }
 }
-
+@media screen and (max-width: 1200px) {
+    .small-screen-disappear {
+        display: none;
+    }
+}
 footer {
     bottom: 0;
     padding: 2rem;
@@ -212,6 +229,12 @@ form {
     display: inline-block;
     box-sizing: border-box;
   }
+
+  input[type=checkbox] {
+    width: 30px;
+    margin: 0;
+    box-sizing: none;
+  }
   
   /* Set for all buttons */
   button {
@@ -222,6 +245,7 @@ form {
     border: none;
     cursor: pointer;
     width: 100%;
+    text-align: center;
   }
   
   /* Add a hover effect for buttons */
@@ -239,6 +263,7 @@ form {
 
   .child_container {
       width: 50%;
+      min-width: auto;
       margin: 0 auto;
       padding: 16px;
   }
@@ -271,6 +296,14 @@ form {
     }
   }
 
+  @media screen and (max-width: 600px) {
+    .child_container {
+        align-items: center;
+        justify-content: center;
+        width: 80%;
+        }
+    }
+
 
 /* Clinician Dashboard */
 
@@ -290,7 +323,7 @@ form {
   }
 
 .table thead tr th {
-    font-size: 25px;
+    font-size: 1rem;
     font-weight: 200; 
     letter-spacing: 0.35px;
     color: white; 
@@ -302,7 +335,7 @@ form {
 }
 
 .table tbody tr td {
-    font-size: 20px;
+    font-size: 1rem;
     letter-spacing: 0.35px;
     font-weight: normal;
     color: #0D2557;
@@ -311,18 +344,13 @@ form {
 }
 
 .red {
-    background-color: red;
-    color: white !important;
+    color: red !important;
 }
 
 /* Record Health */
-.submitted {
-    color: rgb(30, 255, 0);
-}
-
 .profile-container {
     display: flex;
-    gap: 25px;
+    gap: 1rem;
     align-items: center;
 }
 td .profile-container {
@@ -333,8 +361,8 @@ nav .profile-container a{
     white-space: nowrap;
 }
 .profile-pic {
-    width: 45px;
-    height: 45px;
+    width: 2.2rem;
+    height: 2.2rem;
     border-radius: 50%;
 }
   
@@ -356,11 +384,79 @@ nav .profile-container a{
     color: black;
     text-decoration: none;
     display: block;
-  }
+}
   
-  .dropdown-content a:hover {background-color: #f1f1f1}
-  
-  .dropdown:hover .dropdown-content {
+.dropdown-content a:hover {background-color: #f1f1f1}
+
+.dropdown:hover .dropdown-content {
     display: block;
-  }
+}
   
+
+/* menu */
+.sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #CED7EA;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+}
+
+.sidenav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 20px;
+    display: block;
+    transition: 0.3s;
+}
+
+.sidenav a:hover {
+    color: #304e8d;
+}
+
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+#main {
+    transition: margin-left .5s;
+    padding: 16px 0;
+  }
+
+@media screen and (max-height: 450px) {
+    .sidenav {padding-top: 15px;}
+    .sidenav a {font-size: 18px;}
+}
+
+/* for sending support message */
+
+/*patient profile*/
+.flex-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.flex-container>.a {
+    color: #CED7EA;
+}
+
+.flex-container>.a:hover {
+    color: #0D2557;
+}
+
+.flex-container>* {
+    align-self: center;
+}
+
+.name-container>* {
+    flex-grow: 1;
+}

@@ -1,8 +1,10 @@
-const res = require('express/lib/response')
 const mongoose = require('mongoose')
 const Clinician = require('../models/clinician')
 const Patient = require('../models/patient')
-const PatientClinician = require("../models/patient-clinicians-test") //This is the database I'm (Hoang) using
+const Account = require('../models/account')
+const helpers = require('../utils/helper')
+
+//const my_clinician_id = mongoose.Types.ObjectId("62713547ab750c0e07f6387f")
 
 // prolly more suited for clinician but eh testing
 const getAllClinicianData = async (req, res, next) => {
@@ -14,83 +16,38 @@ const getAllClinicianData = async (req, res, next) => {
     }   
 }
 
-const logInPage = async (req, res, next) => {
-    try {
-        return res.render('signInPageClinician', { layout: 'main' })
-    } catch (err) {
-        return next(err)
-    }   
-}
-
-const logIn = async (req, res, next) => {
-    try {
-        return res.redirect("./clinician/dashboard")
-    } catch (err) {
-        return next(err)
-    }
-}
-
 const getAllPatientData = async (req, res, next) => {
     try {
-        const patients = await PatientClinician.find({clinician: "Chris"}).lean()
+        //id associated with the account id
+        const clinician_id = req.user.data_id
+
+        const ids = await Clinician.findById(clinician_id).lean()
+        const patients = await Patient.find({ '_id': { $in: ids.patients } }).lean();
         //show time as DD/MM/YYYY, HH:MM:SS
         patients.forEach((element) => {
-            element.timestamp[element.timestamp.length-1].time = element.timestamp[element.timestamp.length-1].time.toLocaleString()
+            helpers.changeLastTimestampFormat(element.timeseries)
         })
         return res.render('allPatients', {data: patients, layout: 'clinician_main'})
-        
     } catch (err) {
         return next(err)
     }   
 }
 
-const getOnePatientData = async (req, res, next) => {
-    try {
-        const patient = await PatientClinician.findById(req.params.id).lean()
-        //show time as DD/MM/YYYY, HH:MM:SS
-        patient.timestamp.forEach((element) => {
-            element.time = element.time.toLocaleString()
-        })
-        //reverse timestamp so it show newest on top 
-        //TODO: might want to change push timestamp to begin of list instead so don't need this
-        patient.timestamp = patient.timestamp.reverse() 
-        return res.render('onePatient', {data: patient, layout: 'clinician_main'})
-        
-    } catch (err) {
-        return next(err)
-    }   
-}
-
-const updatePatient = async (req, res, next) => {
-    try {
-        if (req.body.updateLowerThreshold) {
-            await PatientClinician.updateOne({
-                _id: req.params.id
-            }, {
-                $set: {
-                  "glucose.lower": req.body.updateLowerThreshold
-                }
-            })
-        }
-        else if (req.body.updateUpperThreshold) {
-            await PatientClinician.updateOne({
-                _id: req.params.id
-            }, {
-                $set: {
-                  "glucose.upper": req.body.updateUpperThreshold
-                }
-            })
-        }
-        return res.redirect("./dashboard")
-    } catch (err) {
-        return next(err)
-    }
-}
-
-//these stuffs below are not in use right now
 const createAccountPage = async (req, res, next) => {
     try {
         return res.render('createClinicianAccount', {layout: 'clinician_main' })
+    } catch (err) {
+        return next(err)
+    }
+}
+
+const createClinician = async (req, res, next) => {
+    try {
+        newClinician = new Clinician( req.body )
+        await newClinician.save(function (err) {
+            if (err) return console.error(err);
+        })
+        return res.redirect('/clinician/create-new-account')
     } catch (err) {
         return next(err)
     }
@@ -104,30 +61,36 @@ const createPatientPage = async (req, res, next) => {
     }
 }
 
-const createClinician = async (req, res, next) => {
+const getPatientcomments = async (req, res, next) => {
     try {
-        newClinician = new Clinician( req.body )
-        await newClinician.save(function (err) {
-            if (err) return console.error(err);
-        })
-        //await Clinician.create(newClinician);
-        return res.redirect('/clinician/create-new-account')
+        return res.render('viewpatientcomments', {layout: 'clinician_main'})
     } catch (err) {
         return next(err)
     }
-}
+} 
 
+
+
+//Dont use this yet. Hardcode to patient CHRIST
 const createPatient = async (req, res, next) => {
     try {
-        newPatient = new Patient( 
-            {patient_name: req.body.patient_name,
-            clinician_id: my_clinician_id,}
-         )
+        //id associated with the account id
+        const clinician_id = req.user.data_id
+
+        //new patient for the patient database
+        newPatient = new Patient( {...req.body, clinicianId: clinician_id, registerdDate: new Date()} )
         await newPatient.save(function (err) {
             if (err) return console.error(err);
         })
+        
+        //new account for the account database
+        newAccount = new Account( {...req.body, role: "patient", data_id: newPatient._id})
+        await newAccount.save(function (err) {
+            if (err) return console.error(err);
+        })
+        
         await Clinician.updateOne(
-            {_id: my_clinician_id}, 
+            {_id: clinician_id}, 
             {$push: {patients: newPatient}})
         return res.redirect('/clinician/create-patient-account')
     } catch (err) {
@@ -135,37 +98,12 @@ const createPatient = async (req, res, next) => {
     }
 }
 
-const setTimeseriesPage = async (req, res, next) => {
-    try {
-        return res.render('setTimeseries', {layout: 'clinician_main' })
-    } catch (err) {
-        return next(err)
-    }
-}
-
-const newTimeseries = async (req, res, next) => {
-    try {
-        var timeseries= {            
-        }
-        return res.redirect('/clinician/set-timeseries')
-    } catch (err) {
-        return next(err)
-    }
-}
-
 module.exports = {
-    logInPage,
-    logIn,
     getAllClinicianData,
     getAllPatientData,
-    getOnePatientData,
-    updatePatient,
-
-    //these stuffs below are not in use right now
     createAccountPage,
     createPatientPage,
-    setTimeseriesPage,
-    newTimeseries,
     createClinician,
+    getPatientcomments, 
     createPatient,
 }

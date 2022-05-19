@@ -24,14 +24,26 @@ const getAboutWebsite = (req, res, next) => {
 
 const getSignin = (req, res, next) => {
     try{
-        res.render("whoAreYou", {layout:"main"})
+        res.render("signInPage", {flash: req.flash('error'), layout:"main"})
     } catch (err) {
         next(err)
     }
 }
+
+const getLogout = (req, res, next) => {
+    try{
+        req.logout()
+        res.redirect('/')
+    } catch (err) {
+        next(err)
+    }
+}
+
+
 module.exports = {
     getMainPage,
     getAboutDiabetes,
     getAboutWebsite,
     getSignin,
+    getLogout
 }
