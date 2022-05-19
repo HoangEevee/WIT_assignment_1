@@ -123,15 +123,20 @@ const setThreshold = async (req, res, next) => {
 
 const getsupportmessages = async (req, res, next) => {
     try {
-        return res.render('sendsupportmessage', {layout: 'clinician_main'})
+        const patient = await Patient.findById(req.params.id).lean()
+        return res.render('sendsupportmessage', {data: patient, layout: 'clinician_main'})
     } catch (err) {
         return next(err)
     }
 } 
-    
 
 const sendSupportmessages = async (req, res, next) => {
     try {
+        /*const patient_id = req.user.data_id;
+        let patient = await Patient.findOne({_id: patient_id});*/
+
+        const patient = await Patient.findById(req.params.id).lean()
+        patient["supportmessage"] = req.body.supportmessage;
         return res.redirect("/clinician/send-support-messages")
     } catch (err) {
         return next(err)

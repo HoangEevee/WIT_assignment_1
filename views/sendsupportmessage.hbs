@@ -1,42 +1,20 @@
 
-<h2 class="center"> Edit Support Messages </h2>
+<h2 class="center"> Update Support Message for Patient </h2>
 
-<div class="tablecontainer">
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Patient Name</th>
-                <th>Time</th>
-                <th>Support Message</th> 
-            </tr>
-        </thead>
-        <tbody>
-          
-            <tr>
-                <td data label = "Patient Name">{{this.firstName}} {{this.lastName}}</td>
-                <td data label = "Time">{{this.time}}</td>
-                <td data label = "Support Message">{{this.message}}</td> 
-            </tr>
-        </tbody>
-    </table>
-</div>   
-
-//
-<div class="child_container">
-          <div class="row">
-            <div class="col-6">
-              <div class="comment">
-            <p v-for="items in item" v-text="items"></p>
-              </div>
-              </div>
-              </div>
-          <div class="center">
+<section>
+    <form action="/clinician/{{data._id}}/send-support-messages" method="POST">
+        <div class="container">
             <div class="child_container">
-          <textarea type="text" class="input" placeholder="Write a comment" v-model="newItem" @keyup.enter="addItem()"></textarea>
-           <form method="post" action="http://"><textarea name="comments" cols="47" rows="5" class="html-text-box">Comments here...</textarea><br><input type="submit" value="Submit" class="html-text-box"><input type="reset" value="Reset" class="html-text-box"></form>
-              <button v-on:click="addItem()" class='primaryContained float-right' type="submit">Add Comment</button>
+                {{!-- <label for="uname"><h4>Username</h4></label> --}}
+                <input type="text" placeholder="Enter a new support message" name="supportmessage" required>
+                <button type="submit">Update Support Message</button>
             </div>
-          </div>
+            {{#each flash}}
+            <p class="red">{{this}}</p>
+            {{/each}}
         </div>
+    </form> 
+</section>
+
 
          

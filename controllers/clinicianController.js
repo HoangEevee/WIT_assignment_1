@@ -63,7 +63,8 @@ const createPatientPage = async (req, res, next) => {
 
 const getPatientcomments = async (req, res, next) => {
     try {
-        return res.render('viewpatientcomments', {layout: 'clinician_main'})
+        const patients = await Patient.find().lean()
+        return res.render('viewpatientcomments', {data: patients, layout: 'clinician_main'})
     } catch (err) {
         return next(err)
     }

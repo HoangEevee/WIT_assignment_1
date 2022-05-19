@@ -50,7 +50,7 @@ const schema = new mongoose.Schema({
     insulinThreshold: thresholdSchema,
     exerciseRecord: Boolean,
     exerciseThreshold: thresholdSchema,
-    supportMessages: [stringSchema],
+    supportMessages: String,
     clinicianNotes: [stringSchema],
     
 })

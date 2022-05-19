@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const Clinician = require('../models/clinician')
 const Patient = require('../models/patient')
 
 // Pat
@@ -41,7 +42,12 @@ const getHomePage = async (req, res, next) => {
 
 const getSupportmessages = async (req, res, next) => {
     try {
-        return res.render('viewsupportmessages', {layout: 'patient_main'})
+        const clinician_id = req.user.data_id
+        const clinician = await Clinician.findOne({
+            _id: clinician_id,
+        }).lean()
+        const patients = await Patient.find().lean()
+        return res.render('viewsupportmessages', {data: patients, clinciandata: clinician, layout: 'patient_main'})
     } catch (err) {
         return next(err)
     }
