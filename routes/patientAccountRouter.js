@@ -10,5 +10,5 @@ patientAccountRouter.get('/past-health', patientAccountController.getPastHealth)
 patientAccountRouter.get('/account-info', patientAccountController.getDataByPatient)
 patientAccountRouter.get('/record-health-form', patientAccountController.getRecordDataForm)
 patientAccountRouter.post('/insert-health-data', patientAccountController.insertHealthData)
-
+patientAccountRouter.post('/change-account-detail', patientAccountController.changeAccountDetail)
 module.exports = patientAccountRouter

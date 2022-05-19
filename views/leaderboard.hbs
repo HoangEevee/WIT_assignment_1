@@ -1,48 +1,48 @@
 <section>
-        <div class="center">
-            <h2>LEADERBOARD</h2>
-            <p>View the top 5 people with the highest engagement rate</p>
-        </div>
-        <br> 
-    </section>
+    <div class="center">
+        <h2>LEADERBOARD</h2>
+        <p>View the top 5 people with the highest engagement rate</p>
+    </div>
+    <br> 
+</section>
 
-    <section>
-        {{#each data}}
-        <div class="center">
-            <img src="\img\small single badge.png" alt="single badge pic">
-            <h2>1st Place</h2>
-            <h3>{{this.firstName}}</h3>
-            <p>96% Engagement</p>
-        </div>
-        {{/each}}
-        <!--
-        <div class="center">
-            <img src="\img\small single badge.png" alt="single badge pic">
-            <h2>2nd Place</h2>
-            <h3>name</h3>
-            <p>88% Engagement</p>
-        </div>
-        <div class="center">
-            <img src="\img\small single badge.png" alt="single badge pic">
-            <h2>3rd Place</h2>
-            <h3>name</h3>
-            <p>86% Engagement</p>
-        </div>
-        <div class="center">
-            <img src="\img\small single badge.png" alt="single badge pic">
-            <h2>4th Place</h2>
-            <h3>name</h3>
-            <p>82% Engagement</p>
-        </div>
-        <div class="center">
-            <img src="\img\small single badge.png" alt="single badge pic">
-            <h2>5th Place</h2>
-            <h3>name</h3>
-            <p>80% Engagement</p>
-        </div>-->
-        <br> 
-    </section>
+<section>
+    {{#each data}}
+    <div class="center">
+        <img src="\img\small single badge.png" alt="single badge pic">
+        <h2>#<script>document.write(parseInt({{@index}}) + 1)</script> Place</h2>
+        <h3>{{this.username}}</h3>
+        <p>{{this.engagement}}% Engagement</p>
+    </div>
+    {{/each}}
+    <!--
+    <div class="center">
+        <img src="\img\small single badge.png" alt="single badge pic">
+        <h2>2nd Place</h2>
+        <h3>name</h3>
+        <p>88% Engagement</p>
+    </div>
+    <div class="center">
+        <img src="\img\small single badge.png" alt="single badge pic">
+        <h2>3rd Place</h2>
+        <h3>name</h3>
+        <p>86% Engagement</p>
+    </div>
+    <div class="center">
+        <img src="\img\small single badge.png" alt="single badge pic">
+        <h2>4th Place</h2>
+        <h3>name</h3>
+        <p>82% Engagement</p>
+    </div>
+    <div class="center">
+        <img src="\img\small single badge.png" alt="single badge pic">
+        <h2>5th Place</h2>
+        <h3>name</h3>
+        <p>80% Engagement</p>
+    </div>-->
+    <br> 
+</section>
 
-    <section>
-        <button onclick= window.location.href="/patient/achievements">back</button>  
-    </section>
+<section>
+    <button onclick= window.location.href="/patient/achievements">back</button>  
+</section>

@@ -2,6 +2,8 @@ const mongoose = require('mongoose')
 const Patient = require('../models/patient')
 const Clinician = require('../models/clinician')
 const helpers = require('../utils/helper')
+const Account = require('../models/account')
+const { redirect } = require('express/lib/response')
 
 // Pat
 //const my_patient_id = mongoose.Types.ObjectId("62713910a76e24742ae2aa9d")
@@ -10,12 +12,74 @@ const getDataByPatient = async (req, res, next) => {
     try{
         const patient_id = req.user.data_id
         const patient = await Patient.findById(patient_id).lean()
-        return res.render('patientData', {oneItem: patient, layout: 'patient_main'})
+        const account = await Account.findOne({'data_id': patient_id}).lean();
+        return res.render('patientData', {patient: patient, account: account, layout: 'patient_main'})
     } catch (err) {
         return next(err)
     }
 }
 
+const changeAccountDetail = async (req, res, next) => {
+    try {
+        const patient_id = req.user.data_id;
+        const account_id = req.user._id;
+
+        if (req.body.firstName) {
+            await Patient.updateOne({
+                _id: patient_id
+            }, {
+                $set: {
+                    firstName: req.body.firstName
+                }
+            })
+        }
+        if (req.body.lastName) {
+            await Patient.updateOne({
+                _id: patient_id
+            }, {
+                $set: {
+                    lastName: req.body.lastName
+                }
+            })
+        } 
+        if (req.body.dob) {
+            await Patient.updateOne({
+                _id: patient_id
+            }, {
+                $set: {
+                    dob: req.body.dob
+                }
+            })
+        } 
+        if (req.body.email) {
+            await Patient.updateOne({
+                _id: patient_id
+            }, {
+                $set: {
+                    email: req.body.email
+                }
+            })
+        }
+        if (req.body.username) {
+            await Account.updateOne({
+                _id: account_id
+            }, {
+                $set: {
+                    username: req.body.username
+                }
+            })
+        }
+        /*This doesnt hash the password DONT USE*/
+        if (req.body.password) {
+            let user = await Account.findOne({_id: account_id});
+            user["password"] = req.body.password;
+            await user.save();
+        }
+        return res.redirect("./")
+    } catch(err) {
+        return next(err)
+    }
+}
 const getPersonal = async (req, res, next) => {
     try {
         return res.render('patientYourAccount', { layout: 'patient_main' })
@@ -132,6 +196,24 @@ const insertHealthData = async (req, res, next) => {
     try {
         const today = new Date()
         const patient_id = req.user.data_id
+        last_entered = await Patient.findOne({
+            id: patient_id
+        }, {
+            _id: 0,
+            timestampedDates: 1
+        })
+        last_date = last_entered.timestampedDates
+        if (!last_date.length 
+            || (today.toLocaleDateString().localeCompare(last_date[last_date.length-1].toLocaleDateString()) > 0)) {
+            await Patient.updateOne({
+                id: patient_id
+            }, {
+                $push: {
+                    timestampedDates: today
+                }
+            })
+        }
+
         if (req.body.glucose) {
             await Patient.updateOne({
                 _id: patient_id
@@ -173,6 +255,7 @@ const insertHealthData = async (req, res, next) => {
 
 module.exports = {
     getDataByPatient,
+    changeAccountDetail,
     getPersonal,
     getPastHealth,
     getRecordDataForm,
