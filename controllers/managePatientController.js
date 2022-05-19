@@ -3,8 +3,6 @@ const Clinician = require('../models/clinician')
 const Patient = require('../models/patient')
 const helpers = require('../utils/helper')
 
-const my_clinician_id = mongoose.Types.ObjectId("62713547ab750c0e07f6387f")
-
 const getOnePatientData = async (req, res, next) => {
     try {
         const patient = await Patient.findById(req.params.id).lean()

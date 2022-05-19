@@ -2,8 +2,6 @@ const mongoose = require('mongoose')
 const Patient = require('../models/patient')
 const Clinician = require('../models/clinician')
 const Account = require('../models/account')
-// Pat
-const my_patient_id = mongoose.Types.ObjectId("62713910a76e24742ae2aa9d")
 
 const getAchievement = async (req, res, next) => { 
     try{
