@@ -130,12 +130,15 @@ const getsupportmessages = async (req, res, next) => {
 
 const sendSupportmessages = async (req, res, next) => {
     try {
-        /*const patient_id = req.user.data_id;
-        let patient = await Patient.findOne({_id: patient_id});*/
+        const patient_id = req.params.id
+        await Patient.updateOne({
+            _id: patient_id,
+        }, {$set: {
+                "supportMessages": req.body.supportmessage
+            }
+        })
 
-        const patient = await Patient.findById(req.params.id).lean()
-        patient["supportmessage"] = req.body.supportmessage;
-        return res.redirect("/clinician/send-support-messages")
+        return res.redirect("/clinician/".concat(req.params.id.toString(), '/send-support-messages'))
     } catch (err) {
         return next(err)
     }
