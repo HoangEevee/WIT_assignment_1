@@ -31,17 +31,21 @@ const schema = new mongoose.Schema({
     glucoseRecord: Boolean,
     glucoseThreshold: thresholdSchema,
     glucoseTimestamp: [timestampSchema],
+     
     weightRecord: Boolean,
     weightThreshold: thresholdSchema,
     weightTimestamp: [timestampSchema],
+    
     insulinRecord: Boolean,
     insulinThreshold: thresholdSchema,
     insulinTimestamp: [timestampSchema],
+    
     exerciseRecord: Boolean,
     exerciseThreshold: thresholdSchema,
     exerciseTimestamp: [timestampSchema],
     supportMessages: [stringSchema],
-    clinicianNotes: [stringSchema]
+    clinicianNotes: [stringSchema],
+    
 })
 
 const Patient = mongoose.model('Patient', schema) 
