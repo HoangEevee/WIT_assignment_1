@@ -77,9 +77,9 @@ const createPatient = async (req, res, next) => {
     try {
         //id associated with the account id
         const clinician_id = req.user.data_id
-
+        const today = new Date()
         //new patient for the patient database
-        newPatient = new Patient( {...req.body, clinicianId: clinician_id, registerdDate: new Date()} )
+        newPatient = new Patient( {...req.body, clinicianId: clinician_id, registeredDate: today} )
         await newPatient.save(function (err) {
             if (err) return console.error(err);
         })
