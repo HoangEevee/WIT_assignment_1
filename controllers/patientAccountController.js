@@ -69,16 +69,12 @@ const changeAccountDetail = async (req, res, next) => {
                 }
             })
         }
-        /*This doesnt hash the password DONT USE
+        /*This doesnt hash the password DONT USE*/
         if (req.body.password) {
-            await Account.updateOne({
-                _id: account_id
-            }, {
-                $set: {
-                    password: req.body.password
-                }
-            })
-        }*/
+            let user = await Account.findOne({_id: account_id});
+            user["password"] = req.body.password;
+            await user.save();
+        }
         return res.redirect("./")
     } catch(err) {
         return next(err)
