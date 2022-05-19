@@ -5,9 +5,6 @@ const helpers = require('../utils/helper')
 const Account = require('../models/account')
 const { redirect } = require('express/lib/response')
 
-// Pat
-//const my_patient_id = mongoose.Types.ObjectId("62713910a76e24742ae2aa9d")
-
 const getDataByPatient = async (req, res, next) => { 
     try{
         const patient_id = req.user.data_id
@@ -84,6 +81,7 @@ const getRecordDataForm = async (req, res, next) => {
         {
             'timeseries.$': 1
         }).lean()
+
         // record it in object
         var submit = {}
         if (date_result) {
@@ -150,7 +148,7 @@ const insertHealthData = async (req, res, next) => {
             }, {
                 $set: {
                     'timeseries.$.glucose': {time: today, value: req.body.glucose, message: req.body.comment},
-                    'lastUpdated.glucose': today
+                    'lastUpdated.glucose': {time: today, value: req.body.glucose, message: req.body.comment},
                 }
             })
         } else if (req.body.weight) {
@@ -164,7 +162,7 @@ const insertHealthData = async (req, res, next) => {
             }, {
                 $set: {
                     'timeseries.$.weight': {time: today, value: req.body.weight, message: req.body.comment},
-                    'lastUpdated.weight': today
+                    'lastUpdated.weight': {time: today, value: req.body.weight, message: req.body.comment},
                 }
             })
         } else if (req.body.insulin) {
@@ -178,7 +176,7 @@ const insertHealthData = async (req, res, next) => {
             }, {
                 $set: {
                     'timeseries.$.insulin': {time: today, value: req.body.insulin, message: req.body.comment},
-                    'lastUpdated.insulin': today
+                    'lastUpdated.insulin': {time: today, value: req.body.insulin, message: req.body.comment},
                 }
             })
         } else if (req.body.exercise) {
@@ -192,10 +190,24 @@ const insertHealthData = async (req, res, next) => {
             }, {
                 $set: {
                     'timeseries.$.exercise': {time: today, value: req.body.exercise, message: req.body.comment},
-                    'lastUpdated.exercise': today
+                    'lastUpdated.exercise': {time: today, value: req.body.exercise, message: req.body.comment},
                 }
             })
         }
+
+        if (req.body.comment) {
+            await Patient.updateOne({
+                _id: patient_id,
+            }, {
+                $push: {
+                    'lastComments': { 
+                        "$each": [{time: today, message: req.body.comment}],
+                        "$slice": -10
+                    }
+                }
+            })
+        }
+
         return res.redirect('/patient/account/record-health-form')
     } catch (err) {
         return next(err)
