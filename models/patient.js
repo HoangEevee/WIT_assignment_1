@@ -51,7 +51,8 @@ const schema = new mongoose.Schema({
     exerciseRecord: Boolean,
     exerciseThreshold: thresholdSchema,
     supportMessages: [stringSchema],
-    clinicianNotes: [stringSchema]
+    clinicianNotes: [stringSchema],
+    
 })
 
 const Patient = mongoose.model('Patient', schema) 

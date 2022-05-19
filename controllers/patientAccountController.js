@@ -2,6 +2,8 @@ const mongoose = require('mongoose')
 const Patient = require('../models/patient')
 const Clinician = require('../models/clinician')
 const helpers = require('../utils/helper')
+const Account = require('../models/account')
+const { redirect } = require('express/lib/response')
 
 // Pat
 //const my_patient_id = mongoose.Types.ObjectId("62713910a76e24742ae2aa9d")
@@ -10,12 +12,41 @@ const getDataByPatient = async (req, res, next) => {
     try{
         const patient_id = req.user.data_id
         const patient = await Patient.findById(patient_id).lean()
-        return res.render('patientData', {oneItem: patient, layout: 'patient_main'})
+        const account = await Account.findOne({'data_id': patient_id}).lean();
+        return res.render('patientData', {patient: patient, account: account, layout: 'patient_main'})
     } catch (err) {
         return next(err)
     }
 }
 
+const changeAccountDetail = async (req, res, next) => {
+    try {
+        // For changes in patient database
+        if (req.body.firstName || req.body.lastName || req.body.dob || req.body.email) {
+            const patient_id = req.user.data_id;
+            let patient = await Patient.findOne({_id: patient_id});
+
+            if (req.body.firstName) patient["firstName"] = req.body.firstName;
+            if (req.body.lastName) patient["lastName"] = req.body.lastName;
+            if (req.body.dob) patient["dob"] = req.body.dob;
+            if (req.body.email) patient["email"] = req.body.email;
+            await patient.save();
+        }
+
+        // For changes in account database
+        if (req.body.username || req.body.password) {
+            const account_id = req.user._id;
+            let user = await Account.findOne({_id: account_id});
+
+            if (req.body.username) user["username"] = req.body.username;
+            if (req.body.password) user["password"] = req.body.password;
+            await user.save();
+        }
+        return res.redirect("./")
+    } catch(err) {
+        return next(err)
+    }
+}
 const getPersonal = async (req, res, next) => {
     try {
         return res.render('patientYourAccount', { layout: 'patient_main' })
@@ -173,6 +204,7 @@ const insertHealthData = async (req, res, next) => {
 
 module.exports = {
     getDataByPatient,
+    changeAccountDetail,
     getPersonal,
     getPastHealth,
     getRecordDataForm,

@@ -38,5 +38,22 @@ accountSchema.pre('save', function save(next) {
         next()
     })
 })
+accountSchema.pre('set', function save(next) {
+    const user = this
+    // Go to next if password field has not been modified
+    if (!user.isModified('password')) {
+        return next()
+    }
+
+    // Automatically generate salt, and calculate hash
+    bcrypt.hash(user.password, SALT_FACTOR, (err, hash) => {
+        if (err) {
+            return next(err)
+        }
+        // Replace password with hash
+        user.password = hash
+        next()
+    })
+})
 const Account = mongoose.model('Account', accountSchema) 
 module.exports = Account

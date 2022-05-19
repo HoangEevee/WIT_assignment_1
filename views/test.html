@@ -1,33 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="\css\styles.css">
-    <title>test</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
 </head>
 <body>
-        <div class="center">
-          <div class="row">
-            <div class="col-6">
-              <div class="comment">
-            <p v-for="items in item" v-text="items"></p>
-              </div><!--End Comment-->
-              </div><!--End col -->
-              </div><!-- End row -->
-          <div class="row">
-            <div class="col-6">
-          <textarea type="text" class="input" placeholder="Write a comment" v-model="newItem" @keyup.enter="addItem()"></textarea>
-              <button v-on:click="addItem()" class='primaryContained float-right' type="submit">Add Comment</button>
-            </div><!-- End col -->
-          </div><!--End Row -->
-        </div><!--End Container --> 
+  
 
-        <style type="text/css">
-          textarea.html-text-box {background-color:#ffffff;background-image:url(http://);background-repeat:no-repeat;background-attachment:fixed;border-width:1;border-style:solid;border-color:#cccccc;font-family:Arial;font-size:14pt;color:#000000;}
-          input.html-text-box {background-color:#ffffff;font-family:Arial;font-size:14pt;color:#0D2557;}
-          </style>
-          <form method="post" action="http://"><textarea name="comments" cols="60" rows="5" class="html-text-box">Comments here...</textarea><br><input type="submit" value="Submit" class="html-text-box"><input type="reset" value="Reset" class="html-text-box"></form>
+
+
+
+
+  $(function () {
+    $("td").dblclick(function () {
+        var OriginalContent = $(this).text();
+        $(this).addClass("cellEditing");
+        $(this).html("<input type='text' value='" + OriginalContent + "' />");
+        $(this).children().first().focus();
+        $(this).children().first().keypress(function (e) {
+            if (e.which == 13) {
+                var newContent = $(this).val();
+                $(this).parent().text(newContent);
+                $(this).parent().removeClass("cellEditing");
+            }
+        });
+    $(this).children().first().blur(function(){
+        $(this).parent().text(OriginalContent);
+        $(this).parent().removeClass("cellEditing");
+    });
+        $(this).find('input').dblclick(function(e){
+            e.stopPropagation(); 
+        });
+    });
+});
 </body>
 </html>
