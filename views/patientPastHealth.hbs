@@ -11,11 +11,11 @@
             </tr>
         </thead>
         <tbody>
-            {{#each data.glucoseTimestamp}}
+            {{#each data.timeseries}}
             <tr>
-                <td data label = "Time">{{this.time}}</td>
-                <td data label = "Blood Glucose (mmol/L)">{{this.value}}</td>
-                <td data label = "Message">{{this.message}}</td> 
+                <td data label = "Time">{{this.glucose.time}}</td>
+                <td data label = "Blood Glucose (mmol/L)">{{this.glucose.value}}</td>
+                <td data label = "Message">{{this.glucose.message}}</td> 
             </tr>
             {{/each}}
         </tbody>

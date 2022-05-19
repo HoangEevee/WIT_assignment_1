@@ -25,7 +25,7 @@ const getAllPatientData = async (req, res, next) => {
         const patients = await Patient.find({ '_id': { $in: ids.patients } }).lean();
         //show time as DD/MM/YYYY, HH:MM:SS
         patients.forEach((element) => {
-            helpers.changeLastTimestampFormat(element.glucoseTimestamp)
+            helpers.changeLastTimestampFormat(element.timeseries)
         })
         return res.render('allPatients', {data: patients, layout: 'clinician_main'})
     } catch (err) {
@@ -78,7 +78,7 @@ const createPatient = async (req, res, next) => {
         const clinician_id = req.user.data_id
 
         //new patient for the patient database
-        newPatient = new Patient( {...req.body, clinicianId: clinician_id} )
+        newPatient = new Patient( {...req.body, clinicianId: clinician_id, registerdDate: new Date()} )
         await newPatient.save(function (err) {
             if (err) return console.error(err);
         })

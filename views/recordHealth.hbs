@@ -25,11 +25,11 @@
                     {{else}}
                         <small>  </small>
                     {{/if}}
-                    {{#each patient.glucoseTimestamp}}
-                    {{#if @last}}
-                        <small>Last updated at {{this.time}}</small>
+                    {{#if patient.lastUpdated.glucose}}
+                        <small>Last updated at {{patient.lastUpdated.glucose}}</small>
+                    {{else}}
+                        <small>Never updated before!</small>
                     {{/if}}
-                    {{/each}}
                 </div>
                 
                 {{#unless submitted.glucose}}
@@ -53,11 +53,11 @@
                     {{else}}
                         <small>  </small>
                     {{/if}}
-                    {{#each patient.weightTimestamp}}
-                    {{#if @last}}
-                        <small>Last updated at {{this.time}}</small>
+                    {{#if patient.lastUpdated.weight}}
+                        <small>Last updated at {{patient.lastUpdated.weight}}</small>
+                    {{else}}
+                        <small>Never updated before!</small>
                     {{/if}}
-                    {{/each}}
                 </div>
                 
                 {{#unless submitted.weight}}
@@ -85,11 +85,11 @@
                     {{else}}
                         <small>  </small>
                     {{/if}}
-                    {{#each patient.insulinTimestamp}}
-                    {{#if @last}}
-                        <small>Last updated at {{this.time}}</small>
+                    {{#if patient.lastUpdated.insulin}}
+                        <small>Last updated at {{patient.lastUpdated.insulin}}</small>
+                    {{else}}
+                        <small>Never updated before!</small>
                     {{/if}}
-                    {{/each}}
                 </div>
                 
                 {{#unless submitted.insulin}}
@@ -113,11 +113,11 @@
                     {{else}}
                         <small>  </small>
                     {{/if}}
-                    {{#each patient.exerciseTimestamp}}
-                    {{#if @last}}
-                        <small>Last updated at {{this.time}}</small>
+                    {{#if patient.lastUpdated.exercise}}
+                        <small>Last updated at {{patient.lastUpdated.exercise}}</small>
+                    {{else}}
+                        <small>Never updated before!</small>
                     {{/if}}
-                    {{/each}}
                 </div>
                 
                 {{#unless submitted.exercise}}

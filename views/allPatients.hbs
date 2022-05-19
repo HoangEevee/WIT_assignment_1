@@ -18,10 +18,10 @@
                         <a href="./{{this._id}}">{{this.firstName}} {{this.lastName}}</a>
                     </div>
                 </td>
-                {{#each this.glucoseTimestamp}}
+                {{#each this.timeseries}}
                 {{#if @last}}
-                <td data label = "Last Updated">{{this.time}}</td>
-                <td data label = "Blood Glucose (mmol/L)"{{#if (outOfThreshold this.value ../glucoseThreshold.lower ../glucoseThreshold.upper)}} class="red" {{/if}}>{{this.value}}</td>
+                <td data label = "Last Updated">{{this.glucose.time}}</td>
+                <td data label = "Blood Glucose (mmol/L)"{{#if (outOfThreshold this.glucose.value ../glucoseThreshold.lower ../glucoseThreshold.upper)}} class="red" {{/if}}>{{this.glucose.value}}</td>
                 {{/if}}
                 {{/each}}
             </tr>

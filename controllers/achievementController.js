@@ -34,16 +34,17 @@ const getleaderboard = async (req, res, next) => {
         var i = 0
         for (var patient of patients) {
             const start = patient.registeredDate
-            const timestamp = patient.timestampedDates
+            const timeseries = patient.timeseries
+            console.log(start)
             const user = await Account.find({
                 data_id: patient._id
             }, {
                 username: 1
             }).lean()
-            if (timestamp.length) {
+            if (timeseries.length) {
                 diff = today - start
                 to_days = Math.floor(diff / (24 * 60 * 60 * 1000))
-                engagement = timestamp.length / to_days * 100
+                engagement = timeseries.length / to_days * 100
                 dates[i++] = {
                     username: user[0].username,
                     engagement: engagement.toFixed(2),

@@ -7,8 +7,16 @@ const thresholdSchema = new mongoose.Schema({
 
 const timestampSchema = new mongoose.Schema({
     time: Date,
-    value: Number,
+    value: {type: Number, required: true},
     message: String
+})
+
+const timeseriesSchema = new mongoose.Schema({
+    date: {type: Date, required: true, unique: true},
+    glucose: timestampSchema,
+    weight: timestampSchema,
+    insulin: timestampSchema,
+    exercise: timestampSchema,
 })
 
 const stringSchema = new mongoose.Schema({
@@ -19,7 +27,6 @@ const stringSchema = new mongoose.Schema({
 const schema = new mongoose.Schema({ 
     clinicianId: mongoose.Types.ObjectId,
     registeredDate: Date,
-    //activeDays: Number,
     title: String,
     firstName: String,
     lastName: String,
@@ -28,19 +35,21 @@ const schema = new mongoose.Schema({
     contactNumber: String,
     emergencyName: String, 
     emergencyNumber: String,
-    timestampedDates: [Date],
+    timeseries: [timeseriesSchema],
+    lastUpdated: {
+        glucose: Date,
+        weight: Date,
+        insulin: Date,
+        exercise: Date,
+    },
     glucoseRecord: Boolean,
     glucoseThreshold: thresholdSchema,
-    glucoseTimestamp: [timestampSchema],
     weightRecord: Boolean,
     weightThreshold: thresholdSchema,
-    weightTimestamp: [timestampSchema],
     insulinRecord: Boolean,
     insulinThreshold: thresholdSchema,
-    insulinTimestamp: [timestampSchema],
     exerciseRecord: Boolean,
     exerciseThreshold: thresholdSchema,
-    exerciseTimestamp: [timestampSchema],
     supportMessages: [stringSchema],
     clinicianNotes: [stringSchema]
 })

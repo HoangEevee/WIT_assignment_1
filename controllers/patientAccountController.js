@@ -28,7 +28,7 @@ const getPastHealth = async(req, res, next) => {
     try {
         const patient_id = req.user.data_id
         const patient = await Patient.findById(patient_id).lean()
-        helpers.changePatientTimestampFormat(patient.glucoseTimestamp)
+        helpers.changePatientTimestampFormat(patient.timeseries)
         return res.render('patientPastHealth', {data: patient, layout: 'patient_main'})
     } catch(err) {
         return next(err)
@@ -37,90 +37,43 @@ const getPastHealth = async(req, res, next) => {
 
 const getRecordDataForm = async (req, res, next) => {
     try {
-        // It's called "today" but it will be modified to not be that way
-        const today = new Date()
-        
-        // Check Melb time to UTC
-        if (today.getUTCHours < today.getTimezoneOffset()) {
-            today.setDate(today.getDate()+1)
-        }
-
-        const today_start = new Date(today.setHours(0,0,0,0))
-        const tmr_start = new Date(today.setDate(today.getDate()+1))
+        const today_start = helpers.getTodayStart()
 
         // Making the "submitted" ticks appear individually
-        const attributes = ['glucose', 'weight', 'insulin', 'exercise']
-        
         const patient_id = req.user.data_id
         var date_result = {}
-        date_result[attributes[0]] = await Patient.findOne({
+        date_result = await Patient.findOne({
             _id: patient_id,
-            glucoseTimestamp: {
+            timeseries: {
                 $elemMatch: {
-                    time: {
-                        $gte: today_start,
-                        $lt: tmr_start,
-                    }
+                    date: today_start
                 }
             }
         },
         {
-            'glucoseTimestamp.$' : 1
+            'timeseries.$': 1
         }).lean()
-        date_result[attributes[1]] = await Patient.findOne({
-            _id: patient_id,
-            weightTimestamp: {
-                $elemMatch: {
-                    time: {
-                        $gte: today_start,
-                        $lt: tmr_start,
-                    }
-                }
-            }
-        },
-        {
-            'weightTimestamp.$' : 1
-        }).lean()
-        date_result[attributes[2]] = await Patient.findOne({
-            _id: patient_id,
-            insulinTimestamp: {
-                $elemMatch: {
-                    time: {
-                        $gte: today_start,
-                        $lt: tmr_start,
-                    }
-                }
-            }
-        },
-        {
-            'insulinTimestamp.$' : 1
-        }).lean()
-        date_result[attributes[3]] = await Patient.findOne({
-            _id: patient_id,
-            exerciseTimestamp: {
-                $elemMatch: {
-                    time: {
-                        $gte: today_start,
-                        $lt: tmr_start,
-                    }
-                }
-            }
-        },
-        {
-            'exerciseTimestamp.$' : 1
-        }).lean()
-
+        // record it in object
         var submit = {}
-        for (let i = 0; i < 4; i++) {
-            submit[attributes[i]] = (date_result[attributes[i]]!=null)
+        if (date_result) {
+            timeseries = date_result.timeseries[0]
+            submit = {
+                glucose: (timeseries.glucose != null),
+                weight: (timeseries.weight != null),
+                insulin: (timeseries.insulin != null),
+                exercise: (timeseries.exercise != null),
+            }
+        } else {
+            submit = {
+                glucose: false,
+                weight: false,
+                insulin: false,
+                exercise: false,
+            }
         }
-
         var patient_data = await Patient.findOne({_id: patient_id}).lean()
         //show time as DD/MM/YYYY, HH:MM:SS
-        helpers.changeLastTimestampFormat(patient_data.glucoseTimestamp)
-        helpers.changeLastTimestampFormat(patient_data.weightTimestamp)
-        helpers.changeLastTimestampFormat(patient_data.insulinTimestamp)
-        helpers.changeLastTimestampFormat(patient_data.exerciseTimestamp)
+        helpers.changeLastTimestampFormat(patient_data.lastUpdated)
 
         return res.render('recordHealth', { submitted: submit, patient: patient_data, layout: 'patient_main' })
     } catch (err) {
@@ -131,55 +84,84 @@ const getRecordDataForm = async (req, res, next) => {
 const insertHealthData = async (req, res, next) => {
     try {
         const today = new Date()
+        const today_start = helpers.getTodayStart()
         const patient_id = req.user.data_id
-        last_entered = await Patient.findOne({
-            id: patient_id
+        timeseries_today = await Patient.findOne({
+            id: patient_id,
+            timeseries: {
+                $elemMatch: {
+                    date: today_start
+                }
+            }
         }, {
             _id: 0,
-            timestampedDates: 1
-        })
-        last_date = last_entered.timestampedDates
-        if (!last_date.length 
-            || (today.toLocaleDateString().localeCompare(last_date[last_date.length-1].toLocaleDateString()) > 0)) {
-            await Patient.updateOne({
-                id: patient_id
-            }, {
-                $push: {
-                    timestampedDates: today
-                }
-            })
-        }
-
-        if (req.body.glucose) {
+            'timeseries.$': 1
+        }).lean()
+        // if no data is entered today yet... UNTIL NOW!
+        if (!timeseries_today) {
             await Patient.updateOne({
                 _id: patient_id
             }, {
                 $push: {
-                    glucoseTimestamp: {time: today, value: req.body.glucose, message: req.body.comment}
+                    timeseries: {date: today_start}
+                }
+            })
+        }
+        // enter the individual data
+        if (req.body.glucose) {
+            await Patient.updateOne({
+                _id: patient_id,
+                timeseries: {
+                    $elemMatch: {
+                        date: today_start
+                    }
+                }
+            }, {
+                $set: {
+                    'timeseries.$.glucose': {time: today, value: req.body.glucose, message: req.body.comment},
+                    'lastUpdated.glucose': today
                 }
             })
         } else if (req.body.weight) {
             await Patient.updateOne({
-                _id: patient_id
+                _id: patient_id,
+                timeseries: {
+                    $elemMatch: {
+                        date: today_start
+                    }
+                }
             }, {
-                $push: {
-                    weightTimestamp: {time: today, value: req.body.weight, message: req.body.comment}
+                $set: {
+                    'timeseries.$.weight': {time: today, value: req.body.weight, message: req.body.comment},
+                    'lastUpdated.weight': today
                 }
             })
         } else if (req.body.insulin) {
             await Patient.updateOne({
-                _id: patient_id
+                _id: patient_id,
+                timeseries: {
+                    $elemMatch: {
+                        date: today_start
+                    }
+                }
             }, {
-                $push: {
-                    insulinTimestamp: {time: today, value: req.body.insulin, message: req.body.comment}
+                $set: {
+                    'timeseries.$.insulin': {time: today, value: req.body.insulin, message: req.body.comment},
+                    'lastUpdated.insulin': today
                 }
             })
         } else if (req.body.exercise) {
             await Patient.updateOne({
-                _id: patient_id
+                _id: patient_id,
+                timeseries: {
+                    $elemMatch: {
+                        date: today_start
+                    }
+                }
             }, {
-                $push: {
-                    exerciseTimestamp: {time: today, value: req.body.exercise, message: req.body.comment}
+                $set: {
+                    'timeseries.$.exercise': {time: today, value: req.body.exercise, message: req.body.comment},
+                    'lastUpdated.exercise': today
                 }
             })
         }

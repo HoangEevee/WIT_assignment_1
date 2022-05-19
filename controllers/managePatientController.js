@@ -8,7 +8,7 @@ const my_clinician_id = mongoose.Types.ObjectId("62713547ab750c0e07f6387f")
 const getOnePatientData = async (req, res, next) => {
     try {
         const patient = await Patient.findById(req.params.id).lean()
-        helpers.changePatientTimestampFormat(patient.glucoseTimestamp)
+        helpers.changePatientTimestampFormat(patient.timeseries)
         return res.render('onePatient', {data: patient, layout: 'clinician_main'})
         
     } catch (err) {

@@ -60,10 +60,10 @@
             </thead>
             <tbody>
                 {{#with data}}
-                {{#each glucoseTimestamp}}
+                {{#each timeseries}}
                 <tr>
-                    <td data label = "Time">{{this.time}}</td>
-                    <td data label = "Blood Glucose (mmol/L)"{{#if (outOfThreshold this.value ../glucoseThreshold.lower ../glucoseThreshold.upper)}} class="red" {{/if}}>{{this.value}}</td> 
+                    <td data label = "Time">{{this.glucose.time}}</td>
+                    <td data label = "Blood Glucose (mmol/L)"{{#if (outOfThreshold this.glucose.value ../glucoseThreshold.lower ../glucoseThreshold.upper)}} class="red" {{/if}}>{{this.glucose.value}}</td> 
                 </tr>
                 {{/each}}
                 {{/with}}
