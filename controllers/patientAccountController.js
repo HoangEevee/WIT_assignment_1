@@ -9,7 +9,10 @@ const getDataByPatient = async (req, res, next) => {
     try{
         const patient_id = req.user.data_id
         const patient = await Patient.findById(patient_id).lean()
-        const account = await Account.findOne({'data_id': patient_id}).lean();
+        const account = await Account.findOne({'data_id': patient_id}).lean()
+        //get date to correct format YYYY-MM-DD
+        patient.dob = patient.dob.toLocaleDateString('en-GB').split("/")
+        patient.dob = patient.dob[2] + "-" + patient.dob[1] + "-" + patient.dob[0]
         return res.render('patientData', {patient: patient, account: account, layout: 'patient_main'})
     } catch (err) {
         return next(err)
@@ -18,14 +21,18 @@ const getDataByPatient = async (req, res, next) => {
 
 const changeAccountDetail = async (req, res, next) => {
     try {
+
         // For changes in patient database
         if (req.body.firstName || req.body.lastName || req.body.dob || req.body.email) {
-            const patient_id = req.user.data_id;
-            let patient = await Patient.findOne({_id: patient_id});
+            let patient = await Patient.findOne({_id: req.user.data_id});
 
             if (req.body.firstName) patient["firstName"] = req.body.firstName;
             if (req.body.lastName) patient["lastName"] = req.body.lastName;
-            if (req.body.dob) patient["dob"] = req.body.dob;
+            if (req.body.dob) {
+                date = req.body.dob.split("-")
+                //HOLY FUCKING SHIT WHY WOULD JAVASCRIPT COUNT MONTH FROM 0-11. I LITERALLY WASTED SO MUCH TIME
+                patient["dob"] = new Date(date[0], date[1]-1, date[2]);
+            }
             if (req.body.email) patient["email"] = req.body.email;
             await patient.save();
         }

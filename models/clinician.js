@@ -4,7 +4,7 @@ const schema = new mongoose.Schema({
     title: String,
     firstName: String,
     lastName: String,
-    dob: String,
+    dob: Date,
     email: String,
     emailAlt: String,
     contactNumber: String,
