@@ -21,58 +21,25 @@ const getDataByPatient = async (req, res, next) => {
 
 const changeAccountDetail = async (req, res, next) => {
     try {
-        const patient_id = req.user.data_id;
-        const account_id = req.user._id;
+        // For changes in patient database
+        if (req.body.firstName || req.body.lastName || req.body.dob || req.body.email) {
+            const patient_id = req.user.data_id;
+            let patient = await Patient.findOne({_id: patient_id});
 
-        if (req.body.firstName) {
-            await Patient.updateOne({
-                _id: patient_id
-            }, {
-                $set: {
-                    firstName: req.body.firstName
-                }
-            })
+            if (req.body.firstName) patient["firstName"] = req.body.firstName;
+            if (req.body.lastName) patient["lastName"] = req.body.lastName;
+            if (req.body.dob) patient["dob"] = req.body.dob;
+            if (req.body.email) patient["email"] = req.body.email;
+            await patient.save();
         }
-        if (req.body.lastName) {
-            await Patient.updateOne({
-                _id: patient_id
-            }, {
-                $set: {
-                    lastName: req.body.lastName
-                }
-            })
-        } 
-        if (req.body.dob) {
-            await Patient.updateOne({
-                _id: patient_id
-            }, {
-                $set: {
-                    dob: req.body.dob
-                }
-            })
-        } 
-        if (req.body.email) {
-            await Patient.updateOne({
-                _id: patient_id
-            }, {
-                $set: {
-                    email: req.body.email
-                }
-            })
-        }
-        if (req.body.username) {
-            await Account.updateOne({
-                _id: account_id
-            }, {
-                $set: {
-                    username: req.body.username
-                }
-            })
-        }
-        /*This doesnt hash the password DONT USE*/
-        if (req.body.password) {
+
+        // For changes in account database
+        if (req.body.username || req.body.password) {
+            const account_id = req.user._id;
             let user = await Account.findOne({_id: account_id});
-            user["password"] = req.body.password;
+
+            if (req.body.username) user["username"] = req.body.username;
+            if (req.body.password) user["password"] = req.body.password;
             await user.save();
         }
         return res.redirect("./")

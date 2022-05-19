@@ -452,3 +452,11 @@ nav .profile-container a{
 .flex-container>.a:hover {
     color: #0D2557;
 }
+
+.flex-container>* {
+    align-self: center;
+}
+
+.name-container>* {
+    flex-grow: 1;
+}
