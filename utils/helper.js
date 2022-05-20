@@ -76,6 +76,7 @@ const isEmail = (email) => {
 // check date in format YYYY-MM-DD. Does not check if month and day valid or not
 const isDate = (date) => {
     const dateRegex = /[0-9]{4}-[0-9]{2}-[0-9]{2}/
+    return date.match(dateRegex)
 }
 module.exports = {
     changePatientTimestampFormat,
