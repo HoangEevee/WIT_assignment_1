@@ -90,7 +90,7 @@ const createPatient = async (req, res, next) => {
         if (!["mr","miss","mrs","ms", "mx", "other"].includes(req.body.title)) flashMessage += " invalid title" 
         if (!helpers.isDate(req.body.dob)) flashMessage += " invalid birthday"
 
-        if (flashMessage !== "You HTML meddler have input an") {
+        if (flashMessage !== "You HTML meddler have input") {
             req.flash("error", flashMessage)
             return res.redirect('/clinician/create-patient-account')
         }
