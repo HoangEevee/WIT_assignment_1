@@ -444,6 +444,40 @@ form {
     margin-bottom: 20px;
 }
 
+@media screen and (max-width: 1200px) {
+    .timeline {
+        margin: 0;
+    }
+    .timeline::after {
+        margin-left: 0;
+        left: 50%;
+    }
+    .date_container {
+        margin-left: 0;
+        /* left: 50px; */
+    }
+    /* .date_container::after {
+        display: none;
+    } */
+    .health_container {
+        flex-wrap: wrap;
+        max-width: 100%;
+        width: auto;
+        float: none;
+        margin-left: 110px;
+        min-height: 53px;
+        padding-right: 0%;
+        padding-top: 2%
+    }
+    .health_child {
+        width: 100%;
+        padding-bottom: 0;
+        padding-top: 0;
+    }
+    .oval_button {
+        width: 80%;
+    }
+
 /* Record Health */
 .profile-container {
     display: flex;
