@@ -1,12 +1,14 @@
 <h2 class="center">All patients</h2>
-
+<h3 class="center">{{today}}</h3>
 <div class="tablecontainer">
     <table class="table">
         <thead> 
             <tr>
                 <th>Patient Name</th>
-                <th>Last Updated</th>
                 <th>Blood Glucose (mmol/L)</th> 
+                <th>Weight (kg)</th>
+                <th>Insulin (no. of doses)</th>
+                <th>Exercise (step count)</th>
             </tr>
         </thead>
         <tbody>
@@ -18,12 +20,28 @@
                         <a href="./{{this._id}}">{{this.firstName}} {{this.lastName}}</a>
                     </div>
                 </td>
-                {{#each this.timeseries}}
-                {{#if @last}}
-                <td data label = "Last Updated">{{this.glucose.time}}</td>
-                <td data label = "Blood Glucose (mmol/L)"{{#if (outOfThreshold this.glucose.value ../glucoseThreshold.lower ../glucoseThreshold.upper)}} class="red" {{/if}}>{{this.glucose.value}}</td>
-                {{/if}}
-                {{/each}}
+
+                <td data label = "Blood Glucose (mmol/L)"{{#if (outOfThreshold this.timeseries.glucose.value ./glucoseThreshold.lower ./glucoseThreshold.upper ./glucoseRecord)}} class="red" {{/if}}>
+                {{#unless ./glucoseRecord}}---{{/unless}}
+                {{#if (upToDate this.timeseries.glucose this.timeseries.date today)}}{{this.timeseries.glucose.value}}
+                {{else if ./glucoseRecord}}???{{/if}}
+                </td>
+                <td data label = "Weight (kg)"{{#if (outOfThreshold this.timeseries.weight.value ./weightThreshold.lower ./weightThreshold.upper ./weightRecord)}} class="red" {{/if}}>
+                {{#unless ./weightRecord}}---{{/unless}}
+                {{#if (upToDate this.timeseries.weight this.timeseries.date today)}}{{this.timeseries.weight.value}}
+                {{else if ./weightRecord}}???{{/if}}
+                </td>
+                <td data label = "Insulin (no. of doses)"{{#if (outOfThreshold this.timeseries.insulin.value ./insulinThreshold.lower ./insulinThreshold.upper ./insulinRecord)}} class="red" {{/if}}>
+                {{#unless ./insulinRecord}}---{{/unless}}
+                {{#if (upToDate this.timeseries.insulin this.timeseries.date today)}}{{this.timeseries.insulin.value}}
+                {{else if ./insulinRecord}}???{{/if}}
+                </td>
+                <td data label = "Exercise (step count)"{{#if (outOfThreshold this.timeseries.exercise.value ./exerciseThreshold.lower ./exerciseThreshold.upper ./exerciseRecord)}} class="red" {{/if}}>
+                {{#unless ./exerciseRecord}}---{{/unless}}
+                {{#if (upToDate this.timeseries.exercise this.timeseries.date today)}}{{this.timeseries.exercise.value}}
+                {{else if ./exerciseRecord}}???{{/if}}
+                
+                </td>
             </tr>
             {{/each}}
         </tbody>

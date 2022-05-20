@@ -8,7 +8,7 @@ const patientController = require('../controllers/patientController.js')
 
 // localhost:8080/patient*** where *** is the following
 
-patientRouter.get('/home', isAuthenticated, patientController.getHomePage)
+patientRouter.get('/home', patientController.getHomePage)
 patientRouter.get('/about-diabetes', patientController.getAboutDiabetes)
 patientRouter.get('/about-website', patientController.getAboutWebsite)
 patientRouter.get('/view-support-messages',patientController.getSupportmessages)
@@ -21,8 +21,8 @@ patientRouter.get('/view-support-messages',patientController.getSupportmessages)
 // patientRouter.get('/settings', patientController)
 
 // onwards to other routers!
-patientRouter.use('/account', isAuthenticated, require('./patientAccountRouter'))
-patientRouter.use('/achievements',  isAuthenticated, require('./achievementRouter'))
+patientRouter.use('/account', require('./patientAccountRouter'))
+patientRouter.use('/achievements', require('./achievementRouter'))
 
 module.exports = patientRouter
 

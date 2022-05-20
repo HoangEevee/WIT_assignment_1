@@ -1,5 +1,8 @@
 <h1 class="center">Patient Data</h1>
 
+{{#each flash}}
+<p class="red center">{{this}}</p>
+{{/each}}
 
 <form action="./change-account-detail" method="POST">
     <div class="container">

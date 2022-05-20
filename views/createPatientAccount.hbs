@@ -2,7 +2,11 @@
 
 <section>
     <p class="center">Put your patient's information below</p>
-
+    
+    {{#each flash}}
+    <p class="red center">{{this}}</p>
+    {{/each}}
+    
     <form action="/clinician/create-patient-account" method="POST">
         <h4>Title</h4>
             <select type="text" id="title" name="title"/>
@@ -22,28 +26,28 @@
             <input type="text" id="lastName" name="lastName" placeholder="Enter last name" required/>
             <br>
             <h4>Date of birth</h4>
-            <input type="text" id="dob" name="dob" placeholder="Enter date of birth" required/>
+            <input type="date" id="dob" name="dob" placeholder="Enter date of birth" required/>
             <br>
             <h4>Email</h4>
-            <input type="text" id="email" name="email" placeholder="Enter email" required/>
+            <input type="email" id="email" name="email" placeholder="Enter email" required/>
             <br>
             <h4>Contact number</h4>
-            <input type="text" id="contactNumber" name="contactNumber" placeholder="Enter contact number" required/>
+            <input type="number" id="contactNumber" name="contactNumber" placeholder="Enter contact number" required/>
             <br>
             <br>
             <h4>Emergency contact name</h4>
             <input type="text" id="emergencyName" name="emergencyName" placeholder="Enter name" required/>
             <br>
             <h4>Emergency contact number</h4>
-            <input type="text" id="emergencyNumber" name="emergencyNumber" placeholder="Enter emergency contact number" required/>
+            <input type="number" id="emergencyNumber" name="emergencyNumber" placeholder="Enter emergency contact number" required/>
 
             <h4>Username</h4>
             <input type="text" id="username" name="username" placeholder="Enter username" required/>
             <h4>Password</h4>
-            <input type="text" id="password" name="password" placeholder="Enter password" required/>
+            <input type="password" id="password" name="password" placeholder="Enter password" required/>
             <br>
 
             <br>
-        <input type="submit"/>
+        <button type="submit">Create</button>
     </form>
 </section>

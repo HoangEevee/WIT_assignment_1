@@ -26,21 +26,35 @@ const changePatientTimestampFormat = (timeseries) => {
     }
 }
 
+//show time as DD/MM/YYYY, HH:MM:SS for the shared date in timestamp
+const changeTimestampDateFormat = (timeseries) => {
+    if (timeseries.length) {
+        //show time as DD/MM/YYYY, HH:MM:SS
+        timeseries.forEach((element) => {
+            element.date = element.date.toLocaleDateString()
+        })
+        //reverse timestamp so it show newest on top 
+        //TODO: might want to change push timestamp to begin of list instead so don't need this
+        timeseries = timeseries.reverse() 
+    }
+}
+
 //show time as DD/MM/YYYY, HH:MM:SS for last inserted element in timestamp
 const changeLastTimestampFormat = (lastUpdated) => {
-    if (lastUpdated.glucose) {
-        lastUpdated.glucose = lastUpdated.glucose.toLocaleString()
+    if (lastUpdated) {
+        if (lastUpdated.glucose) {
+            lastUpdated.glucose = lastUpdated.glucose.time.toLocaleString()
+        }
+        if (lastUpdated.weight) {
+            lastUpdated.weight = lastUpdated.weight.time.toLocaleString()
+        }
+        if (lastUpdated.insulin) {
+            lastUpdated.insulin = lastUpdated.insulin.time.toLocaleString()
+        }
+        if (lastUpdated.exercise) {
+            lastUpdated.exercise = lastUpdated.exercise.time.toLocaleString()
+        } 
     }
-    if (lastUpdated.weight) {
-        lastUpdated.weight = lastUpdated.weight.toLocaleString()
-    }
-    if (lastUpdated.insulin) {
-        lastUpdated.insulin = lastUpdated.insulin.toLocaleString()
-    }
-    if (lastUpdated.exercise) {
-        lastUpdated.exercise = lastUpdated.exercise.toLocaleString()
-    } 
-    
 }
 
 // Authentication middleware
@@ -67,10 +81,23 @@ const getTodayStart = () => {
 
     return new Date(today.setHours(0,0,0,0))
 }
+// regex from here https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/email
+const isEmail = (email) => {
+    const emailRegex = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+    return email.match(emailRegex);
+}
 
+// check date in format YYYY-MM-DD. Does not check if month and day valid or not
+const isDate = (date) => {
+    const dateRegex = /[0-9]{4}-[0-9]{2}-[0-9]{2}/
+    return date.match(dateRegex)
+}
 module.exports = {
     changePatientTimestampFormat,
+    changeTimestampDateFormat,
     changeLastTimestampFormat,
     isAuthenticated,
     getTodayStart,
+    isEmail,
+    isDate
 }

@@ -13,7 +13,7 @@ const getDataByPatient = async (req, res, next) => {
         //get date to correct format YYYY-MM-DD
         patient.dob = patient.dob.toLocaleDateString('en-GB').split("/")
         patient.dob = patient.dob[2] + "-" + patient.dob[1] + "-" + patient.dob[0]
-        return res.render('patientData', {patient: patient, account: account, layout: 'patient_main'})
+        return res.render('patientData', {patient: patient, account: account, layout: 'patient_main', flash:req.flash('error')})
     } catch (err) {
         return next(err)
     }
@@ -21,6 +21,15 @@ const getDataByPatient = async (req, res, next) => {
 
 const changeAccountDetail = async (req, res, next) => {
     try {
+        
+        // Validations
+        let flashMessage = "Stop messing with my HTML you donker. You have input"
+        if (req.body.email && !helpers.isEmail(req.body.email)) flashMessage +=" invalid email"
+        if (req.body.dob && !helpers.isDate(req.body.dob)) flashMessage += " invalid birthday"
+        if (flashMessage !== "Stop messing with my HTML you donker. You have input") {
+            req.flash("error", flashMessage)
+            return res.redirect('./account-info')
+        }
 
         // For changes in patient database
         if (req.body.firstName || req.body.lastName || req.body.dob || req.body.email) {
@@ -46,7 +55,7 @@ const changeAccountDetail = async (req, res, next) => {
             if (req.body.password) user["password"] = req.body.password;
             await user.save();
         }
-        return res.redirect("./")
+        return res.redirect("./account-info")
     } catch(err) {
         return next(err)
     }
@@ -63,7 +72,7 @@ const getPastHealth = async(req, res, next) => {
     try {
         const patient_id = req.user.data_id
         const patient = await Patient.findById(patient_id).lean()
-        helpers.changePatientTimestampFormat(patient.timeseries)
+        helpers.changeTimestampDateFormat(patient.timeseries)
         return res.render('patientPastHealth', {data: patient, layout: 'patient_main'})
     } catch(err) {
         return next(err)
@@ -123,7 +132,7 @@ const insertHealthData = async (req, res, next) => {
         const today_start = helpers.getTodayStart()
         const patient_id = req.user.data_id
         timeseries_today = await Patient.findOne({
-            id: patient_id,
+            _id: patient_id,
             timeseries: {
                 $elemMatch: {
                     date: today_start
