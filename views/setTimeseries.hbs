@@ -2,6 +2,10 @@
 
 <section>
     <p class="center">What does you patient need?</p>
+                
+    {{#each flash}}
+    <p class="red center">{{this}}</p>
+    {{/each}}
 
     <div class="bigcontainer">
         <div class="child_container">

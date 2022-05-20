@@ -17,7 +17,7 @@ const getOnePatientData = async (req, res, next) => {
 const setTimeseriesPage = async (req, res, next) => {
     try {
         const patient = await Patient.findById(req.params.id).lean()
-        return res.render('setTimeseries', {data: patient,layout: 'clinician_main' })
+        return res.render('setTimeseries', {data: patient,layout: 'clinician_main' , flash:req.flash('error')})
     } catch (err) {
         return next(err)
     }
@@ -45,74 +45,48 @@ const newTimeseries = async (req, res, next) => {
 
 const setThreshold = async (req, res, next) => {
     try {
-        // lowerbound
-        if (req.body.glucose_lower) {
-            await Patient.updateOne({
-                _id: req.params.id
-            }, {
-                $set: {
-                  "glucoseThreshold.lower": req.body.glucose_lower
-                }
-            })
-        } else if (req.body.weight_lower) {
-            await Patient.updateOne({
-                _id: req.params.id
-            }, {
-                $set: {
-                  "weightThreshold.lower": req.body.weight_lower
-                }
-            })
-        } else if (req.body.insulin_lower) {
-            await Patient.updateOne({
-                _id: req.params.id
-            }, {
-                $set: {
-                  "insulinThreshold.lower": req.body.insulin_lower
-                }
-            })
-        } else if (req.body.exercise_lower) {
-            await Patient.updateOne({
-                _id: req.params.id
-            }, {
-                $set: {
-                  "exerciseThreshold.lower": req.body.exercise_lower
-                }
-            })
+        let patient = await Patient.findOne({_id: req.params.id});
+
+        //grab all the threshold. Could put if/else to take only newly updated stuffs but cost of this is trivial to database retrival anyway
+        let glucoseLower = req.body.glucose_lower || patient["glucoseThreshold"]["lower"]
+        let glucoseUpper = req.body.glucose_upper || patient["glucoseThreshold"]["upper"]
+        let weightLower = req.body.weight_lower || patient["weightThreshold"]["lower"]
+        let weightUpper = req.body.weight_upper || patient["weightThreshold"]["upper"]
+        let insulinLower = req.body.insulin_lower || patient["insulinThreshold"]["lower"]
+        let insulinUpper = req.body.insulin_upper || patient["insulinThreshold"]["upper"]
+        let exerciseLower = req.body.exercise_lower || patient["exerciseThreshold"]["lower"]
+        let exerciseUpper = req.body.exercise_upper || patient["exerciseThreshold"]["upper"]
+
+        //check threshold lower is smaller than upper
+        if (glucoseLower > glucoseUpper || weightLower > weightUpper || 
+            insulinLower > insulinUpper || exerciseLower > exerciseUpper) {
+                req.flash('error', "Lower threshold must be smaller than upper threshold")
+                return res.redirect('/clinician/'.concat(req.params.id.toString(), '/set-timeseries'));
         }
-        // upperbound
-        if (req.body.glucose_upper) {
-            await Patient.updateOne({
-                _id: req.params.id
-            }, {
-                $set: {
-                  "glucoseThreshold.upper": req.body.glucose_upper
-                }
-            })
-        } else if (req.body.weight_upper) {
-            await Patient.updateOne({
-                _id: req.params.id
-            }, {
-                $set: {
-                  "weightThreshold.upper": req.body.weight_upper
-                }
-            })
-        } else if (req.body.insulin_upper) {
-            await Patient.updateOne({
-                _id: req.params.id
-            }, {
-                $set: {
-                  "insulinThreshold.upper": req.body.insulin_upper
-                }
-            })
-        } else if (req.body.exercise_upper) {
-            await Patient.updateOne({
-                _id: req.params.id
-            }, {
-                $set: {
-                  "exerciseThreshold.upper": req.body.exercise_upper
-                }
-            })
-        }
+
+        //check if value valid i.e. positive, number, int,...
+        if (glucoseLower < 0 || weightLower < 0 || insulinLower < 0 || exerciseLower < 0 ||
+            glucoseUpper < 0 || weightUpper < 0 || insulinUpper < 0 || exerciseUpper < 0 ||
+            isNaN(parseFloat(glucoseLower)) || isNaN(parseFloat(glucoseUpper)) || 
+            isNaN(parseFloat(weightLower)) || isNaN(parseFloat(weightUpper)) ||
+            isNaN(parseFloat(exerciseLower)) || isNaN(parseFloat(exerciseUpper)) ||
+            //insulin must be an interger
+            !Number.isInteger(parseFloat(insulinLower)) || !Number.isInteger(parseFloat(insulinUpper))) { 
+                req.flash('error', 'Invalid data. Stop messing with my html!!!!')
+                return res.redirect('/clinician/'.concat(req.params.id.toString(), '/set-timeseries'));
+            }
+
+        //update and save changes
+        patient["glucoseThreshold"]["lower"] = glucoseLower
+        patient["glucoseThreshold"]["upper"] = glucoseUpper
+        patient["weightThreshold"]["lower"] = weightLower
+        patient["weightThreshold"]["upper"] = weightUpper
+        patient["insulinThreshold"]["lower"] = insulinLower
+        patient["insulinThreshold"]["upper"] = insulinUpper
+        patient["exerciseThreshold"]["lower"] = exerciseLower
+        patient["exerciseThreshold"]["upper"] = exerciseUpper
+        await patient.save()
+
         return res.redirect('/clinician/'.concat(req.params.id.toString(), '/set-timeseries'))
     } catch (err) {
         return next(err)
