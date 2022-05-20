@@ -1,13 +1,12 @@
 // add router
 const express = require('express')
 const clinicianRouter = express.Router()
-const isAuthenticated = require("../utils/helper").isAuthenticated
 // connect to controller
 const clinicianController = require('../controllers/clinicianController.js')
 
 // localhost:8080/clinician*** where *** is the following
 
-clinicianRouter.get("/dashboard", isAuthenticated, clinicianController.getAllPatientData)
+clinicianRouter.get("/dashboard", clinicianController.getAllPatientData)
 
 clinicianRouter.get('/create-patient-account', clinicianController.createPatientPage)
 clinicianRouter.post('/create-patient-account', clinicianController.createPatient)
@@ -25,6 +24,6 @@ clinicianRouter.get('/view-patient-comments', clinicianController.getPatientcomm
 
 
 // onwards to other routers!
-clinicianRouter.use('/:id', isAuthenticated, require('./managePatientRouter'))
+clinicianRouter.use('/:id', require('./managePatientRouter'))
 
 module.exports = clinicianRouter
