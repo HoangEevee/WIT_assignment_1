@@ -77,12 +77,13 @@ const createPatient = async (req, res, next) => {
         
         const today = new Date()
         //Validations
-        let flashMessage = "You HTML meddler have input an"
+        let flashMessage = "You HTML meddler have input"
         if (!helpers.isEmail(req.body.email)) flashMessage +=" invalid email"
         if (!Number.isInteger(parseFloat(req.body.contactNumber)) || !Number.isInteger(parseFloat(req.body.emergencyNumber))) {
             flashMessage +=" invalid phone number"
         }
-        if (!["Mr.","Miss","Mrs.","Ms.", "Mx.", "other"].includes(req.body.title)) flashMessage += " an invalid title" 
+
+        if (!["mr","miss","mrs","ms", "mx", "other"].includes(req.body.title)) flashMessage += " invalid title" 
         if (!helpers.isDate(req.body.dob)) flashMessage += " invalid birthday"
 
         if (flashMessage !== "You HTML meddler have input an") {
