@@ -5,7 +5,7 @@
         <thead>
             <tr>
                 <th>Patient Name</th>
-                <th>Time</th>
+
                 <th>Patient health Comment</th> 
             </tr>
         </thead>
@@ -18,8 +18,8 @@
                         <a href="./{{this._id}}">{{this.firstName}} {{this.lastName}}</a>
                     </div>
                 </td>
-                <td data label = "Time">{{this.time}}</td>
-                <td data label = "Patient Health Comment">{{this.message}}</td> 
+                
+                <td data label = "Patient Health Comment">{{this.lastComments.message}}</td> 
             </tr>
             {{/each}}
         </tbody>

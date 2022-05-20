@@ -25,7 +25,7 @@ const getAllPatientData = async (req, res, next) => {
         const patients = await Patient.find({ '_id': { $in: ids.patients } }).lean();
         //show time as DD/MM/YYYY, HH:MM:SS
         patients.forEach((element) => {
-            helpers.changeLastTimestampFormat(element.timeseries)
+            helpers.changePatientTimestampFormat(element.timeseries)
         })
         return res.render('allPatients', {data: patients, layout: 'clinician_main'})
     } catch (err) {
@@ -63,7 +63,8 @@ const createPatientPage = async (req, res, next) => {
 
 const getPatientcomments = async (req, res, next) => {
     try {
-        return res.render('viewpatientcomments', {layout: 'clinician_main'})
+        const patients = await Patient.find().lean()
+        return res.render('viewpatientcomments', {data: patients, layout: 'clinician_main'})
     } catch (err) {
         return next(err)
     }
@@ -76,9 +77,9 @@ const createPatient = async (req, res, next) => {
     try {
         //id associated with the account id
         const clinician_id = req.user.data_id
-
+        const today = new Date()
         //new patient for the patient database
-        newPatient = new Patient( {...req.body, clinicianId: clinician_id, registerdDate: new Date()} )
+        newPatient = new Patient( {...req.body, clinicianId: clinician_id, registeredDate: today} )
         await newPatient.save(function (err) {
             if (err) return console.error(err);
         })

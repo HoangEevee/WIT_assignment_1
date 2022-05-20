@@ -5,14 +5,14 @@ const helpers = require('../utils/helper')
 const Account = require('../models/account')
 const { redirect } = require('express/lib/response')
 
-// Pat
-//const my_patient_id = mongoose.Types.ObjectId("62713910a76e24742ae2aa9d")
-
 const getDataByPatient = async (req, res, next) => { 
     try{
         const patient_id = req.user.data_id
         const patient = await Patient.findById(patient_id).lean()
-        const account = await Account.findOne({'data_id': patient_id}).lean();
+        const account = await Account.findOne({'data_id': patient_id}).lean()
+        //get date to correct format YYYY-MM-DD
+        patient.dob = patient.dob.toLocaleDateString('en-GB').split("/")
+        patient.dob = patient.dob[2] + "-" + patient.dob[1] + "-" + patient.dob[0]
         return res.render('patientData', {patient: patient, account: account, layout: 'patient_main'})
     } catch (err) {
         return next(err)
@@ -21,14 +21,18 @@ const getDataByPatient = async (req, res, next) => {
 
 const changeAccountDetail = async (req, res, next) => {
     try {
+
         // For changes in patient database
         if (req.body.firstName || req.body.lastName || req.body.dob || req.body.email) {
-            const patient_id = req.user.data_id;
-            let patient = await Patient.findOne({_id: patient_id});
+            let patient = await Patient.findOne({_id: req.user.data_id});
 
             if (req.body.firstName) patient["firstName"] = req.body.firstName;
             if (req.body.lastName) patient["lastName"] = req.body.lastName;
-            if (req.body.dob) patient["dob"] = req.body.dob;
+            if (req.body.dob) {
+                date = req.body.dob.split("-")
+                //HOLY FUCKING SHIT WHY WOULD JAVASCRIPT COUNT MONTH FROM 0-11. I LITERALLY WASTED SO MUCH TIME
+                patient["dob"] = new Date(date[0], date[1]-1, date[2]);
+            }
             if (req.body.email) patient["email"] = req.body.email;
             await patient.save();
         }
@@ -84,6 +88,7 @@ const getRecordDataForm = async (req, res, next) => {
         {
             'timeseries.$': 1
         }).lean()
+
         // record it in object
         var submit = {}
         if (date_result) {
@@ -150,7 +155,7 @@ const insertHealthData = async (req, res, next) => {
             }, {
                 $set: {
                     'timeseries.$.glucose': {time: today, value: req.body.glucose, message: req.body.comment},
-                    'lastUpdated.glucose': today
+                    'lastUpdated.glucose': {time: today, value: req.body.glucose, message: req.body.comment},
                 }
             })
         } else if (req.body.weight) {
@@ -164,7 +169,7 @@ const insertHealthData = async (req, res, next) => {
             }, {
                 $set: {
                     'timeseries.$.weight': {time: today, value: req.body.weight, message: req.body.comment},
-                    'lastUpdated.weight': today
+                    'lastUpdated.weight': {time: today, value: req.body.weight, message: req.body.comment},
                 }
             })
         } else if (req.body.insulin) {
@@ -178,7 +183,7 @@ const insertHealthData = async (req, res, next) => {
             }, {
                 $set: {
                     'timeseries.$.insulin': {time: today, value: req.body.insulin, message: req.body.comment},
-                    'lastUpdated.insulin': today
+                    'lastUpdated.insulin': {time: today, value: req.body.insulin, message: req.body.comment},
                 }
             })
         } else if (req.body.exercise) {
@@ -192,10 +197,24 @@ const insertHealthData = async (req, res, next) => {
             }, {
                 $set: {
                     'timeseries.$.exercise': {time: today, value: req.body.exercise, message: req.body.comment},
-                    'lastUpdated.exercise': today
+                    'lastUpdated.exercise': {time: today, value: req.body.exercise, message: req.body.comment},
                 }
             })
         }
+
+        if (req.body.comment) {
+            await Patient.updateOne({
+                _id: patient_id,
+            }, {
+                $push: {
+                    'lastComments': { 
+                        "$each": [{time: today, message: req.body.comment}],
+                        "$slice": -10
+                    }
+                }
+            })
+        }
+
         return res.redirect('/patient/account/record-health-form')
     } catch (err) {
         return next(err)

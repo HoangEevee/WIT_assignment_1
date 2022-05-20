@@ -3,8 +3,6 @@ const Clinician = require('../models/clinician')
 const Patient = require('../models/patient')
 const helpers = require('../utils/helper')
 
-const my_clinician_id = mongoose.Types.ObjectId("62713547ab750c0e07f6387f")
-
 const getOnePatientData = async (req, res, next) => {
     try {
         const patient = await Patient.findById(req.params.id).lean()
@@ -123,16 +121,24 @@ const setThreshold = async (req, res, next) => {
 
 const getsupportmessages = async (req, res, next) => {
     try {
-        return res.render('sendsupportmessage', {layout: 'clinician_main'})
+        const patient = await Patient.findById(req.params.id).lean()
+        return res.render('sendsupportmessage', {data: patient, layout: 'clinician_main'})
     } catch (err) {
         return next(err)
     }
 } 
-    
 
 const sendSupportmessages = async (req, res, next) => {
     try {
-        return res.redirect("/clinician/send-support-messages")
+        const patient_id = req.params.id
+        await Patient.updateOne({
+            _id: patient_id,
+        }, {$set: {
+                "supportMessages": req.body.supportmessage
+            }
+        })
+
+        return res.redirect("/clinician/".concat(req.params.id.toString(), '/send-support-messages'))
     } catch (err) {
         return next(err)
     }

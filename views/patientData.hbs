@@ -6,33 +6,44 @@
         <div class="child_container">
             <div class="flex-container name-container">
                 <div>
-                <label for="firstName" class="flex-container">
-                        <h4>First name</h4>
-                        <a onclick="edit('firstName')">Edit</a>
-                </label>
-                <input id="firstName" type="text" value="{{patient.firstName}}" name="firstName" required disabled>
+                    <label for="firstName" class="flex-container">
+                            <h4>First name</h4>
+                            <a onclick="edit('firstName')">Edit</a>
+                    </label>
+                    <input id="firstName" type="text" value="{{patient.firstName}}" name="firstName" required disabled>
                 </div>
                 <gap style="flex-grow=0.2"></gap>
                 <div>
-                <label for="lastName" class="flex-container">
-                        <h4>Last name</h4>
-                        <a onclick="edit('lastName')">Edit</a>
-                </label>
-                <input id="lastName" type="text" value="{{patient.lastName}}" name="lastName" required disabled>
+                    <label for="lastName" class="flex-container">
+                            <h4>Last name</h4>
+                            <a onclick="edit('lastName')">Edit</a>
+                    </label>
+                    <input id="lastName" type="text" value="{{patient.lastName}}" name="lastName" required disabled>
                 </div>
             </div>
             
-            <label for="dob" class="flex-container"><h4>Date of Birth</h4><a onclick="edit('dob')">Edit</a></label>
-            <input id="dob" type="text" value="{{patient.dob}}" name="dob" required disabled>
-            
-            <label for="email" class="flex-container"><h4>Email</h4><a onclick="edit('email')">Edit</a></label>
-            <input id="email" type="text" value="{{patient.email}}" name="email" required disabled>
+            <label for="dob" class="flex-container">
+                <h4>Date of Birth</h4>
+                <a onclick="edit('dob')">Edit</a>
+            </label>
+            <input id="dob" type="date" value="{{patient.dob}}" name="dob" required disabled>
+            <label for="email" class="flex-container">
+                <h4>Email</h4>
+                <a onclick="edit('email')">Edit</a>
+            </label>
+            <input id="email" type="email" value="{{patient.email}}" name="email" required disabled>
 
-            <label for="username" class="flex-container"><h4>Username</h4><a onclick="edit('username')">Edit</a></label>
+            <label for="username" class="flex-container">
+                <h4>Username</h4>
+                <a onclick="edit('username')">Edit</a>
+            </label>
             <input id="username" type="text" value="{{account.username}}" name="username" required disabled>
 
-            <label for="password" class="flex-container"><h4>Password</h4><a onclick="edit('password')">Edit</a></label>
-            <input id="password" type="password" placeholder="Password" name="password" required disabled>
+            <label for="password" class="flex-container">
+                <h4>Password</h4>
+                <a onclick="edit('password')">Edit</a>
+            </label>
+            <input id="password" type="password" placeholder="********" name="password" required disabled>
                 
 
             <button type="submit">Save</button>

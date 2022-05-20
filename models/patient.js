@@ -30,17 +30,17 @@ const schema = new mongoose.Schema({
     title: String,
     firstName: String,
     lastName: String,
-    dob: String,
+    dob: Date,
     email: String,
     contactNumber: String,
     emergencyName: String, 
     emergencyNumber: String,
     timeseries: [timeseriesSchema],
     lastUpdated: {
-        glucose: Date,
-        weight: Date,
-        insulin: Date,
-        exercise: Date,
+        glucose: timestampSchema,
+        weight: timestampSchema,
+        insulin: timestampSchema,
+        exercise: timestampSchema,
     },
     glucoseRecord: Boolean,
     glucoseThreshold: thresholdSchema,
@@ -50,9 +50,9 @@ const schema = new mongoose.Schema({
     insulinThreshold: thresholdSchema,
     exerciseRecord: Boolean,
     exerciseThreshold: thresholdSchema,
-    supportMessages: [stringSchema],
+    supportMessages: String,
     clinicianNotes: [stringSchema],
-    
+    lastComments: [stringSchema],
 })
 
 const Patient = mongoose.model('Patient', schema) 
