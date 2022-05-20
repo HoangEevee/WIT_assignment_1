@@ -2,7 +2,11 @@
 
 <section>
     <p class="center">Put your patient's information below</p>
-
+    
+    {{#each flash}}
+    <p class="red center">{{this}}</p>
+    {{/each}}
+    
     <form action="/clinician/create-patient-account" method="POST">
         <h4>Title</h4>
             <select type="text" id="title" name="title"/>
@@ -44,6 +48,6 @@
             <br>
 
             <br>
-        <input type="submit"/>
+        <button type="submit">Create</button>
     </form>
 </section>

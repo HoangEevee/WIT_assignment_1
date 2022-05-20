@@ -45,18 +45,17 @@ const newTimeseries = async (req, res, next) => {
 
 const setThreshold = async (req, res, next) => {
     try {
-
         let patient = await Patient.findOne({_id: req.params.id});
 
-                //grab all the threshold. Could put if/else to take only newly updated stuff but cost of this is trivial to database retrival anyway
-        let glucoseLower = req.body.glucose_lower || patient["glucoseThreshold"]["lower"] || 0
-        let glucoseUpper = req.body.glucose_upper || patient["glucoseThreshold"]["upper"] || 0
-        let weightLower = req.body.weight_lower || patient["weightThreshold"]["lower"] || 0
-        let weightUpper = req.body.weight_upper || patient["weightThreshold"]["upper"] || 0
-        let insulinLower = req.body.insulin_lower || patient["insulinThreshold"]["lower"] || 0
-        let insulinUpper = req.body.insulin_upper || patient["insulinThreshold"]["upper"] || 0
-        let exerciseLower = req.body.exercise_lower || patient["exerciseThreshold"]["lower"] || 0
-        let exerciseUpper = req.body.exercise_upper || patient["exerciseThreshold"]["upper"] || 0
+        //grab all the threshold. Could put if/else to take only newly updated stuffs but cost of this is trivial to database retrival anyway
+        let glucoseLower = req.body.glucose_lower || patient["glucoseThreshold"]["lower"]
+        let glucoseUpper = req.body.glucose_upper || patient["glucoseThreshold"]["upper"]
+        let weightLower = req.body.weight_lower || patient["weightThreshold"]["lower"]
+        let weightUpper = req.body.weight_upper || patient["weightThreshold"]["upper"]
+        let insulinLower = req.body.insulin_lower || patient["insulinThreshold"]["lower"]
+        let insulinUpper = req.body.insulin_upper || patient["insulinThreshold"]["upper"]
+        let exerciseLower = req.body.exercise_lower || patient["exerciseThreshold"]["lower"]
+        let exerciseUpper = req.body.exercise_upper || patient["exerciseThreshold"]["upper"]
 
         //check threshold lower is smaller than upper
         if (glucoseLower > glucoseUpper || weightLower > weightUpper || 
@@ -77,6 +76,7 @@ const setThreshold = async (req, res, next) => {
                 return res.redirect('/clinician/'.concat(req.params.id.toString(), '/set-timeseries'));
             }
 
+        //update and save changes
         patient["glucoseThreshold"]["lower"] = glucoseLower
         patient["glucoseThreshold"]["upper"] = glucoseUpper
         patient["weightThreshold"]["lower"] = weightLower
@@ -85,8 +85,8 @@ const setThreshold = async (req, res, next) => {
         patient["insulinThreshold"]["upper"] = insulinUpper
         patient["exerciseThreshold"]["lower"] = exerciseLower
         patient["exerciseThreshold"]["upper"] = exerciseUpper
-
         await patient.save()
+
         return res.redirect('/clinician/'.concat(req.params.id.toString(), '/set-timeseries'))
     } catch (err) {
         return next(err)
