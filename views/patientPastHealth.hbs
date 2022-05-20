@@ -1,7 +1,7 @@
 <h2 class="center">{{data.firstName}} {{data.lastName}}'s Health Record </h2>
 
 {{!-- <h2 class = "center">Glucose Record</h2> --}}
-<div class="tablecontainer">
+{{!-- <div class="tablecontainer">
     <table class="table">
         <thead>
             <tr>
@@ -20,4 +20,71 @@
             {{/each}}
         </tbody>
     </table>
-</div>    
+</div>     --}}
+
+
+{{!-- <div class="timeline"> --}}
+    {{#each data.timeseries as |day|}}
+        <div class="timeline">
+        <div class="parentcontainer">
+            <div class="date_container"> 
+                <p>{{day.date}}</p> 
+            </div>
+            <div class="health_container">
+                <div class="health_child">
+                    {{#if day.glucose}}
+                        <button class="oval_button"> Glucose: {{day.glucose.value}} </button>
+                        {{!-- <div class="box-footer">
+                            <small>Last updated at {{day.glucose.time}}</small>
+                        </div> --}}
+                    {{else}}
+                        <button class="oval_button"> Glucose: N/A </button>
+                    {{/if}}            
+                </div>
+                <div class="health_child">
+                    {{#if day.weight}}
+                        <button class="oval_button"> Weight: {{day.weight.value}} </button>
+                        {{!-- <div class="box-footer">
+                            <small>Last updated at {{day.weight.time}}</small>
+                        </div> --}}
+                    {{else}}
+                        <button class="oval_button"> Weight: N/A </button>
+                    {{/if}}            
+                </div>
+                <div class="health_child">
+                    {{#if day.insulin}}
+                        <button class="oval_button"> Insulin: {{day.insulin.value}} </button>
+                        {{!-- <div class="box-footer">
+                            <small>Last updated at {{day.insulin.time}}</small>
+                        </div> --}}
+                    {{else}}
+                        <button class="oval_button"> Insulin: N/A </button>
+                    {{/if}}            
+                </div>
+                <div class="health_child">
+                    {{#if day.exercise}}
+                        <button class="oval_button"> Exercise: {{day.exercise.value}} </button>
+                        {{!-- <div class="box-footer">
+                            <small>Last updated at {{day.exercise.time}}</small>
+                        </div> --}}
+                    {{else}}
+                        <button class="oval_button"> Exercise: N/A </button>
+                    {{/if}}            
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+    {{/each}}
+{{!-- </div> --}}
+
+
+{{!-- {{#each data.timeseries as |day|}}
+    <p> Test Test</p>
+    <p>Date = {{this.date}}<p>
+    <p>Test = {{day.date}}<p>
+    {{#if day.glucose}}
+        <p> value = {{day.glucose.value}}</p>
+    {{/if}}
+    <p>Time = {{this}}<p></p>
+{{/each}} --}}
