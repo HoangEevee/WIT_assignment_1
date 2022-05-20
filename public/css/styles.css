@@ -449,6 +449,44 @@ form {
     width: 70%;
 }
 
+<<<<<<< HEAD
+@media screen and (max-width: 1200px) {
+    .timeline {
+        margin: 0;
+    }
+    .timeline::after {
+        margin-left: 0;
+        left: 50%;
+    }
+    .date_container {
+        margin-left: 0;
+        /* left: 50px; */
+    }
+    /* .date_container::after {
+        display: none;
+    } */
+    .health_container {
+        flex-wrap: wrap;
+        max-width: 100%;
+        width: auto;
+        float: none;
+        margin-left: 110px;
+        min-height: 53px;
+        padding-right: 0%;
+        padding-top: 2%
+    }
+    .health_child {
+        width: 100%;
+        padding-bottom: 0;
+        padding-top: 0;
+    }
+    .oval_button {
+        width: 80%;
+    }
+=======
+
+>>>>>>> parent of 69e7fea (did badge and leaderboard pages calculation and basic display)
+
 /* Record Health */
 .profile-container {
     display: flex;
@@ -467,6 +505,33 @@ nav .profile-container a{
     height: 2.2rem;
     border-radius: 50%;
 }
+  
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+  
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: max-content;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+  
+.dropdown-content a {   
+    color: black;
+    text-decoration: none;
+    display: block;
+}
+  
+.dropdown-content a:hover {background-color: #f1f1f1}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+  
 
 /* menu */
 .sidenav {

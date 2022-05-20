@@ -18,8 +18,7 @@ app.engine(
         extname: 'hbs',
         helpers: {
             outOfThreshold: (value, lower, higher, exists) => {return value < lower || value > higher || (!value && exists)},
-            upToDate: (exists, last, today) => {return exists && (last.toLocaleDateString().localeCompare(today) != 0)},
-            badgeEarned: (engagement) => {return engagement >= 80.00}
+            upToDate: (exists, last, today) => {return exists && (last.toLocaleDateString().localeCompare(today) != 0)}
         }
     })
 )
