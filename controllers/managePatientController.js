@@ -96,7 +96,7 @@ const setThreshold = async (req, res, next) => {
 const viewPatientHealth = async (req, res, next) => {
     try {
         const patient = await Patient.findById(req.params.id).lean()
-        helpers.changeTimestampDateFormat(patient.timeseries)
+        helpers.changePatientTimestampFormat(patient.timeseries)
         return res.render('patientPastHealth', {data: patient, layout: 'clinician_main'})
     } catch (err) {
         return next(err)
