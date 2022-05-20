@@ -7,39 +7,22 @@
 </section>
 
 <section>
+    <div class="parentcontainer">
     {{#each data}}
-    <div class="center">
-        <img src="\img\small single badge.png" alt="single badge pic">
-        <h2>#<script>document.write(parseInt({{@index}}) + 1)</script> Place</h2>
-        <h3>{{this.username}}</h3>
-        <p>{{this.engagement}}% Engagement</p>
+    <div class="bigcontainer">
+        {{#if (badgeEarned engagement)}}
+        <img src="\img\small single badge.png" alt="icon for badge">
+        {{else}}
+        <img src="\img\badge faded.png" alt="icon for faded badge">
+        {{/if}}
+        <div class="textcontainer">
+            <h1>#<script>document.write(parseInt({{@index}}) + 1)</script> Place</h1>
+            <h2>{{this.username}}</h2>
+            <p>{{this.engagement}}% Engagement</p>
+        </div>
     </div>
     {{/each}}
-    <!--
-    <div class="center">
-        <img src="\img\small single badge.png" alt="single badge pic">
-        <h2>2nd Place</h2>
-        <h3>name</h3>
-        <p>88% Engagement</p>
     </div>
-    <div class="center">
-        <img src="\img\small single badge.png" alt="single badge pic">
-        <h2>3rd Place</h2>
-        <h3>name</h3>
-        <p>86% Engagement</p>
-    </div>
-    <div class="center">
-        <img src="\img\small single badge.png" alt="single badge pic">
-        <h2>4th Place</h2>
-        <h3>name</h3>
-        <p>82% Engagement</p>
-    </div>
-    <div class="center">
-        <img src="\img\small single badge.png" alt="single badge pic">
-        <h2>5th Place</h2>
-        <h3>name</h3>
-        <p>80% Engagement</p>
-    </div>-->
     <br> 
 </section>
 
