@@ -132,7 +132,7 @@ const insertHealthData = async (req, res, next) => {
         const today_start = helpers.getTodayStart()
         const patient_id = req.user.data_id
         timeseries_today = await Patient.findOne({
-            id: patient_id,
+            _id: patient_id,
             timeseries: {
                 $elemMatch: {
                     date: today_start
