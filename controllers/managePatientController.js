@@ -119,6 +119,15 @@ const setThreshold = async (req, res, next) => {
     }
 }
 
+const getClinicalNotes = async (req, res, next) => {
+    try{
+        const patient = await Patient.findById(req.params.id).lean()
+        return res.render('ClinicalNotes', {data: patient, layout: 'clinician_main'})
+    } catch (err) {
+        return next(err)
+    }
+}
+
 const getsupportmessages = async (req, res, next) => {
     try {
         const patient = await Patient.findById(req.params.id).lean()
@@ -149,6 +158,7 @@ module.exports = {
     setTimeseriesPage,
     newTimeseries,
     setThreshold,
+    getClinicalNotes,
     getsupportmessages,
     sendSupportmessages,
 }
