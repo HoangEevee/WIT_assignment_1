@@ -1,16 +1,7 @@
 <div class="container">
     <h2 class="center">{{data.firstName}} {{data.lastName}}'s Health Record </h2>
 
-    <div class="container">
-        <div class="child_container">
-            <button onclick= window.location.href="/clinician/{{data._id}}/set-timeseries">Set Timeseries</button>
-            <button onclick= window.location.href="/clinician/{{data._id}}/past-health">View Past Health</button>
-            <button onclick= window.location.href="/clinician/{{data._id}}/view-clinical-notes">Clinician Notes</button>
-            <button onclick= window.location.href="/clinician/{{data._id}}/send-support-messages">Support Messages and Comments</button>
-        </div>
-    </div>
-
-    <p>Chosen timeseries<br>
+    <p>Chosen timeseries:<br>
         {{#if data.glucoseRecord}}
         Glucose<br>
         {{/if}}
@@ -26,6 +17,14 @@
         
     </p>
     
+    <div class="container">
+        <div class="child_container">
+            <button onclick= window.location.href="/clinician/{{data._id}}/set-timeseries">Set Timeseries</button>
+            <button onclick= window.location.href="/clinician/{{data._id}}/view-clinical-notes">Clinician Notes</button>
+            <button onclick= window.location.href="/clinician/{{data._id}}/send-support-messages">Support Messages and Comments</button>
+        </div>
+    </div>
+
     
 <!--
     <h2>Glucose Record</h2>
