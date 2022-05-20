@@ -17,7 +17,8 @@ app.engine(
     exphbs.engine({
         extname: 'hbs',
         helpers: {
-            outOfThreshold: (value, lower, higher) => {return value < lower || value > higher}
+            outOfThreshold: (value, lower, higher) => {return value < lower || value > higher},
+            upToDate: (exists, last, today) => {return exists && (last.localeCompare(today) != 0)}
         }
     })
 )

@@ -25,9 +25,13 @@ const getAllPatientData = async (req, res, next) => {
         const patients = await Patient.find({ '_id': { $in: ids.patients } }).lean();
         //show time as DD/MM/YYYY, HH:MM:SS
         patients.forEach((element) => {
-            helpers.changePatientTimestampFormat(element.timeseries)
+            helpers.changeLastTimestampFormat(element.lastUpdated)
+            if (element.timeseries.length) {
+                element.timeseries = element.timeseries[element.timeseries.length-1]
+            }
         })
-        return res.render('allPatients', {data: patients, layout: 'clinician_main'})
+        const today = new Date()
+        return res.render('allPatients', {today: today.toLocaleDateString(), data: patients, layout: 'clinician_main'})
     } catch (err) {
         return next(err)
     }   

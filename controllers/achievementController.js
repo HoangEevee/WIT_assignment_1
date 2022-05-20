@@ -24,7 +24,6 @@ const getDigitalBadge = async (req, res, next) => {
 const getleaderboard = async (req, res, next) => { 
     try{
         const patients = await Patient.find().lean()
-        const accounts = await Account.find().lean()
 
         const today = new Date()
 
@@ -33,7 +32,6 @@ const getleaderboard = async (req, res, next) => {
         for (var patient of patients) {
             const start = patient.registeredDate
             const timeseries = patient.timeseries
-            console.log(start)
             const user = await Account.find({
                 data_id: patient._id
             }, {

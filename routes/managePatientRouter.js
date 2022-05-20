@@ -19,5 +19,5 @@ managePatientRouter.get('/view-clinical-notes', managePatientController.getClini
 // These routes only follow what Quynh suggested
 //managePatientRouter.get('/support-messages', managePatientController)
 //managePatientRouter.get('/patient-info', managePatientController)
-yup
+
 module.exports = managePatientRouter

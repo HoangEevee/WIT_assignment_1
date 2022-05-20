@@ -63,7 +63,7 @@ const getPastHealth = async(req, res, next) => {
     try {
         const patient_id = req.user.data_id
         const patient = await Patient.findById(patient_id).lean()
-        helpers.changePatientTimestampFormat(patient.timeseries)
+        helpers.changeTimestampDateFormat(patient.timeseries)
         return res.render('patientPastHealth', {data: patient, layout: 'patient_main'})
     } catch(err) {
         return next(err)
