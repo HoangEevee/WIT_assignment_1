@@ -2,14 +2,11 @@ const mongoose = require('mongoose')
 const Patient = require('../models/patient')
 const Clinician = require('../models/clinician')
 const Account = require('../models/account')
-const helpers = require('../utils/helper')
 
 const getAchievement = async (req, res, next) => { 
     try{
-        const patient_id = req.user.data_id
-        const patient = await Patient.findById(patient_id).lean()
-        engagement = helpers.calculateEngagement(patient)
-        return res.render('achievement', {engagement: engagement, layout: 'patient_main'})
+        //const patient_id = req.user.data_id
+        return res.render('achievement', {layout: 'patient_main'})
     } catch (err) {
         return next(err)
     }
@@ -17,10 +14,8 @@ const getAchievement = async (req, res, next) => {
 
 const getDigitalBadge = async (req, res, next) => { 
     try{
-        const patient_id = req.user.data_id
-        const patient = await Patient.findById(patient_id).lean()
-        engagement = helpers.calculateEngagement(patient)
-        return res.render('digitalBadge', {engagement: engagement, layout: 'patient_main'})
+        //const patient_id = req.user.data_id
+        return res.render('digitalBadge', {layout: 'patient_main'})
     } catch (err) {
         return next(err)
     }
@@ -29,31 +24,36 @@ const getDigitalBadge = async (req, res, next) => {
 const getleaderboard = async (req, res, next) => { 
     try{
         const patients = await Patient.find().lean()
+
+        const today = new Date()
+
         const dates = []
         var i = 0
         for (var patient of patients) {
-            const user = await Account.findOne({
+            const start = patient.registeredDate
+            const timeseries = patient.timeseries
+            const user = await Account.find({
                 data_id: patient._id
             }, {
                 username: 1
             }).lean()
-
-            engagement = helpers.calculateEngagement(patient)
-
-            if (engagement) {
+            if (timeseries.length) {
+                diff = today - start
+                to_days = Math.floor(diff / (24 * 60 * 60 * 1000))
+                engagement = timeseries.length / to_days * 100
                 dates[i++] = {
-                    username: user.username,
+                    username: user[0].username,
                     engagement: engagement.toFixed(2),
                 }
             } else {
                 dates[i++] = {
-                    username: user.username,
+                    username: user[0].username,
                     engagement: 0,
                 }
             }
         }
 
-        ranks = dates.sort(function(a, b){return b.engagement-a.engagement}).slice(0, 5)
+        ranks = dates.sort(function(a, b){return b-a}).slice(0, 5)
 
         return res.render('leaderboard', {data: ranks, layout: 'patient_main'})
     } catch (err) {
