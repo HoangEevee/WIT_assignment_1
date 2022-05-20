@@ -17,7 +17,7 @@ const getOnePatientData = async (req, res, next) => {
 const setTimeseriesPage = async (req, res, next) => {
     try {
         const patient = await Patient.findById(req.params.id).lean()
-        return res.render('setTimeseries', {data: patient,layout: 'clinician_main' })
+        return res.render('setTimeseries', {data: patient,layout: 'clinician_main' , flash:req.flash('error')})
     } catch (err) {
         return next(err)
     }
@@ -48,23 +48,34 @@ const setThreshold = async (req, res, next) => {
 
         let patient = await Patient.findOne({_id: req.params.id});
 
+                //grab all the threshold. Could put if/else to take only newly updated stuff but cost of this is trivial to database retrival anyway
         let glucoseLower = req.body.glucose_lower || patient["glucoseThreshold"]["lower"] || 0
         let glucoseUpper = req.body.glucose_upper || patient["glucoseThreshold"]["upper"] || 0
-
-
         let weightLower = req.body.weight_lower || patient["weightThreshold"]["lower"] || 0
         let weightUpper = req.body.weight_upper || patient["weightThreshold"]["upper"] || 0
-
         let insulinLower = req.body.insulin_lower || patient["insulinThreshold"]["lower"] || 0
         let insulinUpper = req.body.insulin_upper || patient["insulinThreshold"]["upper"] || 0
-
         let exerciseLower = req.body.exercise_lower || patient["exerciseThreshold"]["lower"] || 0
         let exerciseUpper = req.body.exercise_upper || patient["exerciseThreshold"]["upper"] || 0
 
+        //check threshold lower is smaller than upper
         if (glucoseLower > glucoseUpper || weightLower > weightUpper || 
             insulinLower > insulinUpper || exerciseLower > exerciseUpper) {
-            return res.redirect('/clinician/'.concat(req.params.id.toString(), '/set-timeseries'));
+                req.flash('error', "Lower threshold must be smaller than upper threshold")
+                return res.redirect('/clinician/'.concat(req.params.id.toString(), '/set-timeseries'));
         }
+
+        //check if value valid i.e. positive, number, int,...
+        if (glucoseLower < 0 || weightLower < 0 || insulinLower < 0 || exerciseLower < 0 ||
+            glucoseUpper < 0 || weightUpper < 0 || insulinUpper < 0 || exerciseUpper < 0 ||
+            isNaN(parseFloat(glucoseLower)) || isNaN(parseFloat(glucoseUpper)) || 
+            isNaN(parseFloat(weightLower)) || isNaN(parseFloat(weightUpper)) ||
+            isNaN(parseFloat(exerciseLower)) || isNaN(parseFloat(exerciseUpper)) ||
+            //insulin must be an interger
+            !Number.isInteger(parseFloat(insulinLower)) || !Number.isInteger(parseFloat(insulinUpper))) { 
+                req.flash('error', 'Invalid data. Stop messing with my html!!!!')
+                return res.redirect('/clinician/'.concat(req.params.id.toString(), '/set-timeseries'));
+            }
 
         patient["glucoseThreshold"]["lower"] = glucoseLower
         patient["glucoseThreshold"]["upper"] = glucoseUpper
@@ -76,7 +87,6 @@ const setThreshold = async (req, res, next) => {
         patient["exerciseThreshold"]["upper"] = exerciseUpper
 
         await patient.save()
-
         return res.redirect('/clinician/'.concat(req.params.id.toString(), '/set-timeseries'))
     } catch (err) {
         return next(err)
