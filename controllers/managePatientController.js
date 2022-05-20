@@ -45,74 +45,38 @@ const newTimeseries = async (req, res, next) => {
 
 const setThreshold = async (req, res, next) => {
     try {
-        // lowerbound
-        if (req.body.glucose_lower) {
-            await Patient.updateOne({
-                _id: req.params.id
-            }, {
-                $set: {
-                  "glucoseThreshold.lower": req.body.glucose_lower
-                }
-            })
-        } else if (req.body.weight_lower) {
-            await Patient.updateOne({
-                _id: req.params.id
-            }, {
-                $set: {
-                  "weightThreshold.lower": req.body.weight_lower
-                }
-            })
-        } else if (req.body.insulin_lower) {
-            await Patient.updateOne({
-                _id: req.params.id
-            }, {
-                $set: {
-                  "insulinThreshold.lower": req.body.insulin_lower
-                }
-            })
-        } else if (req.body.exercise_lower) {
-            await Patient.updateOne({
-                _id: req.params.id
-            }, {
-                $set: {
-                  "exerciseThreshold.lower": req.body.exercise_lower
-                }
-            })
+
+        let patient = await Patient.findOne({_id: req.params.id});
+
+        let glucoseLower = req.body.glucose_lower || patient["glucoseThreshold"]["lower"] || 0
+        let glucoseUpper = req.body.glucose_upper || patient["glucoseThreshold"]["upper"] || 0
+
+
+        let weightLower = req.body.weight_lower || patient["weightThreshold"]["lower"] || 0
+        let weightUpper = req.body.weight_upper || patient["weightThreshold"]["upper"] || 0
+
+        let insulinLower = req.body.insulin_lower || patient["insulinThreshold"]["lower"] || 0
+        let insulinUpper = req.body.insulin_upper || patient["insulinThreshold"]["upper"] || 0
+
+        let exerciseLower = req.body.exercise_lower || patient["exerciseThreshold"]["lower"] || 0
+        let exerciseUpper = req.body.exercise_upper || patient["exerciseThreshold"]["upper"] || 0
+
+        if (glucoseLower > glucoseUpper || weightLower > weightUpper || 
+            insulinLower > insulinUpper || exerciseLower > exerciseUpper) {
+            return res.redirect('/clinician/'.concat(req.params.id.toString(), '/set-timeseries'));
         }
-        // upperbound
-        if (req.body.glucose_upper) {
-            await Patient.updateOne({
-                _id: req.params.id
-            }, {
-                $set: {
-                  "glucoseThreshold.upper": req.body.glucose_upper
-                }
-            })
-        } else if (req.body.weight_upper) {
-            await Patient.updateOne({
-                _id: req.params.id
-            }, {
-                $set: {
-                  "weightThreshold.upper": req.body.weight_upper
-                }
-            })
-        } else if (req.body.insulin_upper) {
-            await Patient.updateOne({
-                _id: req.params.id
-            }, {
-                $set: {
-                  "insulinThreshold.upper": req.body.insulin_upper
-                }
-            })
-        } else if (req.body.exercise_upper) {
-            await Patient.updateOne({
-                _id: req.params.id
-            }, {
-                $set: {
-                  "exerciseThreshold.upper": req.body.exercise_upper
-                }
-            })
-        }
+
+        patient["glucoseThreshold"]["lower"] = glucoseLower
+        patient["glucoseThreshold"]["upper"] = glucoseUpper
+        patient["weightThreshold"]["lower"] = weightLower
+        patient["weightThreshold"]["upper"] = weightUpper
+        patient["insulinThreshold"]["lower"] = insulinLower
+        patient["insulinThreshold"]["upper"] = insulinUpper
+        patient["exerciseThreshold"]["lower"] = exerciseLower
+        patient["exerciseThreshold"]["upper"] = exerciseUpper
+
+        await patient.save()
+
         return res.redirect('/clinician/'.concat(req.params.id.toString(), '/set-timeseries'))
     } catch (err) {
         return next(err)

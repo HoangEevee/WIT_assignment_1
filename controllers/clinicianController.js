@@ -77,9 +77,11 @@ const createPatient = async (req, res, next) => {
     try {
         //id associated with the account id
         const clinician_id = req.user.data_id
+        
         const today = new Date()
         //new patient for the patient database
-        newPatient = new Patient( {...req.body, clinicianId: clinician_id, registeredDate: today} )
+        newPatient = new Patient( {...req.body, clinicianId: clinician_id, registeredDate: today,})
+
         await newPatient.save(function (err) {
             if (err) return console.error(err);
         })
@@ -92,7 +94,22 @@ const createPatient = async (req, res, next) => {
         
         await Clinician.updateOne(
             {_id: clinician_id}, 
-            {$push: {patients: newPatient}})
+            {$push: {patients: newPatient}}
+        )
+        await Patient.updateOne({
+            _id: newPatient._id
+        }, {
+            $set: {
+              "glucoseThreshold.lower": 0,
+              "glucoseThreshold.upper": 0,
+              "exerciseThreshold.lower": 0,
+              "exerciseThreshold.upper": 0,
+              "insulinThreshold.lower": 0,
+              "insulinThreshold.upper": 0,
+              "weightThreshold.lower": 0,
+              "weightThreshold.upper": 0,
+            }
+        })
         return res.redirect('/clinician/create-patient-account')
     } catch (err) {
         return next(err)
