@@ -2,6 +2,7 @@
 const passport = require('passport')
 const express = require('express')
 const mainRouter = express.Router()
+const isAuthenticated = require("../utils/helper").isAuthenticated
 
 // connect to controller
 const mainController = require('../controllers/mainController.js')
@@ -30,7 +31,7 @@ mainRouter.post('/login',
 mainRouter.get('/logout', mainController.getLogout)
 
 // onwards to other routers!
-mainRouter.use('/patient', require('./patientRouter'))
-mainRouter.use('/clinician', require('./clinicianRouter'))
+mainRouter.use('/patient',isAuthenticated, require('./patientRouter'))
+mainRouter.use('/clinician',isAuthenticated, require('./clinicianRouter'))
 
 module.exports = mainRouter

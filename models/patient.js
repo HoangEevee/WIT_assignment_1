@@ -25,7 +25,7 @@ const stringSchema = new mongoose.Schema({
 })
 
 const schema = new mongoose.Schema({ 
-    clinicianId: mongoose.Types.ObjectId,
+    clinicianId: mongoose.Types.ObjectId, 
     registeredDate: Date,
     title: String,
     firstName: String,
