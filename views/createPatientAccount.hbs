@@ -8,46 +8,46 @@
     {{/each}}
     
     <form action="/clinician/create-patient-account" method="POST">
-        <h4>Title</h4>
-            <select type="text" id="title" name="title"/>
-                <option hidden selected>Select one...</option>
-                <option value="mr">Mr.</option>
-                <option value="miss">Miss</option>
-                <option value="mrs">Mrs.</option>
-                <option value="ms">Ms.</option>
-                <option value="mx">Mx.</option>
-                <option value="other">other</option>
-            </select>
-            <br>
-            <h4>First name</h4>
-            <input type="text" id="firstName" name="firstName" placeholder="Enter first name" required/>
-            <br>
-            <h4>Last name</h4>
-            <input type="text" id="lastName" name="lastName" placeholder="Enter last name" required/>
-            <br>
-            <h4>Date of birth</h4>
-            <input type="date" id="dob" name="dob" placeholder="Enter date of birth" required/>
-            <br>
-            <h4>Email</h4>
-            <input type="email" id="email" name="email" placeholder="Enter email" required/>
-            <br>
-            <h4>Contact number</h4>
-            <input type="number" id="contactNumber" name="contactNumber" placeholder="Enter contact number" required/>
-            <br>
-            <br>
-            <h4>Emergency contact name</h4>
-            <input type="text" id="emergencyName" name="emergencyName" placeholder="Enter name" required/>
-            <br>
-            <h4>Emergency contact number</h4>
-            <input type="number" id="emergencyNumber" name="emergencyNumber" placeholder="Enter emergency contact number" required/>
+    <h4>Title</h4>
+        <select id="title" name="title"/>
+            <option hidden selected>Select one...</option>
+            <option value="mr">Mr.</option>
+            <option value="miss">Miss</option>
+            <option value="mrs">Mrs.</option>
+            <option value="ms">Ms.</option>
+            <option value="mx">Mx.</option>
+            <option value="other">other</option>
+        </select>
+        <br>
+        <h4>First name</h4>
+        <input type="text" id="firstName" name="firstName" placeholder="Enter first name" required/>
+        <br>
+        <h4>Last name</h4>
+        <input type="text" id="lastName" name="lastName" placeholder="Enter last name" required/>
+        <br>
+        <h4>Date of birth</h4>
+        <input type="date" id="dob" name="dob" placeholder="Enter date of birth" required/>
+        <br>
+        <h4>Email</h4>
+        <input type="email" id="email" name="email" placeholder="Enter email" required/>
+        <br>
+        <h4>Contact number</h4>
+        <input type="number" id="contactNumber" name="contactNumber" placeholder="Enter contact number" required/>
+        <br>
+        <br>
+        <h4>Emergency contact name</h4>
+        <input type="text" id="emergencyName" name="emergencyName" placeholder="Enter name" required/>
+        <br>
+        <h4>Emergency contact number</h4>
+        <input type="number" id="emergencyNumber" name="emergencyNumber" placeholder="Enter emergency contact number" required/>
 
-            <h4>Username</h4>
-            <input type="text" id="username" name="username" placeholder="Enter username" required/>
-            <h4>Password</h4>
-            <input type="password" id="password" name="password" placeholder="Enter password" required/>
-            <br>
+        <h4>Username</h4>
+        <input type="text" id="username" name="username" placeholder="Enter username" required/>
+        <h4>Password</h4>
+        <input type="password" id="password" name="password" placeholder="Enter password" required/>
+        <br>
 
-            <br>
+        <br>
         <button type="submit">Create</button>
     </form>
 </section>

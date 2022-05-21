@@ -7,6 +7,7 @@ const helpers = require('../utils/helper')
 //const my_clinician_id = mongoose.Types.ObjectId("62713547ab750c0e07f6387f")
 
 // prolly more suited for clinician but eh testing
+/*
 const getAllClinicianData = async (req, res, next) => {
     try {
         const clinicians = await Clinician.find().lean()
@@ -15,7 +16,7 @@ const getAllClinicianData = async (req, res, next) => {
         return next(err)
     }   
 }
-
+*/
 const getAllPatientData = async (req, res, next) => {
     try {
         //id associated with the account id
@@ -31,7 +32,7 @@ const getAllPatientData = async (req, res, next) => {
             }
         })
         const today = new Date()
-        return res.render('allPatients', {today: today.toLocaleDateString(), data: patients, layout: 'clinician_main'})
+        return res.render('allPatients', {today: today.toLocaleDateString(), data: patients, layout: 'clinician_main', theme: req.user.theme})
     } catch (err) {
         return next(err)
     }   
@@ -59,7 +60,7 @@ const createClinician = async (req, res, next) => {
 
 const createPatientPage = async (req, res, next) => {
     try {
-        return res.render('createPatientAccount', {layout: 'clinician_main' , flash:req.flash('error')})
+        return res.render('createPatientAccount', {layout: 'clinician_main', theme:req.user.theme, flash:req.flash('error')})
     } catch (err) {
         return next(err)
     }
@@ -77,7 +78,7 @@ const getPatientcomments = async (req, res, next) => {
                 element.timestamp = element.timestamp.toLocaleString()
             })
         })
-        return res.render('viewpatientcomments', {data: patients, layout: 'clinician_main'})
+        return res.render('viewpatientcomments', {data: patients, layout: 'clinician_main', theme:req.user.theme})
     } catch (err) {
         return next(err)
     }
@@ -124,7 +125,7 @@ const createPatient = async (req, res, next) => {
         })
         
         //new account for the account database
-        newAccount = new Account( {...req.body, role: "patient", data_id: newPatient._id})
+        newAccount = new Account( {...req.body, role: "patient", data_id: newPatient._id, theme: "light"})
         await newAccount.save(function (err) {
             if (err) return console.error(err);
         })
@@ -141,7 +142,7 @@ const createPatient = async (req, res, next) => {
 }
 
 module.exports = {
-    getAllClinicianData,
+    //getAllClinicianData,
     getAllPatientData,
     createAccountPage,
     createPatientPage,

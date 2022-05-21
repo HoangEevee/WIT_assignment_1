@@ -13,7 +13,7 @@ const getDataByPatient = async (req, res, next) => {
         //get date to correct format YYYY-MM-DD
         patient.dob = patient.dob.toLocaleDateString('en-GB').split("/")
         patient.dob = patient.dob[2] + "-" + patient.dob[1] + "-" + patient.dob[0]
-        return res.render('patientData', {patient: patient, account: account, layout: 'patient_main', flash:req.flash('error')})
+        return res.render('patientData', {patient: patient, account: account, layout: 'patient_main', theme: req.user.theme, flash:req.flash('error')})
     } catch (err) {
         return next(err)
     }
@@ -21,11 +21,12 @@ const getDataByPatient = async (req, res, next) => {
 
 const changeAccountDetail = async (req, res, next) => {
     try {
-        
+        console.log(req.body)
         // Validations
         let flashMessages = []
         if (req.body.email && !helpers.isEmail(req.body.email)) flashMessages.push("Stop messing with my HTML you donker. You have input invalid email")
         if (req.body.dob && !helpers.isDate(req.body.dob)) flashMessages.push("Stop messing with my HTML you donker. You have input invalid birthday")
+        if (!["light","ugly"].includes(req.body.theme))flashMessages.push("Stop messing with my HTML you donker. You have input invalid theme")
         if (await Account.findOne({'username': req.body.username}).lean()) flashMessages.push("Your new username has already been taken.")
         if (flashMessages.length !== 0) {
             req.flash("error", flashMessages)
@@ -48,12 +49,13 @@ const changeAccountDetail = async (req, res, next) => {
         }
 
         // For changes in account database
-        if (req.body.username || req.body.password) {
+        if (req.body.username || req.body.password || req.body.theme) {
             const account_id = req.user._id;
             let user = await Account.findOne({_id: account_id});
 
             if (req.body.username) user["username"] = req.body.username;
             if (req.body.password) user["password"] = req.body.password;
+            if (req.body.theme) user["theme"] = req.body.theme;
             await user.save();
         }
         return res.redirect("./account-info")
@@ -63,7 +65,7 @@ const changeAccountDetail = async (req, res, next) => {
 }
 const getPersonal = async (req, res, next) => {
     try {
-        return res.render('patientYourAccount', { layout: 'patient_main' })
+        return res.render('patientYourAccount', { layout: 'patient_main', theme: req.user.theme })
     } catch (err) {
         return next(err)
     }   
@@ -74,7 +76,7 @@ const getPastHealth = async(req, res, next) => {
         const patient_id = req.user.data_id
         const patient = await Patient.findById(patient_id).lean()
         helpers.changeTimestampDateFormat(patient.timeseries)
-        return res.render('patientPastHealth', {data: patient, layout: 'patient_main'})
+        return res.render('patientPastHealth', {data: patient, layout: 'patient_main', theme: req.user.theme})
     } catch(err) {
         return next(err)
     }
@@ -121,7 +123,7 @@ const getRecordDataForm = async (req, res, next) => {
         //show time as DD/MM/YYYY, HH:MM:SS
         helpers.changeLastTimestampFormat(patient_data.lastUpdated)
 
-        return res.render('recordHealth', { submitted: submit, patient: patient_data, layout: 'patient_main', flash:req.flash('error')})
+        return res.render('recordHealth', { submitted: submit, patient: patient_data, layout: 'patient_main', theme: req.user.theme, flash:req.flash('error')})
     } catch (err) {
         return next(err)
     }
@@ -130,7 +132,7 @@ const getRecordDataForm = async (req, res, next) => {
 const insertHealthData = async (req, res, next) => {
     try {
         // Validatorinator
-        if ((req.body.glucose && (isNaN(parseFloat(req.body.glucose)) || req.body.glucose < 0)) || //got glucose and (not a number or positive)
+        if ((req.body.glucose && (isNaN(parseFloat(req.body.glucose)) || req.body.glucose < 0)) || //got glucose and (not a number or negative)
             (req.body.weight && (isNaN(parseFloat(req.body.weight)) || req.body.weight < 0)) ||
             (req.body.exercise && (isNaN(parseFloat(req.body.exercise)) || req.body.exercise < 0)) ||
             (req.body.insulin && (!Number.isInteger(parseFloat(req.body.insulin)) || req.body.insulin < 0))) {

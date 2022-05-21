@@ -4,13 +4,27 @@
 }
 
 /*-----------*/
+html[data-theme="light"], html {
+    --background-color: white;
+    --footer-header-color: #CED7EA;
+    --text-color: #0D2557;
+    --past-record-color: #ddd;
+    --menubar-color: #8693B4;
+    --nav-right-hover-color: #304e8d;
+}
 
-/* * {
-    border: 1px solid red;
-} */
+html[data-theme="ugly"] {
+    --background-color: grey;
+    --footer-header-color: #4ED3EA;
+    --text-color: #6D2557;
+    --past-record-color: #add;
+    --menubar-color: #1623B4;
+    --nav-right-hover-color: #4e8d;
+}
 
 body {
-    color: #0D2557;
+    background-color: var(--background-color);
+    color: var(--text-color);
     font-family: "Malgun gothic", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     font-weight: 400;
     margin: 0;
@@ -21,20 +35,6 @@ body {
 main {
     overflow-y: auto;
 }
-
-/* .menu-side {
-    display: none;
-    flex: 1 0 20%;
-}
-
-
-.menu-side ul {
-    list-style-type: none;
-}
-
-.menu-side a {
-    text-decoration:none;
-} */
 
 .menu-main-wrapper {
     display: flex;
@@ -50,7 +50,7 @@ nav, .logo, h1, h2, h3, h4, h5, h6, th, td {
     font-weight: 300;
 }
 footer, nav {
-    background-color: #CED7EA;
+    background-color: var(--footer-header-color);
 }
 
 nav {
@@ -71,11 +71,10 @@ nav ul {
 
 .nav-left {
     float: left;
-    /* padding-left: 3rem; */
 }
 
 .nav-left:hover {
-    background-color: #8693B4;
+    background-color: var(--menubar-color);
 }
 
 .nav-right li{
@@ -91,21 +90,21 @@ nav a {
     font-weight: bold;
     text-align: center;
     text-decoration: none;
-    color: #0D2557;
+    color: var(--text-color);
     padding: 1rem;
 }
 
 nav .active {
-    background-color: #0D2557;
-    color: white;
+    background-color: var(--text-color);
+    color: var(--background-color);
 }
 
 nav .active:hover {
-    background-color: #304e8d;
+    background-color: var(--nav-right-hover-color);
 }
 
 nav .menubar:hover {
-    background-color: #8693B4;
+    background-color: var(--menubar-color);
 }
 
 section, .logo {
@@ -113,8 +112,8 @@ section, .logo {
 }
 
 button {
-    color: #ffffff;
-    background-color: #0D2557;
+    color: var(--background-color);
+    background-color: var(--text-color);
     width: 90px;  
     height: 60px;
 }
@@ -126,10 +125,11 @@ button {
     margin-top: 2rem;
     margin-bottom: -2rem;
 }
-
+hr {
+    border-color: var(--text-color)
+}
 .center {
     text-align: center;
-    /* margin-top: 3rem; */
 }
 
 
@@ -156,7 +156,6 @@ button {
         flex-flow: row;
         align-items: center;
         justify-content: space-between;
-        /* border: 1px solid #0D2557;    */
     }
 
     .bigcontainer {
@@ -210,18 +209,23 @@ footer {
     padding-top: 50.25%;
 }
 
-input {
+/* form */
+form {
+    border: 0px
+  }
+
+input, select {
     width: 100%;
     box-sizing: border-box;
+    background-color: var(--background-color);
+    color: var(--text-color);
 }
-
-/* Bordered form */
-form {
-    border: 0px solid #f1f1f1;
+  ::placeholder {
+      color: var(--text-color);
+      opacity: 1;/* firefox lower opacity of placeholder apparently */
   }
-  
   /* Full-width inputs */
-  input[type=text], input[type=password], input[type=email], input[type=date], input[type=number] {
+  input[type=text], input[type=password], input[type=email], input[type=date], input[type=number], select {
     width: 100%;
     padding: 12px 20px;
     margin: 8px 0;
@@ -237,8 +241,8 @@ form {
   
   /* Set for all buttons */
   button {
-    background-color: #0D2557;
-    color: white;
+    background-color: var(--text-color);
+    color: var(--background-color);
     padding: 14px 20px;
     margin: 8px 0;
     border: none;
@@ -321,18 +325,18 @@ form {
   }
 
 .table thead {
-    background-color: #0D2557;
+    background-color: var(--text-color);
   }
 
 .table thead tr th {
     font-size: 1rem;
     font-weight: 200; 
     letter-spacing: 0.35px;
-    color: white; 
+    color: var(--background-color); 
     opacity: 1;
     padding: 8px; 
     vertical-align: top;
-    border: 1px solid white; 
+    border: 1px solid var(--background-color); 
     text-align: center;
 }
 
@@ -340,10 +344,10 @@ form {
     font-size: 1rem;
     letter-spacing: 0.35px;
     font-weight: normal;
-    color: #0D2557;
+    color: var(--text-color);
     padding:6px;
     text-align: center;
-    border: 1px dotted #CED7EA;
+    border: 1px dotted var(--footer-header-color);
 }
 
 .colpatient {
@@ -381,13 +385,10 @@ form {
   .health_container {
     display: flex;
     flex-direction: row;
-    /* flex-wrap: wrap; */
-    /* justify-content: space-between; */
     position: relative;
 	width: 35%;
     padding-left: 5%;
     padding-right: 18%;
-    /* padding-bottom: 10px; */
     float: right;
   }
 
@@ -413,7 +414,7 @@ form {
     content: '';
     position: absolute;
     width: 6px;
-    background-color: #CED7EA;
+    background-color: var(--footer-header-color);
     top: 0;
     bottom: 0;
     left: 46.3%;
@@ -427,17 +428,17 @@ form {
     width: 25px;
     height: 25px;
     right: -17px;
-    background-color: white;
-    border: 4px solid #0D2557;
+    background-color: var(--background-color);
+    border: 4px solid var(--text-color);
     top: 15px;
     border-radius: 50%;
     z-index: 1;
   }
 
   .oval_button {
-    background-color: #ddd;
+    background-color: var(--past-record-color);
     border: none;
-    color: black;
+    color: var(--text-color);
     padding: 10px 20px;
     text-align: center;
     text-decoration: none;
@@ -482,7 +483,7 @@ nav .profile-container a{
     z-index: 1;
     top: 0;
     left: 0;
-    background-color: #CED7EA;
+    background-color: var(--footer-header-color);
     overflow-x: hidden;
     transition: 0.5s;
     padding-top: 60px;
@@ -497,7 +498,7 @@ nav .profile-container a{
 }
 
 .sidenav a:hover {
-    color: #304e8d;
+    color: var(--nav-right-hover-color);
 }
 
 .sidenav .closebtn {
@@ -526,12 +527,12 @@ nav .profile-container a{
     flex-direction: row;
     justify-content: space-between;
 }
-.flex-container>.a {
-    color: #CED7EA;
-}
 
-.flex-container>.a:hover {
-    color: #0D2557;
+.edit {
+    color: var(--text-color);
+}
+.edit:hover {
+    text-decoration: underline;
 }
 
 .flex-container>* {
