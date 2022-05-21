@@ -23,11 +23,12 @@ const changeAccountDetail = async (req, res, next) => {
     try {
         
         // Validations
-        let flashMessage = "Stop messing with my HTML you donker. You have input"
-        if (req.body.email && !helpers.isEmail(req.body.email)) flashMessage +=" invalid email"
-        if (req.body.dob && !helpers.isDate(req.body.dob)) flashMessage += " invalid birthday"
-        if (flashMessage !== "Stop messing with my HTML you donker. You have input") {
-            req.flash("error", flashMessage)
+        let flashMessages = []
+        if (req.body.email && !helpers.isEmail(req.body.email)) flashMessages.push("Stop messing with my HTML you donker. You have input invalid email")
+        if (req.body.dob && !helpers.isDate(req.body.dob)) flashMessages.push("Stop messing with my HTML you donker. You have input invalid birthday")
+        if (await Account.findOne({'username': req.body.username}).lean()) flashMessages.push("Your new username has already been taken.")
+        if (flashMessages.length !== 0) {
+            req.flash("error", flashMessages)
             return res.redirect('./account-info')
         }
 
@@ -120,7 +121,7 @@ const getRecordDataForm = async (req, res, next) => {
         //show time as DD/MM/YYYY, HH:MM:SS
         helpers.changeLastTimestampFormat(patient_data.lastUpdated)
 
-        return res.render('recordHealth', { submitted: submit, patient: patient_data, layout: 'patient_main' })
+        return res.render('recordHealth', { submitted: submit, patient: patient_data, layout: 'patient_main', flash:req.flash('error')})
     } catch (err) {
         return next(err)
     }
@@ -128,6 +129,15 @@ const getRecordDataForm = async (req, res, next) => {
 
 const insertHealthData = async (req, res, next) => {
     try {
+        // Validatorinator
+        if ((req.body.glucose && (isNaN(parseFloat(req.body.glucose)) || req.body.glucose < 0)) || //got glucose and (not a number or positive)
+            (req.body.weight && (isNaN(parseFloat(req.body.weight)) || req.body.weight < 0)) ||
+            (req.body.exercise && (isNaN(parseFloat(req.body.exercise)) || req.body.exercise < 0)) ||
+            (req.body.insulin && (!Number.isInteger(parseFloat(req.body.insulin)) || req.body.insulin < 0))) {
+                req.flash('error', 'Invalid data. Stop messing with my html!!!!')
+                return res.redirect('/patient/account/record-health-form')
+            }
+
         const today = new Date()
         const today_start = helpers.getTodayStart()
         const patient_id = req.user.data_id

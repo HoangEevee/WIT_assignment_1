@@ -3,7 +3,8 @@ const mongoose = require('mongoose')
 const thresholdSchema = new mongoose.Schema({
     lower: Number,
     upper: Number,
-})
+}, { _id : false }
+)
 
 const timestampSchema = new mongoose.Schema({
     time: Date,

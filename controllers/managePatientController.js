@@ -57,14 +57,14 @@ const setThreshold = async (req, res, next) => {
         let exerciseLower = req.body.exercise_lower || patient["exerciseThreshold"]["lower"]
         let exerciseUpper = req.body.exercise_upper || patient["exerciseThreshold"]["upper"]
 
-        //check threshold lower is smaller than upper
+        //Validator: threshold lower is smaller than upper
         if (glucoseLower > glucoseUpper || weightLower > weightUpper || 
             insulinLower > insulinUpper || exerciseLower > exerciseUpper) {
                 req.flash('error', "Lower threshold must be smaller than upper threshold")
                 return res.redirect('/clinician/'.concat(req.params.id.toString(), '/set-timeseries'));
         }
 
-        //check if value valid i.e. positive, number, int,...
+        //Validator: valid values i.e. positive, number, int,...
         if (glucoseLower < 0 || weightLower < 0 || insulinLower < 0 || exerciseLower < 0 ||
             glucoseUpper < 0 || weightUpper < 0 || insulinUpper < 0 || exerciseUpper < 0 ||
             isNaN(parseFloat(glucoseLower)) || isNaN(parseFloat(glucoseUpper)) || 

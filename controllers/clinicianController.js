@@ -76,27 +76,39 @@ const getPatientcomments = async (req, res, next) => {
 
 const createPatient = async (req, res, next) => {
     try {
-        //id associated with the account id
-        const clinician_id = req.user.data_id
-        
-        const today = new Date()
         //Validations
-        let flashMessage = "You HTML meddler have input"
-        if (!helpers.isEmail(req.body.email)) flashMessage +=" invalid email"
+        let flashMessages = []
+        if (!helpers.isEmail(req.body.email)) flashMessages.push("Get out of my HTML with your invalid email!")
         if (!Number.isInteger(parseFloat(req.body.contactNumber)) || !Number.isInteger(parseFloat(req.body.emergencyNumber))) {
-            flashMessage +=" invalid phone number"
+            flashMessages.push("Get out of my HTML with your invalid phone number!")
         }
+        if (!["mr","miss","mrs","ms", "mx", "other"].includes(req.body.title)) flashMessages.push("Get out of my HTML with your invalid phone number!")
+        if (!helpers.isDate(req.body.dob)) flashMessages.push("Get out of my HTML with your invalid birthday!")
+        if (await Account.findOne({'username': req.body.username}).lean()) flashMessages.push("Your username has already been taken.")
 
-        if (!["mr","miss","mrs","ms", "mx", "other"].includes(req.body.title)) flashMessage += " invalid title" 
-        if (!helpers.isDate(req.body.dob)) flashMessage += " invalid birthday"
-
-        if (flashMessage !== "You HTML meddler have input") {
-            req.flash("error", flashMessage)
+        if (flashMessages.length !== 0) {
+            req.flash("error", flashMessages)
             return res.redirect('/clinician/create-patient-account')
         }
-
+        
+        //id associated with the account id
+        const clinician_id = req.user.data_id
+        const today = new Date()
         //new patient for the patient database
-        newPatient = new Patient( {...req.body, clinicianId: clinician_id, registeredDate: today})
+        newPatient = new Patient( {...req.body, clinicianId: clinician_id, registeredDate: today, 
+            glucoseThreshold: {
+                lower:0, upper:0
+            }, 
+            exerciseThreshold: {
+                lower:0, upper:0
+            },
+            insulinThreshold: {
+                lower:0, upper:0
+            }, 
+            weightThreshold: {
+                lower:0, upper:0
+            }
+        })
 
         await newPatient.save(function (err) {
             if (err) return console.error(err);
@@ -113,20 +125,6 @@ const createPatient = async (req, res, next) => {
             {$push: {patients: newPatient}}
         )
 
-        await Patient.updateOne({
-            _id: newPatient._id
-        }, {
-            $set: {
-              "glucoseThreshold.lower": 0,
-              "glucoseThreshold.upper": 0,
-              "exerciseThreshold.lower": 0,
-              "exerciseThreshold.upper": 0,
-              "insulinThreshold.lower": 0,
-              "insulinThreshold.upper": 0,
-              "weightThreshold.lower": 0,
-              "weightThreshold.upper": 0,
-            }
-        })
         return res.redirect('/clinician/create-patient-account')
     } catch (err) {
         return next(err)

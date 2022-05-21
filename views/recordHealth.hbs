@@ -5,6 +5,9 @@
         <p class="center">
         <script> document.write(new Date().toLocaleDateString()); </script>
         </p>
+        {{#each flash}}
+            <p class="red center">{{this}}</p>
+        {{/each}}
     </div>
 </section>
 
@@ -16,7 +19,7 @@
             <form action="/patient/account/insert-health-data" method="POST">
                 <h3 class="center">Blood Glucose (nmol/L)</h3>
                 <div class="container">
-                <input type="number" step="any" id="glucose" placeholder="Add blood glucose" name="glucose" required>
+                <input type="number" step="any" id="glucose" placeholder="Add blood glucose" name="glucose" min="0" required>
                 <input type="text" id="comment_glucose" placeholder="Add comment" name="comment">
                 
                 <div class="parentcontainer">
@@ -44,7 +47,7 @@
             <form action="/patient/account/insert-health-data" method="POST">
                 <h3 class="center">Weight (kg)</h3>
                 <div class="container">
-                <input type="number" step="any" id="weight" placeholder="Add weight" name="weight" required>
+                <input type="number" step="any" id="weight" placeholder="Add weight" name="weight" min="0" required>
                 <input type="text" id="comment_weight" placeholder="Add comment" name="comment">
                 
                 <div class="parentcontainer">
@@ -76,7 +79,7 @@
             <form action="/patient/account/insert-health-data" method="POST">
                 <h3 class="center">Insulin (no. of doses)</h3>
                 <div class="container">
-                <input type="number" id="insulin" placeholder="Add no. of insulin doses" name="insulin" required>
+                <input type="number" id="insulin" placeholder="Add no. of insulin doses" name="insulin" min="0" required>
                 <input type="text" id="comment_insulin" placeholder="Add comment" name="comment">
                 
                 <div class="parentcontainer">
@@ -104,7 +107,7 @@
             <form action="/patient/account/insert-health-data" method="POST">
                 <h3 class="center">Exercise (step count)</h3>
                 <div class="container">
-                <input type="number" id="exercise" placeholder="Add step count" name="exercise" required>
+                <input type="number" id="exercise" placeholder="Add step count" name="exercise" min="0" required>
                 <input type="text" id="comment_exercise" placeholder="Add comment" name="comment">
                 
                 <div class="parentcontainer">
