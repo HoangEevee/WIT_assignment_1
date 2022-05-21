@@ -1,4 +1,4 @@
-<h1 class="center">Patient Data</h1>
+<h1 class="center">User's Data</h1>
 
 {{#each flash}}
 <p class="red center">{{this}}</p>
@@ -11,7 +11,7 @@
                 <div>
                     <label for="firstName" class="flex-container">
                             <h4>First name</h4>
-                            <a onclick="edit('firstName')">Edit</a>
+                            <a onclick="edit('firstName')" class="edit">Edit</a>
                     </label>
                     <input id="firstName" type="text" value="{{patient.firstName}}" name="firstName" required disabled>
                 </div>
@@ -19,7 +19,7 @@
                 <div>
                     <label for="lastName" class="flex-container">
                             <h4>Last name</h4>
-                            <a onclick="edit('lastName')">Edit</a>
+                            <a onclick="edit('lastName')" class="edit">Edit</a>
                     </label>
                     <input id="lastName" type="text" value="{{patient.lastName}}" name="lastName" required disabled>
                 </div>
@@ -27,28 +27,42 @@
             
             <label for="dob" class="flex-container">
                 <h4>Date of Birth</h4>
-                <a onclick="edit('dob')">Edit</a>
+                <a onclick="edit('dob')" class="edit">Edit</a>
             </label>
             <input id="dob" type="date" value="{{patient.dob}}" name="dob" required disabled>
+            
             <label for="email" class="flex-container">
                 <h4>Email</h4>
-                <a onclick="edit('email')">Edit</a>
+                <a onclick="edit('email')" class="edit">Edit</a>
             </label>
             <input id="email" type="email" value="{{patient.email}}" name="email" required disabled>
 
+            <label for="contactNumber" class="flex-container">
+                <h4>Contact Number</h4>
+                <a onclick="edit('contactNumber')" class="edit">Edit</a>
+            </label>
+            <input id="contactNumber" type="number" value="{{patient.contactNumber}}" name="contactNumber" required disabled>
+
             <label for="username" class="flex-container">
                 <h4>Username</h4>
-                <a onclick="edit('username')">Edit</a>
+                <a onclick="edit('username')" class="edit">Edit</a>
             </label>
             <input id="username" type="text" value="{{account.username}}" name="username" required disabled>
 
             <label for="password" class="flex-container">
                 <h4>Password</h4>
-                <a onclick="edit('password')">Edit</a>
+                <a onclick="edit('password')" class="edit">Edit</a>
             </label>
             <input id="password" type="password" placeholder="********" name="password" required disabled>
                 
-
+            <div class="flex-container">
+                <h4>Color Theme</h4>
+                <a onclick="edit('theme')" class="edit">Edit</a>
+            </div>
+            <select id="theme" name="theme" disabled/>
+                <option {{#if (equalTo account.theme "light")}}selected{{/if}} value="light">Light</option>
+                <option {{#if (equalTo account.theme "ugly")}}selected{{/if}} value="ugly">Ugly</option>
+            </select>
             <button type="submit">Save</button>
         </div>
     </div>

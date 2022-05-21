@@ -19,7 +19,8 @@ app.engine(
         helpers: {
             outOfThreshold: (value, lower, higher, exists) => {return value < lower || value > higher || (!value && exists)},
             upToDate: (exists, last, today) => {return exists && (last.toLocaleDateString().localeCompare(today) != 0)},
-            badgeEarned: (engagement) => {return engagement >= 80.00}
+            badgeEarned: (engagement) => {return engagement >= 80.00},
+            equalTo: (value1, value2) => {return value1 == value2}
         }
     })
 )

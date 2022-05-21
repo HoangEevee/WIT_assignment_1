@@ -7,7 +7,7 @@ const getOnePatientData = async (req, res, next) => {
     try {
         const patient = await Patient.findById(req.params.id).lean()
         helpers.changePatientTimestampFormat(patient.timeseries)
-        return res.render('onePatient', {data: patient, layout: 'clinician_main'})
+        return res.render('onePatient', {data: patient, layout: 'clinician_main', theme:req.user.theme})
         
     } catch (err) {
         return next(err)
@@ -17,7 +17,7 @@ const getOnePatientData = async (req, res, next) => {
 const setTimeseriesPage = async (req, res, next) => {
     try {
         const patient = await Patient.findById(req.params.id).lean()
-        return res.render('setTimeseries', {data: patient,layout: 'clinician_main' , flash:req.flash('error')})
+        return res.render('setTimeseries', {data: patient,layout: 'clinician_main', theme:req.user.theme , flash:req.flash('error')})
     } catch (err) {
         return next(err)
     }
@@ -97,7 +97,7 @@ const viewPatientHealth = async (req, res, next) => {
     try {
         const patient = await Patient.findById(req.params.id).lean()
         helpers.changeTimestampDateFormat(patient.timeseries)
-        return res.render('patientPastHealth', {data: patient, layout: 'clinician_main'})
+        return res.render('patientPastHealth', {data: patient, layout: 'clinician_main', theme:req.user.theme})
     } catch (err) {
         return next(err)
     }
@@ -110,7 +110,7 @@ const getClinicalNotes = async (req, res, next) => {
             element.timestamp = element.timestamp.toLocaleString()
         })
         patient.clinicianNotes = patient.clinicianNotes.reverse()
-        return res.render('clinicianNotes', {data: patient, layout: 'clinician_main'})
+        return res.render('clinicianNotes', {data: patient, layout: 'clinician_main', theme:req.user.theme})
     } catch (err) {
         return next(err)
     }
@@ -119,7 +119,7 @@ const getClinicalNotes = async (req, res, next) => {
 const newClinicalNote = async (req, res, next) => {
     try{
         const patient = await Patient.findById(req.params.id).lean()
-        return res.render('createClinicalNote', {data: patient, layout: 'clinician_main'})
+        return res.render('createClinicalNote', {data: patient, layout: 'clinician_main', theme:req.user.theme})
     } catch (err) {
         return next(err)
     }
@@ -144,7 +144,7 @@ const setClinicalNote = async (req, res, next) => {
 const getsupportmessages = async (req, res, next) => {
     try {
         const patient = await Patient.findById(req.params.id).lean()
-        return res.render('sendsupportmessage', {data: patient, layout: 'clinician_main'})
+        return res.render('sendsupportmessage', {data: patient, layout: 'clinician_main', theme:req.user.theme})
     } catch (err) {
         return next(err)
     }
