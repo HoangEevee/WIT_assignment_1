@@ -106,6 +106,10 @@ const viewPatientHealth = async (req, res, next) => {
 const getClinicalNotes = async (req, res, next) => {
     try{
         const patient = await Patient.findById(req.params.id).lean()
+        patient.clinicianNotes.forEach((element) => {
+            element.timestamp = element.timestamp.toLocaleString()
+        })
+        patient.clinicianNotes = patient.clinicianNotes.reverse()
         return res.render('clinicianNotes', {data: patient, layout: 'clinician_main'})
     } catch (err) {
         return next(err)
