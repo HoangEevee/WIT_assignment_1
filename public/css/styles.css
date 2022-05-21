@@ -343,6 +343,12 @@ form {
     color: #0D2557;
     padding:6px;
     text-align: center;
+    border: 1px dotted #CED7EA;
+}
+
+.colpatient {
+    width: 25%;
+    text-align: justify;
 }
 
 .red {

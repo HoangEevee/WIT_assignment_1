@@ -1,8 +1,3 @@
-const mongoose = require('mongoose')
-const Patient = require('../models/patient')
-const Clinician = require('../models/clinician')
-const passport = require('passport')
-
 const changePatientTimestampFormat = (timeseries) => {
     if (timeseries.length) {
         //show time as DD/MM/YYYY, HH:MM:SS

@@ -4,7 +4,7 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Patient Name</th>
+                <th class="colpatient">Patient Name</th>
                 <th>Patient health Comment</th> 
             </tr>
         </thead>
@@ -18,7 +18,15 @@
                     </div>
                 </td>
                 
-                <td data label = "Patient Health Comment">{{this.timeseries.message}}</td> 
+                <td data label = "Patient Health Comment">
+                    <table>
+                        {{#each this.lastComments}}
+                        <tr>
+                        <td class="colpatient"><script>document.write(parseInt({{@index}}) + 1)</script>. {{this.timestamp}}</td>
+                        <td>{{this.message}}</td>
+                        </tr>
+                        {{/each}}
+                    </table></td> 
             </tr>
             {{/each}}
         </tbody>
