@@ -7,7 +7,7 @@
 
 /* * {
     border: 1px solid red;
-} */
+}*/
 
 body {
     color: #0D2557;
@@ -60,7 +60,7 @@ nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    
+    z-index: 4;
 }
 nav ul {
     list-style-type: none;
@@ -173,6 +173,7 @@ button {
     .img-right {
         margin:1rem 0 1rem 3rem;
     }
+    
 }
 @media screen and (max-width: 1200px) {
     .small-screen-disappear {
@@ -218,25 +219,25 @@ input {
 /* Bordered form */
 form {
     border: 0px solid #f1f1f1;
-  }
-  
-  /* Full-width inputs */
-  input[type=text], input[type=password], input[type=email], input[type=date], input[type=number] {
+}
+
+/* Full-width inputs */
+input[type=text], input[type=password], input[type=email], input[type=date], input[type=number] {
     width: 100%;
     padding: 12px 20px;
     margin: 8px 0;
     display: inline-block;
     box-sizing: border-box;
-  }
+}
 
-  input[type=checkbox] {
+input[type=checkbox] {
     width: 30px;
     margin: 0;
     box-sizing: none;
-  }
+}
   
-  /* Set for all buttons */
-  button {
+/* Set for all buttons */
+button {
     background-color: #0D2557;
     color: white;
     padding: 14px 20px;
@@ -245,29 +246,29 @@ form {
     cursor: pointer;
     width: 100%;
     text-align: center;
-  }
+}
   
   /* Add a hover effect for buttons */
-  button:hover {
+button:hover {
     opacity: 0.8;
-  }
+}
   
   
-  /* Add padding to containers */
-  .container {
+/* Add padding to containers */
+.container {
     text-align: center;
     margin: 0 auto;
     padding: 16px;
-  }
+}
 
-  .child_container {
+.child_container {
       width: 50%;
       min-width: auto;
       margin: 0 auto;
       padding: 16px;
-  }
+}
   
-  .signinout {
+.signinout {
     width: 50%;
     margin-left: auto;
     margin-right: auto;
@@ -275,43 +276,31 @@ form {
 }
 
   /* The "Need Help" text */ 
-  span.psw1 {
+span.psw1 {
     float: right; 
     padding-top: 16px; 
-  }
+}
   
-  /* The "Forgot password" text */
-  span.psw2 {
+/* The "Forgot password" text */
+span.psw2 {
     float:left; 
     padding-top: 16px;
-  }
+}
 
 
   /* Change styles for span and cancel button on extra small screens */
-  @media screen and (max-width: 300px) {
+@media screen and (max-width: 300px) {
     span.psw {
       display: block;
       float: none;
     }
-    }
-
-
-  @media screen and (max-width: 600px) {
-    .child_container {
-        align-items: center;
-        justify-content: center;
-        width: 80%;
-        }
-    }
-
-
-
+}
 
 /* Clinician Dashboard */
 
 .tablecontainer {
     padding: 0 10%; 
-    margin: 40px auto 0; 
+    margin: 40px auto 0;
 }
 
 .table {
@@ -360,81 +349,104 @@ form {
     text-align: center;
     margin: 0 auto;
     padding: 16px;
-  }
+}
 
-  .child_container {
+.child_container {
       width: 50%;
       min-width: auto;
       margin: 0 auto;
       padding: 16px;
-  }
+}
 
 .date_container {
     width: 30%;
-    max-width: 30%;;
+    max-width: 250px;
     position: relative;
-    padding-left: 20%;
-    text-align: center;
+    left: 90px;
+    text-align: left;
     float: left;
-  }
+}
 
-  .health_container {
-    display: flex;
-    flex-direction: row;
+.health_pair {
+    /*display: flex;
+    flex-direction: row;*/
     /* flex-wrap: wrap; */
     /* justify-content: space-between; */
     position: relative;
-	width: 35%;
-    padding-left: 5%;
-    padding-right: 18%;
+    padding-right: 5px;
     /* padding-bottom: 10px; */
     float: right;
-  }
+    width: 45%;
+    margin-left: 2%;
+}
 
-  .health_child {
+.health_child {
     position: relative;
-    width: 60%;
+    max-width: 200px;
+    width: 100%;
     max-height: 80%;
     height: 50%;
-    min-width: auto;
-    margin: 0 auto;
-    padding: 16px;
+    margin-right: 5%;
     padding-top: 6%;
-  }
+}
 
-  /* The actual timeline (the vertical ruler) */
-  .timeline {
+.health_container {
+    /*display: flex;
+    flex-direction: row;*/
+    margin-left: 14%;
+    margin-right: 10%;
+    width: 80%;
+}
+
+/* The actual timeline (the vertical ruler) */
+.timeline {
     position: relative;
     margin: 0 auto;
-  }
+    margin-left:5%;
+    margin-right:5%;
+}
 
-  /* The actual timeline (the vertical ruler) */
-  .timeline::after {
+.timeline hr {
+    width: 80%;
+    height: 0.5px;
+    border: 1px solid #CED7EA;
+}
+
+/* The actual timeline (the vertical ruler) */
+.timeline::after {
     content: '';
     position: absolute;
     width: 6px;
     background-color: #CED7EA;
     top: 0;
     bottom: 0;
-    left: 46.3%;
+    left: 250px;
     margin-left: -3px;
-  }
+}
+
+.timelinecontainer {
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    justify-content: space-between;
+    /* border: 1px solid #0D2557;    */
+}
   
   /* The circles on the timeline */
-  .date_container::after {
+.date_container::after {
     content: '';
     position: absolute;
     width: 25px;
     height: 25px;
-    right: -17px;
+    left: 143px;
     background-color: white;
     border: 4px solid #0D2557;
     top: 15px;
     border-radius: 50%;
     z-index: 1;
-  }
+}
 
-  .oval_button {
+.oval_button {
     background-color: #ddd;
     border: none;
     color: black;
@@ -449,8 +461,82 @@ form {
     width: 100%;
     margin-bottom: 20px;
 }
+@media screen and (min-width: 950px) {
+    .health_container {
+        /*display: flex;
+        flex-direction: row;*/
+        /* flex-wrap: wrap; */
+        /* justify-content: space-between; */
+        /*position: relative;*/
+        /* padding-bottom: 10px; */
+        float: right;
+    }
+
+    .health_pair {
+        display: flex;
+        flex-direction: row;
+        margin-right: 5px;
+    }
+}
 
 
+@media screen and (max-width: 600px) {
+    .child_container {
+        align-items: center;
+        justify-content: center;
+        width: 80%;
+    }
+}
+@media screen and (max-width: 950px) {
+
+    /* Place the timelime to the left */
+    .timeline::after {
+        left: 130px;
+    }
+
+    .date_container {
+        left: 20px;
+        text-align: left;
+    }
+
+    .date_container::after {
+        left: 94px;
+    }
+}
+
+@media screen and (max-width: 450px) {
+
+    /* Place the timelime to the left */
+    .timeline::after {
+        left: 110px;
+    }
+
+    .date_container {
+        left: 0px;
+        text-align: left;
+    }
+
+    .date_container::after {
+        left: 94px;
+    }
+}
+
+@media screen and (min-width: 1300px) {
+
+    /* Place the timelime to the left */
+    .timeline::after {
+        left: 350px;
+    }
+
+    .date_container {
+        left: 200px;
+        text-align: left;
+    }
+
+    .date_container::after {
+        left: 135px;
+    }
+}
 
 /* Record Health */
 .profile-container {
@@ -479,13 +565,13 @@ nav .profile-container a{
     height: 100%;
     width: 0;
     position: fixed;
-    z-index: 1;
     top: 0;
     left: 0;
     background-color: #CED7EA;
     overflow-x: hidden;
     transition: 0.5s;
     padding-top: 60px;
+    z-index: 3;
 }
 
 .sidenav a {
