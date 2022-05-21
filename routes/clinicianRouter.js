@@ -3,6 +3,7 @@ const express = require('express')
 const clinicianRouter = express.Router()
 // connect to controller
 const clinicianController = require('../controllers/clinicianController.js')
+const accountModController = require('../controllers/accountModController.js')
 
 clinicianRouter.get("/dashboard", clinicianController.getAllPatientData)
 
@@ -14,8 +15,8 @@ clinicianRouter.post('/create-clinician', clinicianController.createClinician)
 
 clinicianRouter.get('/view-patient-comments', clinicianController.getPatientcomments)
 
-clinicianRouter.get('/account-info', clinicianController.getAccountDetail)
-clinicianRouter.post('/change-account-detail', clinicianController.changeAccountDetail)
+clinicianRouter.get('/account-info', accountModController.getAccountDetail)
+clinicianRouter.post('/change-account-detail', accountModController.changeAccountDetail)
 // onwards to other routers!
 clinicianRouter.use('/:id', require('./managePatientRouter'))
 
