@@ -25,9 +25,13 @@ const getAllPatientData = async (req, res, next) => {
         const patients = await Patient.find({ '_id': { $in: ids.patients } }).lean();
         //show time as DD/MM/YYYY, HH:MM:SS
         patients.forEach((element) => {
-            helpers.changePatientTimestampFormat(element.timeseries)
+            helpers.changeLastTimestampFormat(element.lastUpdated)
+            if (element.timeseries.length) {
+                element.timeseries = element.timeseries[element.timeseries.length-1]
+            }
         })
-        return res.render('allPatients', {data: patients, layout: 'clinician_main'})
+        const today = new Date()
+        return res.render('allPatients', {today: today.toLocaleDateString(), data: patients, layout: 'clinician_main'})
     } catch (err) {
         return next(err)
     }   
@@ -77,15 +81,16 @@ const createPatient = async (req, res, next) => {
         
         const today = new Date()
         //Validations
-        let flashMessage = "You HTML meddler have input an"
+        let flashMessage = "You HTML meddler have input"
         if (!helpers.isEmail(req.body.email)) flashMessage +=" invalid email"
         if (!Number.isInteger(parseFloat(req.body.contactNumber)) || !Number.isInteger(parseFloat(req.body.emergencyNumber))) {
             flashMessage +=" invalid phone number"
         }
-        if (!["Mr.","Miss","Mrs.","Ms.", "Mx.", "other"].includes(req.body.title)) flashMessage += " an invalid title" 
+
+        if (!["mr","miss","mrs","ms", "mx", "other"].includes(req.body.title)) flashMessage += " invalid title" 
         if (!helpers.isDate(req.body.dob)) flashMessage += " invalid birthday"
 
-        if (flashMessage !== "You HTML meddler have input an") {
+        if (flashMessage !== "You HTML meddler have input") {
             req.flash("error", flashMessage)
             return res.redirect('/clinician/create-patient-account')
         }

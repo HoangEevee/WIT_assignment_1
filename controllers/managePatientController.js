@@ -93,14 +93,49 @@ const setThreshold = async (req, res, next) => {
     }
 }
 
+const viewPatientHealth = async (req, res, next) => {
+    try {
+        const patient = await Patient.findById(req.params.id).lean()
+        helpers.changePatientTimestampFormat(patient.timeseries)
+        return res.render('patientPastHealth', {data: patient, layout: 'clinician_main'})
+    } catch (err) {
+        return next(err)
+    }
+} 
+
 const getClinicalNotes = async (req, res, next) => {
     try{
         const patient = await Patient.findById(req.params.id).lean()
-        return res.render('ClinicalNotes', {data: patient, layout: 'clinician_main'})
+        return res.render('clinicianNotes', {data: patient, layout: 'clinician_main'})
     } catch (err) {
         return next(err)
     }
 }
+
+const newClinicalNote = async (req, res, next) => {
+    try{
+        const patient = await Patient.findById(req.params.id).lean()
+        return res.render('createClinicalNote', {data: patient, layout: 'clinician_main'})
+    } catch (err) {
+        return next(err)
+    }
+}
+
+const setClinicalNote = async (req, res, next) => {
+    try {
+        const patient_id = req.params.id
+        const today = new Date()
+        await Patient.updateOne({
+            _id: patient_id,
+        }, {$push: {
+                "clinicianNotes": {timestamp: today, message: req.body.note}
+            }
+        })
+        return res.redirect("/clinician/".concat(req.params.id.toString(), '/view-clinical-notes'))
+    } catch (err) {
+        return next(err)
+    }
+} 
 
 const getsupportmessages = async (req, res, next) => {
     try {
@@ -133,6 +168,9 @@ module.exports = {
     newTimeseries,
     setThreshold,
     getClinicalNotes,
+    newClinicalNote,
+    setClinicalNote,
     getsupportmessages,
     sendSupportmessages,
+    viewPatientHealth,
 }

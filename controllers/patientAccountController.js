@@ -72,7 +72,7 @@ const getPastHealth = async(req, res, next) => {
     try {
         const patient_id = req.user.data_id
         const patient = await Patient.findById(patient_id).lean()
-        helpers.changePatientTimestampFormat(patient.timeseries)
+        helpers.changeTimestampDateFormat(patient.timeseries)
         return res.render('patientPastHealth', {data: patient, layout: 'patient_main'})
     } catch(err) {
         return next(err)
@@ -132,7 +132,7 @@ const insertHealthData = async (req, res, next) => {
         const today_start = helpers.getTodayStart()
         const patient_id = req.user.data_id
         timeseries_today = await Patient.findOne({
-            id: patient_id,
+            _id: patient_id,
             timeseries: {
                 $elemMatch: {
                     date: today_start
