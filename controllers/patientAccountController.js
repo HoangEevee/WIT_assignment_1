@@ -24,9 +24,10 @@ const changeAccountDetail = async (req, res, next) => {
         console.log(req.body)
         // Validations
         let flashMessages = []
-        if (req.body.email && !helpers.isEmail(req.body.email)) flashMessages.push("Stop messing with my HTML you donker. You have input invalid email")
-        if (req.body.dob && !helpers.isDate(req.body.dob)) flashMessages.push("Stop messing with my HTML you donker. You have input invalid birthday")
-        if (!["light","ugly"].includes(req.body.theme))flashMessages.push("Stop messing with my HTML you donker. You have input invalid theme")
+        const msgTemplate = "Stop messing with my HTML you donker. You have input "
+        if (req.body.email && !helpers.isEmail(req.body.email)) flashMessages.push(msgTemplate + "invalid email")
+        if (req.body.dob && !helpers.isDate(req.body.dob)) flashMessages.push(msgTemplate + "invalid birthday")
+        if (!["light","ugly"].includes(req.body.theme))flashMessages.push(msgTemplate + "invalid theme")
         if (await Account.findOne({'username': req.body.username}).lean()) flashMessages.push("Your new username has already been taken.")
         if (flashMessages.length !== 0) {
             req.flash("error", flashMessages)

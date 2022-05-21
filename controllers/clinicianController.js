@@ -4,19 +4,6 @@ const Patient = require('../models/patient')
 const Account = require('../models/account')
 const helpers = require('../utils/helper')
 
-//const my_clinician_id = mongoose.Types.ObjectId("62713547ab750c0e07f6387f")
-
-// prolly more suited for clinician but eh testing
-/*
-const getAllClinicianData = async (req, res, next) => {
-    try {
-        const clinicians = await Clinician.find().lean()
-        return res.render('allPatients', {data: clinicians, layout: 'clinician_main' })
-    } catch (err) {
-        return next(err)
-    }   
-}
-*/
 const getAllPatientData = async (req, res, next) => {
     try {
         //id associated with the account id
@@ -88,12 +75,13 @@ const createPatient = async (req, res, next) => {
     try {
         //Validations
         let flashMessages = []
-        if (!helpers.isEmail(req.body.email)) flashMessages.push("Get out of my HTML with your invalid email!")
+        const msgTemplate = "Get out of my HTML with your "
+        if (!helpers.isEmail(req.body.email)) flashMessages.push(msgTemplate + "invalid email!")
         if (!Number.isInteger(parseFloat(req.body.contactNumber)) || !Number.isInteger(parseFloat(req.body.emergencyNumber))) {
-            flashMessages.push("Get out of my HTML with your invalid phone number!")
+            flashMessages.push(msgTemplate + "invalid phone number!")
         }
-        if (!["mr","miss","mrs","ms", "mx", "other"].includes(req.body.title)) flashMessages.push("Get out of my HTML with your invalid phone number!")
-        if (!helpers.isDate(req.body.dob)) flashMessages.push("Get out of my HTML with your invalid birthday!")
+        if (!["mr","miss","mrs","ms", "mx", "other"].includes(req.body.title)) flashMessages.push(msgTemplate + "invalid phone number!")
+        if (!helpers.isDate(req.body.dob)) flashMessages.push(msgTemplate + "invalid birthday!")
         if (await Account.findOne({'username': req.body.username}).lean()) flashMessages.push("Your username has already been taken.")
 
         if (flashMessages.length !== 0) {
@@ -142,7 +130,6 @@ const createPatient = async (req, res, next) => {
 }
 
 module.exports = {
-    //getAllClinicianData,
     getAllPatientData,
     createAccountPage,
     createPatientPage,
