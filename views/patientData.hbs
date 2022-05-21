@@ -1,4 +1,4 @@
-<h1 class="center">Patient Data</h1>
+<h1 class="center">User's Data</h1>
 
 {{#each flash}}
 <p class="red center">{{this}}</p>
@@ -30,11 +30,18 @@
                 <a onclick="edit('dob')" class="edit">Edit</a>
             </label>
             <input id="dob" type="date" value="{{patient.dob}}" name="dob" required disabled>
+            
             <label for="email" class="flex-container">
                 <h4>Email</h4>
                 <a onclick="edit('email')" class="edit">Edit</a>
             </label>
             <input id="email" type="email" value="{{patient.email}}" name="email" required disabled>
+
+            <label for="contactNumber" class="flex-container">
+                <h4>Contact Number</h4>
+                <a onclick="edit('contactNumber')" class="edit">Edit</a>
+            </label>
+            <input id="contactNumber" type="number" value="{{patient.contactNumber}}" name="contactNumber" required disabled>
 
             <label for="username" class="flex-container">
                 <h4>Username</h4>

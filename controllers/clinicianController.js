@@ -6,11 +6,8 @@ const helpers = require('../utils/helper')
 
 const getAllPatientData = async (req, res, next) => {
     try {
-        //id associated with the account id
-        const clinician_id = req.user.data_id
-
-        const ids = await Clinician.findById(clinician_id).lean()
-        const patients = await Patient.find({ '_id': { $in: ids.patients } }).lean();
+        const clinician = await Clinician.findById(req.user.data_id).lean()
+        const patients = await Patient.find({ '_id': { $in: clinician.patients } }).lean();
         //show time as DD/MM/YYYY, HH:MM:SS
         patients.forEach((element) => {
             helpers.changeLastTimestampFormat(element.lastUpdated)
@@ -35,12 +32,72 @@ const createAccountPage = async (req, res, next) => {
 
 const createClinician = async (req, res, next) => {
     try {
-        newClinician = new Clinician( req.body )
+        newClinician = new Clinician(req.body)
         await newClinician.save(function (err) {
             if (err) return console.error(err);
         })
         return res.redirect('/clinician/create-new-account')
     } catch (err) {
+        return next(err)
+    }
+}
+
+const getAccountDetail = async (req, res, next) => { 
+    try{
+        const user_id = req.user.data_id
+        const clinician = await Clinician.findById(user_id).lean()
+        const account = await Account.findOne({'data_id': user_id}).lean()
+        //get date to correct format YYYY-MM-DD
+        clinician.dob = clinician.dob.toLocaleDateString('en-GB').split("/")
+        clinician.dob = clinician.dob[2] + "-" + clinician.dob[1] + "-" + clinician.dob[0]
+        return res.render('patientData', {patient: clinician, account: account, layout: 'clinician_main', theme: req.user.theme, flash:req.flash('error')})
+    } catch (err) {
+        return next(err)
+    }
+}
+
+const changeAccountDetail = async (req, res, next) => {
+    try {
+        // Validations
+        let flashMessages = []
+        const msgTemplate = "Stop messing with my HTML you donker. You have input "
+        if (req.body.email && !helpers.isEmail(req.body.email)) flashMessages.push(msgTemplate + "invalid email")
+        if (req.body.dob && !helpers.isDate(req.body.dob)) flashMessages.push(msgTemplate + "invalid birthday")
+        if (req.body.theme && !["light","ugly"].includes(req.body.theme))flashMessages.push(msgTemplate + "invalid theme")
+        if (req.body.contactNumber && !Number.isInteger(parseFloat(req.body.contactNumber))) flashMessages.push(msgTemplate + "invalid phone number")
+        if (await Account.findOne({'username': req.body.username}).lean()) flashMessages.push("Your new username has already been taken.")
+        if (flashMessages.length !== 0) {
+            req.flash("error", flashMessages)
+            return res.redirect('./account-info')
+        }
+
+        // For changes in patient database
+        if (req.body.firstName || req.body.lastName || req.body.dob || req.body.email || req.body.contactNumber) {
+            let clinician = await Clinician.findOne({_id: req.user.data_id});
+
+            if (req.body.firstName) clinician["firstName"] = req.body.firstName;
+            if (req.body.lastName) clinician["lastName"] = req.body.lastName;
+            if (req.body.dob) {
+                date = req.body.dob.split("-")
+                //HOLY FUCKING SHIT WHY WOULD JAVASCRIPT COUNT MONTH FROM 0-11. I LITERALLY WASTED SO MUCH TIME
+                clinician["dob"] = new Date(date[0], date[1]-1, date[2]);
+            }
+            if (req.body.email) clinician["email"] = req.body.email;
+            if (req.body.contactNumber) clinician["contactNumber"] = req.body.contactNumber;
+            await clinician.save();
+        }
+
+        // For changes in account database
+        if (req.body.username || req.body.password || req.body.theme) {
+            let user = await Account.findOne({_id: req.user._id});
+
+            if (req.body.username) user["username"] = req.body.username;
+            if (req.body.password) user["password"] = req.body.password;
+            if (req.body.theme) user["theme"] = req.body.theme;
+            await user.save();
+        }
+        return res.redirect("./account-info")
+    } catch(err) {
         return next(err)
     }
 }
@@ -130,6 +187,8 @@ const createPatient = async (req, res, next) => {
 }
 
 module.exports = {
+    getAccountDetail,
+    changeAccountDetail,
     getAllPatientData,
     createAccountPage,
     createPatientPage,

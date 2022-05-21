@@ -5,7 +5,7 @@ const helpers = require('../utils/helper')
 const Account = require('../models/account')
 const { redirect } = require('express/lib/response')
 
-const getDataByPatient = async (req, res, next) => { 
+const getAccountDetail = async (req, res, next) => { 
     try{
         const patient_id = req.user.data_id
         const patient = await Patient.findById(patient_id).lean()
@@ -27,7 +27,8 @@ const changeAccountDetail = async (req, res, next) => {
         const msgTemplate = "Stop messing with my HTML you donker. You have input "
         if (req.body.email && !helpers.isEmail(req.body.email)) flashMessages.push(msgTemplate + "invalid email")
         if (req.body.dob && !helpers.isDate(req.body.dob)) flashMessages.push(msgTemplate + "invalid birthday")
-        if (!["light","ugly"].includes(req.body.theme))flashMessages.push(msgTemplate + "invalid theme")
+        if (req.body.theme && !["light","ugly"].includes(req.body.theme)) flashMessages.push(msgTemplate + "invalid theme")
+        if (req.body.contactNumber && !Number.isInteger(parseFloat(req.body.contactNumber))) flashMessages.push(msgTemplate + "invalid phone number")
         if (await Account.findOne({'username': req.body.username}).lean()) flashMessages.push("Your new username has already been taken.")
         if (flashMessages.length !== 0) {
             req.flash("error", flashMessages)
@@ -35,7 +36,7 @@ const changeAccountDetail = async (req, res, next) => {
         }
 
         // For changes in patient database
-        if (req.body.firstName || req.body.lastName || req.body.dob || req.body.email) {
+        if (req.body.firstName || req.body.lastName || req.body.dob || req.body.email || req.body.contactNumber) {
             let patient = await Patient.findOne({_id: req.user.data_id});
 
             if (req.body.firstName) patient["firstName"] = req.body.firstName;
@@ -46,13 +47,13 @@ const changeAccountDetail = async (req, res, next) => {
                 patient["dob"] = new Date(date[0], date[1]-1, date[2]);
             }
             if (req.body.email) patient["email"] = req.body.email;
+            if (req.body.contactNumber) patient["contactNumber"] = req.body.contactNumber;
             await patient.save();
         }
 
         // For changes in account database
         if (req.body.username || req.body.password || req.body.theme) {
-            const account_id = req.user._id;
-            let user = await Account.findOne({_id: account_id});
+            let user = await Account.findOne({_id: req.user._id});
 
             if (req.body.username) user["username"] = req.body.username;
             if (req.body.password) user["password"] = req.body.password;
@@ -244,7 +245,7 @@ const insertHealthData = async (req, res, next) => {
 }
 
 module.exports = {
-    getDataByPatient,
+    getAccountDetail,
     changeAccountDetail,
     getPersonal,
     getPastHealth,
