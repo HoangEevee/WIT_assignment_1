@@ -1,8 +1,3 @@
-const mongoose = require('mongoose')
-const Patient = require('../models/patient')
-const Clinician = require('../models/clinician')
-const passport = require('passport')
-
 const changePatientTimestampFormat = (timeseries) => {
     if (timeseries.length) {
         //show time as DD/MM/YYYY, HH:MM:SS
@@ -92,6 +87,24 @@ const isDate = (date) => {
     const dateRegex = /[0-9]{4}-[0-9]{2}-[0-9]{2}/
     return date.match(dateRegex)
 }
+
+// calculate engagement ( (days with some data) / (days since registration))
+const calculateEngagement = (patient) => {
+    const today = new Date()
+    const timeseries = patient.timeseries
+    if (timeseries.length) {
+        diff = today - patient.registeredDate
+        to_days = Math.floor(diff / (24 * 60 * 60 * 1000))
+        if (to_days == 0) {
+            to_days = timeseries.length
+        }
+        engagement = timeseries.length / to_days * 100
+        return engagement
+    }
+    return false
+    
+}
+
 module.exports = {
     changePatientTimestampFormat,
     changeTimestampDateFormat,
@@ -99,5 +112,6 @@ module.exports = {
     isAuthenticated,
     getTodayStart,
     isEmail,
-    isDate
+    isDate,
+    calculateEngagement,
 }

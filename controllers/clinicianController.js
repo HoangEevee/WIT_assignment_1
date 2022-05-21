@@ -67,7 +67,16 @@ const createPatientPage = async (req, res, next) => {
 
 const getPatientcomments = async (req, res, next) => {
     try {
-        const patients = await Patient.find().lean()
+        const clinician_id = req.user.data_id
+
+        const ids = await Clinician.findById(clinician_id).lean()
+        const patients = await Patient.find({ '_id': { $in: ids.patients } }).lean();
+        //show time as DD/MM/YYYY, HH:MM:SS
+        patients.forEach((patient) => {
+            patient.lastComments.forEach((element) => {
+                element.timestamp = element.timestamp.toLocaleString()
+            })
+        })
         return res.render('viewpatientcomments', {data: patients, layout: 'clinician_main'})
     } catch (err) {
         return next(err)
