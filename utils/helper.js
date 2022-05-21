@@ -92,16 +92,21 @@ const isDate = (date) => {
 const calculateEngagement = (patient) => {
     const today = new Date()
     const timeseries = patient.timeseries
+
     if (timeseries.length) {
+        last = timeseries[timeseries.length-1].date.toLocaleDateString()
         diff = today - patient.registeredDate
         to_days = Math.floor(diff / (24 * 60 * 60 * 1000))
+        if (last.localeCompare((new Date(to_days)).toLocaleDateString()) != 0) {
+            to_days += 1
+        }
         if (to_days == 0) {
             to_days = timeseries.length
         }
         engagement = timeseries.length / to_days * 100
         return engagement
     }
-    return false
+    return 0
     
 }
 

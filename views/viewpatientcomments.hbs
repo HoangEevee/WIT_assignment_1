@@ -5,6 +5,43 @@
         <thead>
             <tr>
                 <th class="colpatient">Patient Name</th>
+                <th class="colpatient">Timestamp</th>
+                <th>Patient health Comment</th> 
+            </tr>
+        </thead>
+        <tbody>
+            {{#each data}}
+            <tr>
+                <td data label = "Patient Name">
+                    <div class="profile-container">
+                        <img src="\img\profile-pic.jpg" alt="profile pic" class="profile-pic small-screen-disappear">
+                        <a href="./{{this._id}}">{{this.firstName}} {{this.lastName}}</a>
+                    </div>
+                </td>
+
+                <td data label = "Timestamp"></td>
+                
+                <td data label = "Patient Health Comment">
+                    <table>
+                        {{#each this.lastComments}}
+                        <tr>
+                        <td class="colpatient"><script>document.write(parseInt({{@index}}) + 1)</script>. {{this.timestamp}}</td>
+                        <td>{{this.message}}</td>
+                        </tr>
+                        {{/each}}
+                    </table></td> 
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>   
+
+<!--
+<div class="tablecontainer">
+    <table class="table">
+        <thead>
+            <tr>
+                <th class="colpatient">Patient Name</th>
                 <th>Patient health Comment</th> 
             </tr>
         </thead>
@@ -32,3 +69,4 @@
         </tbody>
     </table>
 </div>   
+-->

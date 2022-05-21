@@ -167,9 +167,9 @@ const insertHealthData = async (req, res, next) => {
                 _id: patient_id,
             }, {
                 $push: {
-                    'lastComments': { 
-                        "$each": [{timestamp: today, message: req.body.comment}],
-                        "$slice": -5
+                    'lastComments': {
+                        timestamp: today, 
+                        message: req.body.comment
                     }
                 }
             })

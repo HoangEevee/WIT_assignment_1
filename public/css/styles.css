@@ -633,3 +633,7 @@ nav .profile-container a{
 .name-container>* {
     flex-grow: 1;
 }
+
+.faded {
+    opacity: 0.5;
+}
