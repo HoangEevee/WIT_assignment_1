@@ -148,8 +148,16 @@ hr {
     margin-top: 3rem;
 }
 
+.badgecontainer {
+    align-items: center;
+}
+
 /* for computer size and beyond */
 @media screen and (min-width: 1200px) {
+
+    .badgecontainer {
+        justify-content: center;
+    }
 
     .parentcontainer {
         display: flex;
@@ -182,6 +190,36 @@ hr {
 footer {
     bottom: 0;
     padding: 2rem;
+}
+
+@media screen and (min-width: 700px) {
+    .badgecontainer {
+        display: flex;
+        flex-direction: row;
+    }
+}
+
+@media screen and (min-width: 450px) {
+    .leaderboard {
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+    }
+}
+
+.leaderboard {
+    width: 50%;
+    min-width: auto;
+    padding: 16px;
+    
+}
+
+@media screen and (max-width: 600px) {
+    .child_container {
+        align-items: center;
+        justify-content: center;
+        width: 80%;
+    }
 }
 
 .textcontainer {
@@ -536,16 +574,6 @@ span.psw2 {
 .new_note {
     width: 200px;
 }
-
-
-@media screen and (max-width: 600px) {
-    .child_container {
-        align-items: center;
-        justify-content: center;
-        width: 80%;
-    }
-}
-
 
 /* Record Health */
 .profile-container {
