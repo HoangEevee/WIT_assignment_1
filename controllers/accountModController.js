@@ -14,7 +14,8 @@ const getAccountDetail = async (req, res, next) => {
         user.dob = user.dob.toLocaleDateString('en-GB').split("/")
         user.dob = user.dob[2] + "-" + user.dob[1] + "-" + user.dob[0]
         if (req.user.role === "clinician") {
-            return res.render('userData', {patient: user, account: account, layout: 'clinician_main', theme: req.user.theme, flash:req.flash('error')})
+            const clinician = await Clinician.findById(user_id).lean()
+            return res.render('userData', {patient: user, account: account, layout: 'clinician_main', theme: req.user.theme, flash:req.flash('error'), clinician: clinician})
         }
         else if (req.user.role === "patient") {
             return res.render('userData', {patient: user, account: account, layout: 'patient_main', theme: req.user.theme, flash:req.flash('error')})

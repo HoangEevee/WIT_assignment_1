@@ -15,7 +15,7 @@ const getAllPatientData = async (req, res, next) => {
             }
         })
         const today = new Date()
-        return res.render('allPatients', {today: today.toLocaleDateString(), data: patients, layout: 'clinician_main', theme: req.user.theme})
+        return res.render('allPatients', {today: today.toLocaleDateString(), data: patients, layout: 'clinician_main', theme: req.user.theme, clinician: clinician})
     } catch (err) {
         return next(err)
     }   
@@ -23,7 +23,8 @@ const getAllPatientData = async (req, res, next) => {
 
 const createAccountPage = async (req, res, next) => {
     try {
-        return res.render('createClinicianAccount', {layout: 'clinician_main' })
+        const clinician = await Clinician.findById(req.user.data_id).lean()
+        return res.render('createClinicianAccount', {layout: 'clinician_main' , clinician: clinician})
     } catch (err) {
         return next(err)
     }
@@ -43,7 +44,8 @@ const createClinician = async (req, res, next) => {
 
 const createPatientPage = async (req, res, next) => {
     try {
-        return res.render('createPatientAccount', {layout: 'clinician_main', theme:req.user.theme, flash:req.flash('error')})
+        const clinician = await Clinician.findById(req.user.data_id).lean()
+        return res.render('createPatientAccount', {layout: 'clinician_main', theme:req.user.theme, flash:req.flash('error'), clinician: clinician})
     } catch (err) {
         return next(err)
     }
@@ -53,15 +55,15 @@ const getPatientcomments = async (req, res, next) => {
     try {
         const clinician_id = req.user.data_id
 
-        const ids = await Clinician.findById(clinician_id).lean()
-        const patients = await Patient.find({ '_id': { $in: ids.patients } }).lean();
+        const clinician = await Clinician.findById(clinician_id).lean()
+        const patients = await Patient.find({ '_id': { $in: clinician.patients } }).lean();
         //show time as DD/MM/YYYY, HH:MM:SS
         patients.forEach((patient) => {
             patient.lastComments.forEach((element) => {
                 element.timestamp = element.timestamp.toLocaleString()
             })
         })
-        return res.render('viewpatientcomments', {data: patients, layout: 'clinician_main', theme:req.user.theme})
+        return res.render('viewpatientcomments', {data: patients, layout: 'clinician_main', theme:req.user.theme, clinician: clinician})
     } catch (err) {
         return next(err)
     }
