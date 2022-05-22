@@ -1,6 +1,6 @@
-<h2 class="center"> View Support Messages </h2>
+<h2 class="center"> View Support Message </h2>
 
-<div class="tablecontainer">
+{{!-- <div class="tablecontainer">
     <table class="table">
         <thead>
             <tr>
@@ -18,5 +18,16 @@
         </tbody>    
         
     </table>
-</div>   
+</div>    --}}
 
+
+<div class="note_parentcontainer">
+    {{#if data.supportMessages}}
+    <h2 class="center"> {{data.supportMessages}} </h2>
+        {{!-- <div class="clinical_note_box">
+            <h3> {{data.supportMessages}} </h3>
+        </div> --}}
+    {{else}}
+        <h2 class="center"> Please come back later to see any messages from your clincian! </h2>
+    {{/if}}
+</div>

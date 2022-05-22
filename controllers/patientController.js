@@ -28,24 +28,12 @@ const getHomePage = async (req, res, next) => {
 }
 
 
-const getSupportmessages = async (req, res, next) => {
-    try {
-        const clinician_id = req.user.data_id
-        const clinician = await Clinician.findOne({
-            _id: clinician_id,
-        }).lean()
-        const patients = await Patient.find().lean()
-        return res.render('viewsupportmessages', {data: patients, clinciandata: clinician, layout: 'patient_main', theme: req.user.theme})
-    } catch (err) {
-        return next(err)
-    }
-} 
+
 
 module.exports = {
     getAboutDiabetes,
     getAboutWebsite,
-    getHomePage,
-    getSupportmessages, 
+    getHomePage
 }
 
 
