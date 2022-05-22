@@ -1,34 +1,8 @@
-<h2 class="center"> View Support Message from Clinician </h2>
-
-
-{{!-- <div class="tablecontainer">
-    <table class="table">
-        <thead>
-            <tr>
-                
-                <th>View Support Message</th> 
-            </tr>
-        </thead>
-        
-        <tbody>
-            {{#each data}}
-            <tr>
-                <td data label = "Support Message">{{this.supportMessages}}</td>
-            </tr>
-            {{/each}}
-        </tbody>    
-        
-    </table>
-</div>    --}}
-
+<h2 class="center"> Support Message from Clinician </h2>
 
 <div class="note_parentcontainer">
     {{#if data.supportMessages}}
-    <h3 class="center">  {{data.supportMessages}} </h3>
-    
-        {{!-- <div class="clinical_note_box">
-            <h3> {{data.supportMessages}} </h3>
-        </div> --}}
+        <h3 class="center">  {{data.supportMessages}} </h3>
     {{else}}
         <h3 class="center"> Please come back later to see any messages from your clinician! </h3>
     {{/if}}
