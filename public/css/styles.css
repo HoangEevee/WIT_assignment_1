@@ -13,13 +13,13 @@ html[data-theme="light"], html {
     --nav-right-hover-color: #304e8d;
 }
 
-html[data-theme="ugly"] {
-    --background-color: grey;
-    --footer-header-color: #4ED3EA;
-    --text-color: #6D2557;
-    --past-record-color: #add;
-    --menubar-color: #1623B4;
-    --nav-right-hover-color: #4e8d;
+html[data-theme="dark"] {
+    --background-color: #0B1935;
+    --footer-header-color: #0B1935;
+    --text-color: #CED7EA;
+    --past-record-color: #8693B4;
+    --menubar-color: #CED7EA;
+    --nav-right-hover-color: #304e8d;
 }
 
 body {
