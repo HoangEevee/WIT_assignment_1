@@ -272,6 +272,7 @@ button:hover {
       min-width: auto;
       margin: 0 auto;
       padding: 16px;
+
 }
   
 .signinout {
@@ -464,6 +465,7 @@ span.psw2 {
 }
 
 @media screen and (max-width: 1200px) {
+
     .timeline {
         margin: 0;
     }
