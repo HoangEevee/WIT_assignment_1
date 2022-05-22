@@ -25,6 +25,23 @@
                         <button class="oval_button"> Weight: N/A </button>
                     {{/if}}           
                 </div>
+                <div class="health_child">
+                    {{#if day.glucose.message}}
+                        <button class="comment_button"> {{day.glucose.message}} </button>
+                        {{!-- {{#if day.glucose.message}}
+                        <div class="box-footer">
+                            <small> Comment attached </small>
+                        </div>
+                        {{/if}} --}}
+                    {{else}}
+                        <button class="comment_button"> No Comment </button>
+                    {{/if}} 
+                    {{#if day.weight.message}}
+                        <button class="comment_button"> {{day.weight.message}} </button>
+                    {{else}}
+                        <button class="comment_button"> No Comment </button>
+                    {{/if}}           
+                </div>
                 {{!-- <div class="health_child">
                     {{#if day.weight}}
                         <button class="oval_button"> Weight: {{day.weight.value}} kg </button>
@@ -50,6 +67,23 @@
                         <button class="oval_button"> Exercise: N/A </button>
                     {{/if}}             
                 </div>
+                <div class="health_child">
+                    {{#if day.insulin.message}}
+                        <button class="comment_button"> {{day.insulin.message}} </button>
+                        {{!-- {{#if day.glucose.message}}
+                        <div class="box-footer">
+                            <small> Comment attached </small>
+                        </div>
+                        {{/if}} --}}
+                    {{else}}
+                        <button class="comment_button"> No Comment </button>
+                    {{/if}} 
+                    {{#if day.exercise.message}}
+                        <button class="comment_button"> {{day.exercise.message}} </button>
+                    {{else}}
+                        <button class="comment_button"> No Comment </button>
+                    {{/if}}           
+                </div>
                 {{!-- <div class="health_child">
                     {{#if day.exercise}}
                         <button class="oval_button"> Exercise: {{day.exercise.value}} No. of Steps </button>
@@ -62,6 +96,7 @@
         </div>
     </div>
     {{/each}}
+{{!-- </div> --}}
 
 <script>
 // When the user clicks on div, open the popup
@@ -69,4 +104,3 @@ function myFunction() {
     var popup = document.getElementById("popup");
     popup.classList.toggle("show");
 }
-</script>
