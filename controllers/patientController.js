@@ -27,14 +27,10 @@ const getHomePage = async (req, res, next) => {
     }   
 }
 
-
-
-
 module.exports = {
     getAboutDiabetes,
     getAboutWebsite,
-    getHomePage,
-    
+    getHomePage
 }
 
 
