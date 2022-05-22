@@ -16,9 +16,9 @@
     
     <div class="badgecontainer">
         {{#if (badgeEarned engagement)}}
-        <img src="\img\small single badge.png" alt="icon for badge">
+        <img src="\img\small-single-badge-{{../theme}}.png" alt="icon for badge">
         {{else}}
-        <img class="faded" src="\img\badge faded.png" alt="icon for faded badge">
+        <img class="faded" src="\img\badge-faded-{{../theme}}.png" alt="icon for faded badge">
         {{/if}}
         <div class="textcontainer">
             <h1>#<script>document.write(parseInt({{@index}}) + 1)</script> Place</h1>
