@@ -104,7 +104,7 @@ const calculateEngagement = (patient) => {
             to_days = timeseries.length
         }
         engagement = timeseries.length / to_days * 100
-        return engagement
+        return engagement.toFixed(2)
     }
     return 0
     

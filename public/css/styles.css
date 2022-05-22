@@ -366,96 +366,73 @@ span.psw2 {
 
 .date_container {
     width: 30%;
-    max-width: 250px;
+    max-width: 30%;;
     position: relative;
-    left: 90px;
-    text-align: left;
+    padding-left: 20%;
+    text-align: center;
     float: left;
-}
+  }
 
-.health_pair {
-    /*display: flex;
-    flex-direction: row;*/
+  .health_container {
+    display: flex;
+    flex-direction: row;
     /* flex-wrap: wrap; */
     /* justify-content: space-between; */
     position: relative;
-    padding-right: 5px;
+	width: 35%;
+    padding-left: 5%;
+    padding-right: 18%;
     /* padding-bottom: 10px; */
     float: right;
-    width: 45%;
-    margin-left: 2%;
-}
+  }
 
-.health_child {
+  .health_child {
     position: relative;
-    max-width: 200px;
-    width: 100%;
+    width: 60%;
     max-height: 80%;
     height: 50%;
-    margin-right: 5%;
+    min-width: auto;
+    margin: 0 auto;
+    padding: 16px;
     padding-top: 6%;
-}
+  }
 
-.health_container {
-    /*display: flex;
-    flex-direction: row;*/
-    margin-left: 14%;
-    margin-right: 10%;
-    width: 80%;
-}
-
-/* The actual timeline (the vertical ruler) */
-.timeline {
+  /* The actual timeline (the vertical ruler) */
+  .timeline {
     position: relative;
     margin: 0 auto;
-    margin-left:5%;
-    margin-right:5%;
-}
+  }
 
-.timeline hr {
-    width: 80%;
-    height: 0.5px;
-    border: 1px solid #CED7EA;
-}
-
-/* The actual timeline (the vertical ruler) */
-.timeline::after {
+  /* The actual timeline (the vertical ruler) */
+  .timeline::after {
     content: '';
     position: absolute;
     width: 6px;
-    background-color: var(--footer-header-color);
+    background-color: #CED7EA;
     top: 0;
     bottom: 0;
-    left: 250px;
+    left: 46.3%;
     margin-left: -3px;
-}
-
-.timelinecontainer {
-    display: flex;
-    flex-flow: row;
-    align-items: center;
-    justify-content: space-between;
-    /* border: 1px solid #0D2557;    */
-}
+  }
   
   /* The circles on the timeline */
-.date_container::after {
+  .date_container::after {
     content: '';
     position: absolute;
     width: 25px;
     height: 25px;
-    left: 143px;
-    background-color: var(--background-color);
-    border: 4px solid var(--text-color);
+    right: -17px;
+    background-color: white;
+    border: 4px solid #0D2557;
     top: 15px;
     border-radius: 50%;
     z-index: 1;
-}
+  }
 
   .oval_button {
-    background-color: var(--past-record-color);
+    background-color: #ddd;
     border: none;
-    color: var(--text-color);
+    color: black;
     padding: 10px 20px;
     text-align: center;
     text-decoration: none;
@@ -467,22 +444,75 @@ span.psw2 {
     width: 100%;
     margin-bottom: 20px;
 }
-@media screen and (min-width: 950px) {
-    .health_container {
-        /*display: flex;
-        flex-direction: row;*/
-        /* flex-wrap: wrap; */
-        /* justify-content: space-between; */
-        /*position: relative;*/
-        /* padding-bottom: 10px; */
-        float: right;
-    }
 
-    .health_pair {
-        display: flex;
-        flex-direction: row;
-        margin-right: 5px;
+@media screen and (max-width: 1200px) {
+    .timeline {
+        margin: 0;
     }
+    .timeline::after {
+        margin-left: 0;
+        left: 50%;
+    }
+    .date_container {
+        margin-left: 0;
+        /* left: 50px; */
+    }
+    /* .date_container::after {
+        display: none;
+    } */
+    .health_container {
+        flex-wrap: wrap;
+        max-width: 100%;
+        width: auto;
+        float: none;
+        margin-left: 110px;
+        min-height: 53px;
+        padding-right: 0%;
+        padding-top: 2%
+    }
+    .health_child {
+        width: 100%;
+        padding-bottom: 0;
+        padding-top: 0;
+    }
+    .oval_button {
+        width: 80%;
+    }
+}
+
+.note_parentcontainer {
+    display: flex;
+    /* flex-direction: row; */
+    flex-wrap: wrap;
+    justify-content: center;
+    /* justify-content: space-between;
+    position: relative; */
+    /* width: 80%;
+    height: 100%;
+    border: 10px #0D2557; */
+}
+
+.clinical_note_box {
+    width:300px;
+    height:280px;
+    position:relative;
+    background:#CED7EA;
+    overflow:hidden;
+    margin:30px auto;
+    padding:20px;
+    color:#130d6b;
+    margin: 1em;
+    border: 2px solid #0D2557; 
+}
+
+.box_footer {
+    position: absolute;
+    margin: 0 25px 10px 10px;
+    bottom: 0;
+}
+
+.new_note {
+    width: 200px;
 }
 
 
@@ -493,56 +523,7 @@ span.psw2 {
         width: 80%;
     }
 }
-@media screen and (max-width: 950px) {
 
-    /* Place the timelime to the left */
-    .timeline::after {
-        left: 130px;
-    }
-
-    .date_container {
-        left: 20px;
-        text-align: left;
-    }
-
-    .date_container::after {
-        left: 94px;
-    }
-}
-
-@media screen and (max-width: 450px) {
-
-    /* Place the timelime to the left */
-    .timeline::after {
-        left: 110px;
-    }
-
-    .date_container {
-        left: 0px;
-        text-align: left;
-    }
-
-    .date_container::after {
-        left: 94px;
-    }
-}
-
-@media screen and (min-width: 1300px) {
-
-    /* Place the timelime to the left */
-    .timeline::after {
-        left: 350px;
-    }
-
-    .date_container {
-        left: 200px;
-        text-align: left;
-    }
-
-    .date_container::after {
-        left: 135px;
-    }
-}
 
 /* Record Health */
 .profile-container {
