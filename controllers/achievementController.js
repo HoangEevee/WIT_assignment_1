@@ -43,7 +43,7 @@ const getleaderboard = async (req, res, next) => {
             if (engagement) {
                 dates[i++] = {
                     username: user.username,
-                    engagement: engagement.toFixed(2),
+                    engagement: engagement,
                 }
             } else {
                 dates[i++] = {

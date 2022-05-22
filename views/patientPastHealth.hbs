@@ -1,15 +1,13 @@
 <h2 class="center">{{data.firstName}} {{data.lastName}}'s Health Record </h2>
 
 {{!-- <div class="timeline"> --}}
-    <div class="timeline">
     {{#each data.timeseries as |day|}}
-        
-        <div class="timelinecontainer">
+        <div class="timeline">
+        <div class="parentcontainer">
             <div class="date_container"> 
                 <p>{{day.date}}</p> 
             </div>
             <div class="health_container">
-                <div class="health_pair">
                 <div class="health_child">
                     {{#if day.glucose}}
                         <button class="oval_button"> Glucose: {{day.glucose.value}} nmol/L </button>
@@ -21,14 +19,11 @@
                     {{else}}
                         <button class="oval_button"> Glucose: N/A </button>
                     {{/if}} 
-                </div>
-                <div class="health_child">
                     {{#if day.weight}}
                         <button class="oval_button"> Weight: {{day.weight.value}} kg </button>
                     {{else}}
                         <button class="oval_button"> Weight: N/A </button>
-                    {{/if}}              
-                </div>
+                    {{/if}}           
                 </div>
                 {{!-- <div class="health_child">
                     {{#if day.weight}}
@@ -37,7 +32,6 @@
                         <button class="oval_button"> Weight: N/A </button>
                     {{/if}}            
                 </div> --}}
-                <div class="health_pair">
                 <div class="health_child">
                     {{#if day.insulin}}
                         <button class="oval_button"> Insulin: {{day.insulin.value}} Doses </button>
@@ -47,8 +41,6 @@
                     {{else}}
                         <button class="oval_button"> Insulin: N/A </button>
                     {{/if}}
-                </div>
-                <div class="health_child">
                     {{#if day.exercise}}
                         <button class="oval_button"> Exercise: {{day.exercise.value}} Steps </button>
                         {{!-- <div class="box-footer">
@@ -58,7 +50,6 @@
                         <button class="oval_button"> Exercise: N/A </button>
                     {{/if}}             
                 </div>
-                </div>
                 {{!-- <div class="health_child">
                     {{#if day.exercise}}
                         <button class="oval_button"> Exercise: {{day.exercise.value}} No. of Steps </button>
@@ -67,11 +58,10 @@
                     {{/if}}            
                 </div> --}}
             </div>
+            </div>
         </div>
-        <hr>
-    {{/each}}
     </div>
-{{!-- </div> --}}
+    {{/each}}
 
 <script>
 // When the user clicks on div, open the popup
@@ -79,7 +69,4 @@ function myFunction() {
     var popup = document.getElementById("popup");
     popup.classList.toggle("show");
 }
-
-
-
 </script>
