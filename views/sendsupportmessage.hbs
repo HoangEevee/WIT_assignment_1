@@ -1,8 +1,16 @@
 
 <h2 class="center"> Update Support Message for Patient </h2>
+<div class="child_container">
+    {{#if data.supportMessages}}
+        <h3 class="center"> Current: {{data.supportMessages}} </h3>
+    {{/if}}
+</div>
 
 <section>
   <p class="center">Send a new patient support message and it will be updated on their account</p>
+    {{!-- {{#if data.supportMessages}}
+        <h2 class="center"> Current Support Message: {{data.supportMessages}} </h2>
+    {{/if}} --}}
     <form action="/clinician/{{data._id}}/send-support-messages" method="POST">
         <div class="container">
             <div class="child_container">
