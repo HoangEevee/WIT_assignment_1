@@ -32,7 +32,7 @@ const changeAccountDetail = async (req, res, next) => {
         const msgTemplate = "Stop messing with my HTML you donker. You have input "
         if (req.body.email && !helpers.isEmail(req.body.email)) flashMessages.push(msgTemplate + "invalid email")
         if (req.body.dob && !helpers.isDate(req.body.dob)) flashMessages.push(msgTemplate + "invalid birthday")
-        if (req.body.theme && !["light","ugly"].includes(req.body.theme)) flashMessages.push(msgTemplate + "invalid theme")
+        if (req.body.theme && !["light","dark"].includes(req.body.theme)) flashMessages.push(msgTemplate + "invalid theme")
         if (req.body.contactNumber && !Number.isInteger(parseFloat(req.body.contactNumber))) flashMessages.push(msgTemplate + "invalid phone number")
         if (await Account.findOne({'username': req.body.username}).lean()) flashMessages.push("Your new username has already been taken.")
         if (flashMessages.length !== 0) {

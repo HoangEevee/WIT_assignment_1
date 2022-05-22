@@ -6,15 +6,15 @@
     <br> 
 </section>
 
-<section>
+<section >
     
     {{#each data}}
     {{#unless (isOdd @index)}}
     <div class="bigcontainer">
     {{/unless}}
-    <div class="child_container">
+    <div class="leaderboard">
     
-    <div class="bigcontainer">
+    <div class="badgecontainer">
         {{#if (badgeEarned engagement)}}
         <img src="\img\small single badge.png" alt="icon for badge">
         {{else}}
