@@ -1,0 +1,17 @@
+<h2 class="center">{{data.firstName}} {{data.lastName}}'s Support Messages</h2>
+
+<div class="container">
+    <button class="new_note" onclick= window.location.href="/clinician/{{data._id}}/send-support-message"> Send New Support Message </button>
+</div>
+
+<div class="note_parentcontainer">
+    {{#each data.supportMessages}}
+    <div class="clinical_note_box">
+        {{!-- <h2> {{this.timestamp}} </h2> --}}
+        <h3> {{this.supportMessages}} </h3>
+        <div class="box_footer">
+            <small>Message written on: {{this.timestamp}}</small>
+        </div> 
+    </div>
+    {{/each}}
+</div>

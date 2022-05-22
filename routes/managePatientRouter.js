@@ -12,6 +12,7 @@ managePatientRouter.post('/new-timeseries', managePatientController.newTimeserie
 managePatientRouter.post('/new-threshold', managePatientController.setThreshold)
 managePatientRouter.get('/send-support-messages', managePatientController.getsupportmessages)
 managePatientRouter.post('/send-support-messages', managePatientController.sendSupportmessages)
+managePatientRouter.get('/clinician-support-messages', managePatientController.getclinicianSuppportmessages)
 managePatientRouter.get('/view-clinical-notes', managePatientController.getClinicalNotes)
 managePatientRouter.get('/create-new-note', managePatientController.newClinicalNote)
 managePatientRouter.post('/create-new-note', managePatientController.setClinicalNote)

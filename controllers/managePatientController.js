@@ -149,6 +149,8 @@ const getsupportmessages = async (req, res, next) => {
     }
 } 
 
+
+
 const sendSupportmessages = async (req, res, next) => {
     try {
         const patient_id = req.params.id
@@ -165,6 +167,39 @@ const sendSupportmessages = async (req, res, next) => {
     }
 } 
 
+
+const setclinicianSupportmessages = async (req, res, next) => {
+    try {
+        const patient_id = req.params.id
+        const today = new Date()
+        await Patient.updateOne({
+            _id: patient_id,
+        }, {$push: {
+                "supportmessage": {timestamp: today, message: req.body.note}
+            }
+        })
+        return res.redirect("/clinician/".concat(req.params.id.toString(), '/support-message'))
+    } catch (err) {
+        return next(err)
+    }
+} 
+
+const getclinicianSuppportmessages = async (req, res, next) => {
+    try{
+        const patient = await Patient.findById(req.params.id).lean()
+        patient.supportmessage.forEach((element) => {
+            element.timestamp = element.timestamp.toLocaleString()
+        })
+        patient.cliniciansupportmessage = patient.supportmessage.reverse()
+        return res.render('supportmessage', {data: patient, layout: 'clinician_main', theme:req.user.theme})
+    } catch (err) {
+        return next(err)
+    }
+}
+
+
+
+
 module.exports = {
     getOnePatientData,
     setTimeseriesPage,
@@ -175,5 +210,8 @@ module.exports = {
     setClinicalNote,
     getsupportmessages,
     sendSupportmessages,
+    setclinicianSupportmessages, 
+    getclinicianSuppportmessages, 
     viewPatientHealth,
+    
 }
