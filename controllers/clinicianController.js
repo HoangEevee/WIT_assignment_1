@@ -91,16 +91,16 @@ const createPatient = async (req, res, next) => {
         //new patient for the patient database
         newPatient = new Patient( {...req.body, clinicianId: clinician_id, registeredDate: today, 
             glucoseThreshold: {
-                lower:0, upper:0
+                lower:0, upper:200
             }, 
             exerciseThreshold: {
-                lower:0, upper:0
+                lower:0, upper:999999
             },
             insulinThreshold: {
-                lower:0, upper:0
+                lower:0, upper:300
             }, 
             weightThreshold: {
-                lower:0, upper:0
+                lower:0, upper:500
             }
         })
 
