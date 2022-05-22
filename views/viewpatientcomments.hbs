@@ -22,7 +22,7 @@
                     <table>
                         {{#each this.lastComments}}
                         <tr>
-                        <td class="colpatient"><script>document.write(parseInt({{@index}}) + 1)</script>. {{this.timestamp}}</td>
+                        <td class="colpatient">{{this.timestamp}}</td>
                         <td href="./{{this._id}}">{{this.message}}</td>
                         </tr>
                         {{/each}}
