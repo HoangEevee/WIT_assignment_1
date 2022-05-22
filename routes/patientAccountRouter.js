@@ -12,4 +12,5 @@ patientAccountRouter.get('/record-health-form', patientAccountController.getReco
 patientAccountRouter.post('/insert-health-data', patientAccountController.insertHealthData)
 patientAccountRouter.get('/account-info', accountModController.getAccountDetail)
 patientAccountRouter.post('/change-account-detail', accountModController.changeAccountDetail)
+patientAccountRouter.get('/view-support-messages',patientAccountController.getSupportmessages)
 module.exports = patientAccountRouter

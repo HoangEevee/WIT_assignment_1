@@ -181,9 +181,40 @@ const insertHealthData = async (req, res, next) => {
     }
 }
 
+const getSupportmessages = async (req, res, next) => {
+    try {
+        // const clinician_id = req.user.data_id
+        // const clinician = await Clinician.findOne({
+        //     _id: clinician_id,
+        // }).lean()
+        const patient_id = req.user.data_id
+        const patient = await Patient.findById(patient_id).lean()
+        return res.render('viewsupportmessages', {data: patient, layout: 'patient_main', theme: req.user.theme})
+    } catch (err) {
+        return next(err)
+    }
+} 
+
+// const getSupportmessages = async (req, res, next) => {
+//     try {
+//         const clinician_id = req.user.data_id
+//         const clinician = await Clinician.findOne({
+//             _id: clinician_id,
+//         }).lean()
+//         const patient_id = req.user.data_id
+//         const patient = await Patient.findById(patient_id).lean()
+//         return res.render('viewsupportmessages', {data: patient, clinciandata: clinician, layout: 'patient_main', theme: req.user.theme})
+//     } catch (err) {
+//         return next(err)
+//     }
+// } 
+
+
+
 module.exports = {
     getPersonal,
     getPastHealth,
     getRecordDataForm,
     insertHealthData,
+    getSupportmessages
 }
