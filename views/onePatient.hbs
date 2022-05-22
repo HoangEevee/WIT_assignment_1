@@ -9,21 +9,4 @@
             <button onclick= window.location.href="/clinician/{{data._id}}/send-support-messages">Support Messages and Comments</button>
         </div>
     </div>
-
-    <p>Chosen timeseries:<br>
-        {{#if data.glucoseRecord}}
-        Glucose<br>
-        {{/if}}
-        {{#if data.weightRecord}}
-        Weight<br>
-        {{/if}}
-        {{#if data.insulinRecord}}
-        Insulin<br>
-        {{/if}}
-        {{#if data.exerciseRecord}}
-        Exercise<br>
-        {{/if}}
-        
-    </p>
-
 </div>

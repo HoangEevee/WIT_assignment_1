@@ -11,7 +11,7 @@
             <div class="health_container">
                 <div class="health_child">
                     {{#if day.glucose}}
-                        <button class="oval_button"> Glucose: {{day.glucose.value}} nmol/L</button>
+                        <button class="oval_button"> Glucose: {{day.glucose.value}} mmol/L</button>
                         {{!-- {{#if day.glucose.message}}
                         <div class="box-footer">
                             <small> Comment attached </small>
@@ -96,10 +96,3 @@
         </div>
     {{/each}}
 {{!-- </div> --}}
-
-<script>
-// When the user clicks on div, open the popup
-function myFunction() {
-    var popup = document.getElementById("popup");
-    popup.classList.toggle("show");
-}
