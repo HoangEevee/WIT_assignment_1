@@ -46,7 +46,7 @@ CLINCIAN UI //
 - for register patient; clinician can register/add a new patient to the database (dbs). 
 
 IMPLEMENTED BONUS FEATURE //
-- we have incorporated a dark mode within the patient details page of patient and clinician
+- we have incorporated a dark mode within the personal details pages of patient and clinician
 
 
 
