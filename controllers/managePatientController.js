@@ -48,18 +48,20 @@ const setThreshold = async (req, res, next) => {
         let patient = await Patient.findOne({_id: req.params.id});
 
         //grab all the threshold. Could put if/else to take only newly updated stuffs but cost of this is trivial to database retrival anyway
-        let glucoseLower = req.body.glucose_lower || patient["glucoseThreshold"]["lower"]
-        let glucoseUpper = req.body.glucose_upper || patient["glucoseThreshold"]["upper"]
-        let weightLower = req.body.weight_lower || patient["weightThreshold"]["lower"]
-        let weightUpper = req.body.weight_upper || patient["weightThreshold"]["upper"]
-        let insulinLower = req.body.insulin_lower || patient["insulinThreshold"]["lower"]
-        let insulinUpper = req.body.insulin_upper || patient["insulinThreshold"]["upper"]
-        let exerciseLower = req.body.exercise_lower || patient["exerciseThreshold"]["lower"]
-        let exerciseUpper = req.body.exercise_upper || patient["exerciseThreshold"]["upper"]
+        // pseudo-validator: threshold will always be a number. If req input is word, will use value in database but doesn't show flash message 
+        let glucoseLower = parseFloat(req.body.glucose_lower) || patient["glucoseThreshold"]["lower"]
+        let glucoseUpper = parseFloat(req.body.glucose_upper) || patient["glucoseThreshold"]["upper"]
+        let weightLower = parseFloat(req.body.weight_lower) || patient["weightThreshold"]["lower"]
+        let weightUpper = parseFloat(req.body.weight_upper) || patient["weightThreshold"]["upper"]
+        let insulinLower = parseFloat(req.body.insulin_lower) || patient["insulinThreshold"]["lower"]
+        let insulinUpper = parseFloat(req.body.insulin_upper) || patient["insulinThreshold"]["upper"]
+        let exerciseLower = parseFloat(req.body.exercise_lower) || patient["exerciseThreshold"]["lower"]
+        let exerciseUpper = parseFloat(req.body.exercise_upper) || patient["exerciseThreshold"]["upper"]
 
         //Validator: threshold lower is smaller than upper
         if (glucoseLower > glucoseUpper || weightLower > weightUpper || 
             insulinLower > insulinUpper || exerciseLower > exerciseUpper) {
+
                 req.flash('error', "Lower threshold must be smaller than upper threshold")
                 return res.redirect('/clinician/'.concat(req.params.id.toString(), '/set-timeseries'));
         }
@@ -67,9 +69,6 @@ const setThreshold = async (req, res, next) => {
         //Validator: valid values i.e. positive, number, int,...
         if (glucoseLower < 0 || weightLower < 0 || insulinLower < 0 || exerciseLower < 0 ||
             glucoseUpper < 0 || weightUpper < 0 || insulinUpper < 0 || exerciseUpper < 0 ||
-            isNaN(parseFloat(glucoseLower)) || isNaN(parseFloat(glucoseUpper)) || 
-            isNaN(parseFloat(weightLower)) || isNaN(parseFloat(weightUpper)) ||
-            isNaN(parseFloat(exerciseLower)) || isNaN(parseFloat(exerciseUpper)) ||
             //insulin must be an interger
             !Number.isInteger(parseFloat(insulinLower)) || !Number.isInteger(parseFloat(insulinUpper))) { 
                 req.flash('error', 'Invalid data. Stop messing with my html!!!!')
