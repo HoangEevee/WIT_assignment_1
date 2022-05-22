@@ -1,8 +1,9 @@
 <h2 class="center">{{data.firstName}} {{data.lastName}}'s Health Record </h2>
 
 {{!-- <div class="timeline"> --}}
+<div class="timeline">
     {{#each data.timeseries as |day|}}
-        <div class="timeline">
+        
         <div class="parentcontainer">
             <div class="date_container"> 
                 <p>{{day.date}}</p> 
@@ -10,7 +11,7 @@
             <div class="health_container">
                 <div class="health_child">
                     {{#if day.glucose}}
-                        <button class="oval_button"> Glucose: {{day.glucose.value}} nmol/L </button>
+                        <button class="oval_button"> Glucose: {{day.glucose.value}} nmol/L</button>
                         {{!-- {{#if day.glucose.message}}
                         <div class="box-footer">
                             <small> Comment attached </small>
@@ -58,15 +59,14 @@
                     {{/if}}            
                 </div> --}}
             </div>
-            </div>
         </div>
-    </div>
     {{/each}}
+</div>
 
 <script>
 // When the user clicks on div, open the popup
-function myFunction() {
-    var popup = document.getElementById("popup");
-    popup.classList.toggle("show");
+function myFunction(popup_id) {
+  var popup = document.getElementById(popup_id);
+  popup.classList.toggle("show");
 }
 </script>
