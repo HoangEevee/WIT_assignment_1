@@ -1,4 +1,3 @@
-const mongoose = require('mongoose')
 const Clinician = require('../models/clinician')
 const Patient = require('../models/patient')
 const helpers = require('../utils/helper')

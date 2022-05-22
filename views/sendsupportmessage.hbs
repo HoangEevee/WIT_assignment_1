@@ -10,13 +10,9 @@
 
 <section>
   <p class="center">Send a new patient support message and it will be updated on their account</p>
-    {{!-- {{#if data.supportMessages}}
-        <h2 class="center"> Current Support Message: {{data.supportMessages}} </h2>
-    {{/if}} --}}
     <form action="/clinician/{{data._id}}/send-support-messages" method="POST">
         <div class="container">
             <div class="child_container">
-                {{!-- <label for="uname"><h4>Username</h4></label> --}}
                 <input type="text" placeholder="Enter a new support message" name="supportmessage" required>
                 <button type="submit">Update Support Message</button>
             </div>

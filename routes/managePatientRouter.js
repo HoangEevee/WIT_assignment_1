@@ -18,10 +18,4 @@ managePatientRouter.get('/create-new-note', managePatientController.newClinicalN
 managePatientRouter.post('/create-new-note', managePatientController.setClinicalNote)
 managePatientRouter.get('/past-health', managePatientController.viewPatientHealth)
 
-// yet to be implemented
-// NOTE: add whatever method after the controller + add any post routes
-// These routes only follow what Quynh suggested
-//managePatientRouter.get('/support-messages', managePatientController)
-//managePatientRouter.get('/patient-info', managePatientController)
-
 module.exports = managePatientRouter

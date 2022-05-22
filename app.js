@@ -6,8 +6,6 @@ app.use(express.static('public')) // define where static assets live
 const flash = require('express-flash')
 const session = require('express-session')
 
-// POST requests, delete json when we do mongo
-//app.use(express.json()) // needed if POST data is in JSON format
 app.use(express.urlencoded({ extended: false }))
 
 // Handlebars stuff
@@ -65,16 +63,9 @@ app.use((req, res, next) => {
 
 // connect to router
 const mainRouter = require('./routes/mainRouter')
-//const patientRouter = require('./routes/patientRouter')
-//const clinicianRouter = require('./routes/clinicianRouter')
-
-//const clinicianRouter = require('./routes/clinicianRouter')
-//app.use(clinicianRouter)
 
 // send HTTP requests to routers
 app.use('/', mainRouter)
-//app.use('/patient', patientRouter)
-//app.use('/clinician', clinicianRouter)
 
 
 app.listen(process.env.PORT || 8080, () => {

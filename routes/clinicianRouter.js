@@ -10,9 +10,6 @@ clinicianRouter.get("/dashboard", clinicianController.getAllPatientData)
 clinicianRouter.get('/create-patient-account', clinicianController.createPatientPage)
 clinicianRouter.post('/create-patient-account', clinicianController.createPatient)
 
-clinicianRouter.get('/create-new-account', clinicianController.createAccountPage)
-clinicianRouter.post('/create-clinician', clinicianController.createClinician)
-
 clinicianRouter.get('/view-patient-comments', clinicianController.getPatientcomments)
 
 clinicianRouter.get('/account-info', accountModController.getAccountDetail)

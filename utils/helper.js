@@ -71,11 +71,9 @@ const getTodayStart = () => {
         today.setDate(today.getDate()+1)
     }
 
-    //const today_start = new Date(today.setHours(0,0,0,0))
-    //const tmr_start = new Date(today.setDate(today.getDate()+1))
-
     return new Date(today.setHours(0,0,0,0))
 }
+
 // regex from here https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/email
 const isEmail = (email) => {
     const emailRegex = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;

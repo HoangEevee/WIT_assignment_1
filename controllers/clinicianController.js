@@ -21,27 +21,6 @@ const getAllPatientData = async (req, res, next) => {
     }   
 }
 
-const createAccountPage = async (req, res, next) => {
-    try {
-        const clinician = await Clinician.findById(req.user.data_id).lean()
-        return res.render('createClinicianAccount', {layout: 'clinician_main' , clinician: clinician})
-    } catch (err) {
-        return next(err)
-    }
-}
-
-const createClinician = async (req, res, next) => {
-    try {
-        newClinician = new Clinician(req.body)
-        await newClinician.save(function (err) {
-            if (err) return console.error(err);
-        })
-        return res.redirect('/clinician/create-new-account')
-    } catch (err) {
-        return next(err)
-    }
-}
-
 const createPatientPage = async (req, res, next) => {
     try {
         const clinician = await Clinician.findById(req.user.data_id).lean()
@@ -129,9 +108,7 @@ const createPatient = async (req, res, next) => {
 
 module.exports = {
     getAllPatientData,
-    createAccountPage,
     createPatientPage,
-    createClinician,
     getPatientcomments, 
     createPatient,
 }

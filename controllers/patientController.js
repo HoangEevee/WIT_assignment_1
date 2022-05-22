@@ -1,7 +1,3 @@
-const mongoose = require('mongoose')
-const Clinician = require('../models/clinician')
-const Patient = require('../models/patient')
-
 const getAboutDiabetes = (req, res, next) => {
     try{
         res.render('aboutDiabetes', {layout: 'patient_main', theme: req.user.theme})
