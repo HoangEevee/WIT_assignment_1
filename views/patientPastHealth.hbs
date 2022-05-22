@@ -6,17 +6,12 @@
         
         <div class="parentcontainer">
             <div class="date_container"> 
-                <p>{{day.date}}</p> 
+                <p>Date: {{day.date}}</p> 
             </div>
             <div class="health_container">
                 <div class="health_child">
                     {{#if day.glucose}}
                         <button class="oval_button"> Glucose: {{day.glucose.value}} mmol/L</button>
-                        {{!-- {{#if day.glucose.message}}
-                        <div class="box-footer">
-                            <small> Comment attached </small>
-                        </div>
-                        {{/if}} --}}
                     {{else}}
                         <button class="oval_button"> Glucose: N/A </button>
                     {{/if}} 
@@ -29,11 +24,6 @@
                 <div class="health_child">
                     {{#if day.glucose.message}}
                         <button class="comment_button"> {{day.glucose.message}} </button>
-                        {{!-- {{#if day.glucose.message}}
-                        <div class="box-footer">
-                            <small> Comment attached </small>
-                        </div>
-                        {{/if}} --}}
                     {{else}}
                         <button class="comment_button"> No Comment </button>
                     {{/if}} 
@@ -43,27 +33,14 @@
                         <button class="comment_button"> No Comment </button>
                     {{/if}}           
                 </div>
-                {{!-- <div class="health_child">
-                    {{#if day.weight}}
-                        <button class="oval_button"> Weight: {{day.weight.value}} kg </button>
-                    {{else}}
-                        <button class="oval_button"> Weight: N/A </button>
-                    {{/if}}            
-                </div> --}}
                 <div class="health_child">
                     {{#if day.insulin}}
                         <button class="oval_button"> Insulin: {{day.insulin.value}} Doses </button>
-                        {{!-- <div class="box-footer">
-                            <small>Last updated at {{day.insulin.time}}</small>
-                        </div> --}}
                     {{else}}
                         <button class="oval_button"> Insulin: N/A </button>
                     {{/if}}
                     {{#if day.exercise}}
                         <button class="oval_button"> Exercise: {{day.exercise.value}} Steps </button>
-                        {{!-- <div class="box-footer">
-                            <small>Last updated at {{day.exercise.time}}</small>
-                        </div> --}}
                     {{else}}
                         <button class="oval_button"> Exercise: N/A </button>
                     {{/if}}             
@@ -71,11 +48,6 @@
                 <div class="health_child">
                     {{#if day.insulin.message}}
                         <button class="comment_button"> {{day.insulin.message}} </button>
-                        {{!-- {{#if day.glucose.message}}
-                        <div class="box-footer">
-                            <small> Comment attached </small>
-                        </div>
-                        {{/if}} --}}
                     {{else}}
                         <button class="comment_button"> No Comment </button>
                     {{/if}} 
@@ -85,14 +57,8 @@
                         <button class="comment_button"> No Comment </button>
                     {{/if}}           
                 </div>
-                {{!-- <div class="health_child">
-                    {{#if day.exercise}}
-                        <button class="oval_button"> Exercise: {{day.exercise.value}} No. of Steps </button>
-                    {{else}}
-                        <button class="oval_button"> Exercise: N/A </button>
-                    {{/if}}            
-                </div> --}}
             </div>
         </div>
     {{/each}}
-{{!-- </div> --}}
+</div>
+

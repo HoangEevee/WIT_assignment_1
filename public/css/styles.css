@@ -310,6 +310,7 @@ button:hover {
       min-width: auto;
       margin: 0 auto;
       padding: 16px;
+
 }
   
 .signinout {
@@ -376,7 +377,7 @@ span.psw2 {
     color: var(--text-color);
     padding:6px;
     text-align: center;
-    border: 1px dotted var(--footer-header-color);
+    border: 1px dotted var(--text-color);
 }
 
 .colpatient {
@@ -502,6 +503,7 @@ span.psw2 {
 }
 
 @media screen and (max-width: 1200px) {
+
     .timeline {
         margin: 0;
     }
