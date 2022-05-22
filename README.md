@@ -1,6 +1,4 @@
 # WIT_assignment
-Assignment 1/2/3 for WIT sem1 2022
-
 NOTES FOR DELIVERABLE 3; 
 
 GENERAL DELIVERABLE NOTES //
